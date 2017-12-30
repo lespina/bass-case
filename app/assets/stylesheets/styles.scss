@@ -1,0 +1,52 @@
+@font-face {
+  font-family: "Interstate";
+  src: font-url("interstate-bold.otf") format("opentype");
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "Interstate";
+  src: font-url("interstate.ttf") format("truetype");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Interstate";
+  src: font-url("interstate-light-regular.otf") format("opentype");
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: "Interstate";
+  src: font-url("interstate-extra-light.otf") format("opentype");
+  font-weight: 200;
+}
+
+@font-face {
+  font-family: "Interstate";
+  src: font-url("interstate-thin.otf") format("opentype");
+  font-weight: 100;
+}
+
+@font-face {
+  font-family: "Interstate";
+  src: font-url("interstate-hairline.ttf") format("truetype");
+  font-weight: 50;
+}
+
+@font-face {
+font-family: "Lucida Grande";
+src: font-url("lucida-grande.ttf") format("truetype");
+}
+
+@font-face {
+font-family: "Lucida Sans";
+src: font-url("lucida-sans.ttf") format("truetype");
+font-weight: normal;
+font-style: normal;
+}
+
+@font-face {
+font-family: "Lucida Sans Unicode";
+src: font-url("lucida-sans-unicode.ttf") format("truetype");
+}

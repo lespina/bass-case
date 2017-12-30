@@ -67,17 +67,11 @@ class SessionForm extends React.Component {
     const { inputType, username, password } = this.state;
     if (inputType === USERNAME) {
       return (
-        <div>
-          <label htmlFor="input-username">Username</label>
-          <input onChange={this.handleChange('username')} id="input-username" type="text" value={username}/>
-        </div>
+        <input onChange={this.handleChange('username')} id="input-username" type="text" value={username} placeholder="Your username *"/>
       );
     } else {
       return (
-        <div>
-          <label htmlFor="input-password">Password</label>
-          <input onChange={this.handleChange('password')} id="input-password" type="password" value={password}/>
-        </div>
+        <input onChange={this.handleChange('password')} id="input-password" type="password" value={password} placeholder="Your password *"/>
       );
     }
   }
@@ -87,20 +81,30 @@ class SessionForm extends React.Component {
     if (inputType === USERNAME) {
       return;
     } else {
-      return <button onClick={this.handleBack}>Back</button>;
+      return <button className="session-form-back-button" onClick={this.handleBack}>Back</button>;
     }
   }
 
   render() {
     return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          {this.input()}
-          <button>Continue</button>
-        </form>
-        {this.back()}
-        {this.errors()}
-      </div>
+      <section className="modal show">
+        <button className="modal-close-button"></button>
+
+        <div className="session-form-container">
+          <form className="session-form" onSubmit={this.handleSubmit}>
+            {this.input()}
+            <button type="submit">Continue</button>
+            <p className="session-form-text-email">
+              We may use your email for updates and tips on BassCase's products and services. You can unsubscribe for free at any time in your notification preferences.
+            </p>
+            <p className="session-form-text-agree">
+              By signing in, you agree to have a great time.
+            </p>
+          </form>
+          {this.back()}
+          {this.errors()}
+        </div>
+      </section>
     );
   }
 }

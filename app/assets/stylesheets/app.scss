@@ -1,0 +1,55 @@
+body {
+  font-family: "Interstate";
+  font-weight: 200;
+  background-color: rgb(242, 242, 242);
+}
+
+@media (max-width: 1239px) {
+  .full-width {
+      width: 1020px;
+  }
+}
+
+@media (max-width: 1079px) {
+  .full-width {
+    width: 910px;
+  }
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
+.modal {
+  transition: all 700ms ease-in-out;
+  opacity: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(242,242,242,.9);
+  overflow-y: auto;
+  box-sizing: border-box;
+  z-index: -1;
+}
+
+.show {
+  z-index: 1000;
+  opacity: 1;
+}
+
+.modal-close-button {
+  background: url('../images/modal-close-button.svg') center no-repeat;
+  position: absolute;
+  top: 14px;
+  right: 20px;
+  width: 20px;
+  height: 20px;
+  text-indent: 20px;
+  border: 0;
+  overflow: hidden;
+  color: #333;
+}

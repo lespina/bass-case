@@ -1,0 +1,83 @@
+.session-form {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 450px;
+  top: 0;
+  left: 50%;
+  margin: 76px 0 30px -225px;
+  height: 620px;
+  padding: 25px;
+  background: #fff;
+}
+
+.session-form-enter {
+  top: -700px;
+  animation-name: drop;
+  animation-delay: 200ms;
+  animation-duration: 500ms;
+}
+
+.session-form-exit {
+  animation-name: rise;
+  animation-duration: 400ms;
+  top: -700px;
+}
+
+@keyframes drop {
+  0% {top: -700px;}
+  100% {top: 0;}
+}
+
+@keyframes rise {
+  0% {top: 0;}
+  33% {top: 50px;}
+  66% {top: -375;}
+  100% {top: -800px;}
+}
+
+.session-form > input[type="text"], .session-form > input[type="password"] {
+  font-size: 18px;
+  line-height: 24px;
+  padding: 7px 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  transition: border-color .1s;
+  background-color: #fff;
+  color: #333;
+  width: 100%;
+  font-weight: 300;
+  margin: 10px 0;
+}
+
+.session-form > input[type="text"]::placeholder, , .session-form > input[type="password"]::placeholder {
+  color: #999;
+  font-weight: 300;
+}
+
+.session-form > button[type="submit"] {
+  margin: 10px 0;
+  color: white;
+  background-color: #f50;
+  width: 100%;
+  border-radius: 3px;
+  border: 1px solid #f50;
+  padding: 10px 15px;
+  text-align: center;
+  white-space: nowrap;
+  height: 40px;
+  font-weight: 300;
+}
+
+[class^="session-form-text-"] {
+  margin: 10px 0;
+  font-size: 12px;
+  font-family: "Lucida Grande";
+  line-height: 16.8px;
+  color: #999;
+}
+
+.session-form-text-agree {
+  text-align: center;
+}
