@@ -6,6 +6,7 @@ const Greeting = ({ currentUser, logout }) => {
     return (
       <div>
         Welcome, {currentUser.username}!
+        <button onClick={logout}>Log Out</button>
       </div>
     );
   } else {
