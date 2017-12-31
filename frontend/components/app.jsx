@@ -2,6 +2,7 @@ import React from 'react';
 import { AuthRoute, ProtectedRoute } from '../util/route_util';
 import GreetingContainer from './greeting/greeting_container';
 import SessionFormContainer from './session_form/session_form_container';
+import HeroImage from './hero_image/hero_image';
 
 class App extends React.Component {
   constructor(props) {
@@ -14,13 +15,14 @@ class App extends React.Component {
   }
 
   toggleModalOpen() {
-    this.setState({ modalOpen: !!this.state.modalOpen });
+    this.setState({ modalOpen: !this.state.modalOpen });
   }
 
   render() {
     return (
-      <div className={(this.state.modalOpen) ? "modal-open" : ""}>
-        <h1>BaseCase</h1>
+      <div className={"full-width" + ((this.state.modalOpen) ? " modal-open" : "")}>
+        <AuthRoute exact path="/" component={HeroImage} />
+
         <GreetingContainer />
         <AuthRoute path="/login" component={SessionFormContainer} toggleModalOpen={this.toggleModalOpen}/>
         <AuthRoute path="/signup" component={SessionFormContainer} toggleModalOpen={this.toggleModalOpen} />

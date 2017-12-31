@@ -4,6 +4,15 @@ body {
   background-color: rgb(242, 242, 242);
 }
 
+.full-width {
+  display: block;
+  background-color: white;
+  height: 100vh;
+  padding: 0 30px;
+  width: 1180px;
+  margin: 0 auto;
+}
+
 @media (max-width: 1239px) {
   .full-width {
       width: 1020px;
@@ -21,8 +30,8 @@ body.modal-open {
 }
 
 .modal {
-  transition: all 700ms ease-in-out;
-  opacity: 0;
+  transition: all 500ms ease-in-out;
+  opacity: .3;
   position: fixed;
   top: 0;
   left: 0;
@@ -43,6 +52,7 @@ body.modal-open {
 
 .cancel-background {
   z-index: 1;
+  background-color: transparent;
 }
 
 .modal-close-button {

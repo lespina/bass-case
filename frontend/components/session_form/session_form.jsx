@@ -29,11 +29,11 @@ class SessionForm extends React.Component {
 
     const classList = origClassList.concat(["session-form-enter"]);
     const show = true;
-    this.setState({ classList, show });
+    this.setState({ show, classList });
 
     window.setTimeout(() => {
       this.setState({ classList: origClassList });
-    }, 685);
+    }, 585);
   }
 
   componentWillUnMount() {
