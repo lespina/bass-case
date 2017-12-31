@@ -37,12 +37,16 @@ body.modal-open {
 }
 
 .show {
-  z-index: 1000;
+  z-index: 1;
   opacity: 1;
 }
 
+.cancel-background {
+  z-index: 1;
+}
+
 .modal-close-button {
-  background: url('../images/modal-close-button.svg') center no-repeat;
+  background: image-url('modal-close-button.svg') center no-repeat;
   position: absolute;
   top: 14px;
   right: 20px;
@@ -52,4 +56,5 @@ body.modal-open {
   border: 0;
   overflow: hidden;
   color: #333;
+  z-index: 3;
 }

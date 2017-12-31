@@ -8,15 +8,26 @@ const mapStateToProps = state => {
   };
 };
 
-const Auth = ({component: Component, path, loggedIn}) => (
-  <Route path={path} render={(props) => (
-    !loggedIn ? (
-      <Component {...props} />
-    ) : (
-      <Redirect to="/" />
-    )
-  )}/>
-);
+const Auth = (origProps) => {
+  const { component: Component, path, loggedIn } = origProps;
+
+  const ownProps = Object.assign({}, origProps);
+  delete ownProps["component"];
+  delete ownProps["path"];
+  delete ownProps["loggedIn"];
+
+  return (
+    <Route path={path} render={(props) => {
+      return (
+        !loggedIn ? (
+          <Component {...props} {...ownProps} />
+        ) : (
+          <Redirect to="/" />
+        )
+      );
+    }}/>
+  );
+};
 
 const Protected = ({component: Component, path, loggedIn}) => (
   <Route path={path} render={(props) => (
