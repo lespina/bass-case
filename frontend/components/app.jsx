@@ -7,24 +7,23 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      classes: ""
+      modalOpen: false,
     };
 
-    this.updateAppClass = this.updateAppClass.bind(this);
+    this.toggleModalOpen = this.toggleModalOpen.bind(this);
   }
 
-  updateAppClass(classes) {
-    this.setState({ classes });
+  toggleModalOpen() {
+    this.setState({ modalOpen: !!this.state.modalOpen });
   }
-
 
   render() {
     return (
-      <div className={this.state.classes}>
+      <div className={(this.state.modalOpen) ? "modal-open" : ""}>
         <h1>BaseCase</h1>
         <GreetingContainer />
-        <AuthRoute path="/login" component={SessionFormContainer} updateAppClass={this.updateAppClass}/>
-        <AuthRoute path="/signup" component={SessionFormContainer} updateAppClass={this.updateAppClass} />
+        <AuthRoute path="/login" component={SessionFormContainer} toggleModalOpen={this.toggleModalOpen}/>
+        <AuthRoute path="/signup" component={SessionFormContainer} toggleModalOpen={this.toggleModalOpen} />
       </div>
     );
   }

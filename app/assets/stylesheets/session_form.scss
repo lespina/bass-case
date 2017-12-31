@@ -38,7 +38,7 @@
   100% {top: -800px;}
 }
 
-.session-form > input[type="text"], .session-form > input[type="password"] {
+.session-form input[type="text"], .session-form input[type="password"] {
   font-size: 18px;
   line-height: 24px;
   padding: 7px 8px;
@@ -49,16 +49,43 @@
   color: #333;
   width: 100%;
   font-weight: 300;
-  margin: 10px 0;
+  margin: 5px 0;
 }
 
-.session-form > input[type="text"]::placeholder, , .session-form > input[type="password"]::placeholder {
+.session-form-locked-username {
+  padding-left: 32px !important;
+}
+.session-form-locked-username::placeholder {
+  color: black !important;
+  font-weight: 400 !important;
+}
+
+.session-form input[type="text"]::placeholder, .session-form input[type="password"]::placeholder {
   color: #999;
   font-weight: 300;
 }
 
+.session-form-back-button {
+  position: absolute;
+  color: transparent;
+  background-size: 10px 12px;
+  background-image: image-url("back-button.png");
+  background-repeat: no-repeat;
+  top: 20px;//237px;
+  left: 13px;//38px;
+}
+
+.session-form-errors {
+  color: #f50;
+  padding: 3px 0 5px;
+  transition: transform .12s,padding .12s,min-height .12s,opacity .2s;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
 .session-form > button[type="submit"] {
-  margin: 10px 0;
+  margin: 5px 0;
   color: white;
   background-color: #f50;
   width: 100%;

@@ -19,10 +19,11 @@ class SessionForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleBack = this.handleBack.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
+    this.handleEscCancel = this.handleEscCancel.bind(this);
   }
 
   componentDidMount() {
-    this.props.updateAppClass("modal-open");
+    this.props.toggleModalOpen();
 
     let { classList: origClassList } = _.merge({}, this.state);
 
@@ -55,26 +56,25 @@ class SessionForm extends React.Component {
     processForm({ user });
   }
 
-  handleCancel(e) {
-    e.preventDefault();
-
-
+  handleCancel() {
     let { classList: origClassList } = _.merge({}, this.state);
 
-    const sessionForm = document.querySelector(".session-form");
+    this.props.toggleModalOpen();
+    const classList = origClassList.concat(["session-form-exit"]);
+    const show = false;
+    this.setState({ classList, show });
 
-    if (!sessionForm.contains(e.target)) {
-      this.props.updateAppClass("");
-      const classList = origClassList.concat(["session-form-exit"]);
-      const show = false;
-      this.setState({ classList, show });
+    window.setTimeout(() => {
+      this.setState({ classList: origClassList });
+      this.props.history.push('/');
+    }, 500);
+  }
 
-      window.setTimeout(() => {
-        this.setState({ classList: origClassList });
-        this.props.history.push('/');
-      }, 1000);
-    } else {
-      e.stopPropagation();
+  handleEscCancel(e) {
+    e.preventDefault();
+
+    if (e.keyCode === 27) {
+      this.handleCancel();
     }
   }
 
@@ -95,7 +95,7 @@ class SessionForm extends React.Component {
 
     if (errors.length > 0) {
       return (
-        <ul>
+        <ul className="session-form-errors">
           {
             errors.map((error, idx) => {
               return <li key={idx}>{error}</li>;
@@ -110,28 +110,44 @@ class SessionForm extends React.Component {
 
   input() {
     const { inputType, username, password } = this.state;
+    const { errors } = this.props;
+
+    const errorsExist = (errors.length > 0) ? true : false;
+
     if (inputType === USERNAME) {
       return (
-        <input autoFocus onChange={this.handleChange('username')} id="input-username" type="text" value={username} placeholder="Your username *"/>
+        <div>
+          <input className={(errorsExist) ? "orange-input" : ""} autoFocus onKeyUp={this.handleEscCancel} onChange={this.handleChange('username')} type="text" value={username} placeholder="Your username *"/>
+        </div>
       );
     } else {
       return (
-        <input autoFocus onChange={this.handleChange('password')} id="input-password" type="password" value={password} placeholder="Your password *"/>
+        <div>
+          <div className="relative">
+            <input className="session-form-locked-username" type="text" placeholder={username} disabled/>
+            <button type="button" className="session-form-back-button" onClick={this.handleBack}>Back</button>
+          </div>
+          <input className={(errorsExist) ? "orange-input" : ""} autoFocus onKeyUp={this.handleEscCancel} onChange={this.handleChange('password')} id="input-password" type="password" value={password} placeholder="Your password *"/>
+        </div>
       );
     }
   }
 
-  back() {
-    const { inputType } = this.state;
-    if (inputType === USERNAME) {
-      return;
-    } else {
-      return <button className="session-form-back-button" onClick={this.handleBack}>Back</button>;
-    }
+  formText() {
+    return (
+      <div>
+        <p className="session-form-text-email">
+          We may use your email for updates and tips on BassCase's products and services. You can unsubscribe for free at any time in your notification preferences.
+        </p>
+        <p className="session-form-text-agree">
+          By signing in, you agree to have a great time.
+        </p>
+      </div>
+    );
   }
 
   render() {
-    const { classList, show } = this.state;
+    const { classList, show, inputType } = this.state;
     return (
       <div>
         <section className={`modal ${(show) ? "show" : ""}`}>
@@ -139,21 +155,14 @@ class SessionForm extends React.Component {
             <button className="modal-close-button"></button>
           </div>
 
-
-          <div className="session-form-container">
-            <form className={`session-form ${classList.join(' ')}`} onSubmit={this.handleSubmit}>
-              {this.input()}
-              <button type="submit">Continue</button>
-              <p className="session-form-text-email">
-                We may use your email for updates and tips on BassCase's products and services. You can unsubscribe for free at any time in your notification preferences.
-              </p>
-              <p className="session-form-text-agree">
-                By signing in, you agree to have a great time.
-              </p>
-            </form>
-            {this.back()}
+          <form className={`session-form ${classList.join(' ')}`} onSubmit={this.handleSubmit}>
+            {this.input()}
             {this.errors()}
-          </div>
+            <button type="submit">Continue</button>
+            {(inputType === USERNAME) ? this.formText() : ""}
+            <div className="transparent">Flex Filler</div>
+            <div className="transparent">Flex Filler</div>
+          </form>
         </section>
       </div>
     );
