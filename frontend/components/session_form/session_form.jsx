@@ -17,6 +17,7 @@ class SessionForm extends React.Component {
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDemoSignIn = this.handleDemoSignIn.bind(this);
     this.handleBack = this.handleBack.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
     this.handleEscCancel = this.handleEscCancel.bind(this);
@@ -50,10 +51,19 @@ class SessionForm extends React.Component {
       return;
     }
 
-    const { processForm, history } = this.props;
+    const { processForm } = this.props;
     const user = Object.assign({}, this.state);
 
     processForm({ user });
+  }
+
+  handleDemoSignIn(e) {
+    e.preventDefault();
+    const user = {
+      username: "guest",
+      password: "password",
+    };
+    this.props.processForm({ user });
   }
 
   handleCancel() {
@@ -146,6 +156,21 @@ class SessionForm extends React.Component {
     );
   }
 
+  demoSignIn() {
+    if (this.state.inputType === USERNAME && this.props.formType === 'login') {
+      return (
+        <button className="session-form-demo-submit" onClick={this.handleDemoSignIn} type="button">Log in as Guest</button>
+      );
+    } else {
+      return (
+        <div>
+          <div className="transparent">Flex Filler</div>
+          <div className="transparent">Flex Filler</div>
+        </div>
+      );
+    }
+  }
+
   render() {
     const { classList, show, inputType } = this.state;
     return (
@@ -160,8 +185,7 @@ class SessionForm extends React.Component {
             {this.errors()}
             <button type="submit">Continue</button>
             {(inputType === USERNAME) ? this.formText() : ""}
-            <div className="transparent">Flex Filler</div>
-            <div className="transparent">Flex Filler</div>
+            {this.demoSignIn()}
           </form>
         </section>
       </div>

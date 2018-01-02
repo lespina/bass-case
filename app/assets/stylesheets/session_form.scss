@@ -84,7 +84,7 @@
   line-height: 1.4;
 }
 
-.session-form > button[type="submit"] {
+.session-form > button[type="submit"], .session-form-demo-submit {
   margin: 5px 0;
   color: white;
   background-color: #f50;
@@ -96,6 +96,11 @@
   white-space: nowrap;
   height: 40px;
   font-weight: 300;
+}
+
+.session-form-demo-submit {
+  background-color: white;
+  color: #f50;
 }
 
 [class^="session-form-text-"] {
