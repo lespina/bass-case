@@ -22,7 +22,7 @@ class Song < ApplicationRecord
 
   belongs_to :user
   # styles: { medium: "#300x300", thumb: "100x100>" }
-  has_attached_file :image, default_url: "null-image"
+  has_attached_file :image, styles: { medium: "500x500>" }, default_url: "null-image"
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\z/
 
   has_attached_file :audio
