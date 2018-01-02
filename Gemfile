@@ -33,6 +33,10 @@ gem 'jquery-rails'
 # gem 'capistrano-rails', group: :development
 gem "paperclip", "~> 5.0.0"
 
+gem 'aws-sdk', '~> 2.3.0'
+
+gem 'figaro'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
