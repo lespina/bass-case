@@ -28,12 +28,13 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
+gem 'pry-rails'
 gem 'jquery-rails'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 gem "paperclip", "~> 5.0.0"
 
-gem 'aws-sdk', '~> 2.3.0'
+gem 'aws-sdk', '< 3.0'
 
 gem 'figaro'
 
@@ -45,7 +46,6 @@ group :development, :test do
   gem 'selenium-webdriver'
   gem 'binding_of_caller'
   gem 'better_errors'
-  gem 'pry-rails'
   gem 'annotate'
 end
 

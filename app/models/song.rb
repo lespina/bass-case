@@ -26,5 +26,5 @@ class Song < ApplicationRecord
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\z/
 
   # has_attached_file :audio
-  # validates_attachment_content_type :audio, content_type: /\Aimage\/.*\z/
+  # validates_attachment_content_type :audio, content_type: /\Aaudio\/.*\z/
 end
