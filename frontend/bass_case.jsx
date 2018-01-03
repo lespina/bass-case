@@ -31,4 +31,9 @@ import * as SessionApiUtil from './util/session_api_util';
 import * as SessionActions from './actions/session_actions';
 window.SessionApiUtil = SessionApiUtil;
 window.SessionActions = SessionActions;
+
+import * as SongApiUtil from './util/song_api_util';
+import * as SongActions from './actions/song_actions';
+window.SongApiUtil = SongApiUtil;
+window.SongActions = SongActions;
 // TESTING END

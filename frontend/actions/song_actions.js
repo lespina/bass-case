@@ -14,14 +14,14 @@ export const receiveSong = (song) => ({
 });
 
 export const fetchSongs = () => (dispatch) => {
-  return SongApiUtil.fetchsongs().then(songs => {
+  return SongApiUtil.fetchSongs().then(songs => {
     dispatch(receiveSongs(songs));
     return songs;
   });
 };
 
 export const fetchSong = () => (dispatch) => {
-  return SongApiUtil.fetchsong().then(song => {
+  return SongApiUtil.fetchSong().then(song => {
     dispatch(receiveSong(song));
     return song;
   });
