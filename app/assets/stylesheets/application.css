@@ -14,6 +14,7 @@
  *= require 'reset'
  *= require 'app'
  *= require 'session_form'
+ *= require 'landing/trending_songs'
  *= require_tree .
  *= require_self
  */

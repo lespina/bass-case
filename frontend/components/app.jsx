@@ -2,8 +2,8 @@ import React from 'react';
 import { AuthRoute, ProtectedRoute } from '../util/route_util';
 import GreetingContainer from './greeting/greeting_container';
 import SessionFormContainer from './session_form/session_form_container';
-import HeroImage from './hero_image/hero_image';
-import SongIndexContainer from './song/song_index_container';
+import Landing from './landing_page/landing';
+// import SongIndexContainer from './song/song_index_container';
 
 class App extends React.Component {
   constructor(props) {
@@ -22,12 +22,11 @@ class App extends React.Component {
   render() {
     return (
       <div className={"full-width" + ((this.state.modalOpen) ? " modal-open" : "")}>
-        <AuthRoute exact path="/" component={HeroImage} />
+        <AuthRoute exact path="/" component={Landing} />
 
         <GreetingContainer />
         <AuthRoute path="/login" component={SessionFormContainer} toggleModalOpen={this.toggleModalOpen}/>
         <AuthRoute path="/signup" component={SessionFormContainer} toggleModalOpen={this.toggleModalOpen} />
-        <SongIndexContainer/>
       </div>
     );
   }

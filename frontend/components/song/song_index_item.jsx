@@ -27,7 +27,6 @@ const SongIndexItem = ({ song }) => {
       <Sound
         url={audioUrl}
         playStatus={Sound.status.PLAYING}
-        ref={(playback => { this.props.playback = playback; })}
       ></Sound>
     </li>
   );

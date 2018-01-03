@@ -1,0 +1,127 @@
+.trending-songs-title {
+  font-size: 24px;
+  text-align: center;
+  padding-top: 20px;
+  margin-bottom: 30px;
+  font-weight: 300;
+  height: 33px;
+  color: #333;
+}
+
+.song-index-container {
+  margin-right: -20px;
+}
+
+.song-index-item {
+  box-sizing: border-box;
+  padding-right: 20px;
+  width: 16.666%;
+  float: left;
+}
+
+.playable-tile {
+  padding-bottom: 78px;
+  position: relative;
+}
+
+
+
+[class^="playable-tile-artwork"] {
+  background-size: cover;
+  width: 180px;
+  height: 180px;
+  opacity: 1;
+  position: relative;
+}
+
+@media (max-width: 1239px) {
+  [class^="playable-tile-artwork"] {
+    width: 153px;
+    height: 153px;
+  }
+}
+
+@media (max-width: 1079px) {
+  [class^="playable-tile-artwork"] {
+    width: 136px;
+    height: 136px;
+  }
+}
+
+.play-button {
+  opacity: 0;
+  visibility: hidden;
+  border-radius: 50%;
+  background-color: #f50;
+  color: white;
+  transition: opacity .1s, visibility .1s;
+
+  position: absolute;
+  left: 34%;
+  top: 34%;
+  right: 34%;
+  bottom: 34%;
+}
+
+[class^="playable-tile-artwork"]:hover .play-button {
+  opacity: 1;
+  visibility: visible;
+}
+
+.play-button a {
+  color: transparent;
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+  background-image: image-url('play.svg');
+  background-size: 40% 60%;
+  background-position: 60% center;
+  background-repeat: no-repeat;
+  transition: opacity .3s;
+  opacity: 1;
+}
+
+.play-button a:hover {
+  background-color: #f30;
+  border-radius: 50%;
+}
+
+.playable-tile-description {
+  position: absolute;
+  top: 185px;
+  width: 100%;
+}
+
+@media (max-width: 1239px) {
+  .playable-tile-description {
+    top: 158px;
+  }
+}
+
+@media (max-width: 1079px) {
+  .playable-tile-description {
+    top: 142px;
+  }
+}
+
+.playable-tile-description-title a {
+  display: block;
+  font-size: 14px;
+  color: #333;
+  font-weight: 300;
+  line-height: 1.4;
+}
+
+.playable-tile-description-username a {
+  display: block;
+  color: #999;
+  font-size: 12px;
+  font-weight: 300;
+}
+
+.playable-tile-description-username a:hover {
+  color: #333;
+}
