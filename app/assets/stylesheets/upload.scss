@@ -36,6 +36,18 @@
   font-weight: 500;
 }
 
+.upload-file-name {
+  position: relative;
+  line-height: 26px;
+  margin: 10px 0;
+}
+
+.upload-file-name span {
+  font-size: 14px;
+  font-weight: 300;
+  color: #999;
+}
+
 .upload-chooser {
   margin: 90px 0 210px;
   transition: margin .3s cubic-bezier(.175,.885,.32,1.275);

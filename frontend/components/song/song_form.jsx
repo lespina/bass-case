@@ -14,6 +14,7 @@ class SongForm extends React.Component {
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.addAudio = this.addAudio.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
   }
 
   addAudio(e) {
@@ -40,14 +41,24 @@ class SongForm extends React.Component {
     this.props.createSong(formData);
   }
 
+  handleCancel(idx) {
+    return () => {
+      const updatedAudioFiles = this.state.audioFiles.slice(0);
+      updatedAudioFiles.splice(idx, 1);
+      this.setState({ audioFiles: updatedAudioFiles });
+    };
+  }
+
   activeUploads() {
     const { createSong } = this.props.createSong;
-    if (this.state.audioFiles.length > 0) {
+    const numFiles = this.state.audioFiles.length;
+
+    if (numFiles > 0) {
       return (
         <ul className="active-uploads">
           {
-            this.state.audioFiles.slice(0).map((audio, idx) => {
-              return <SongFormItem key={idx} audio={audio[0]} createSong={this.props.createSong}/>;
+            this.state.audioFiles.reverse().map((audio, idx) => {
+              return <SongFormItem key={idx} audio={audio[0]} createSong={this.props.createSong} handleCancel={this.handleCancel(numFiles - idx)}/>;
             }, this)
           }
         </ul>

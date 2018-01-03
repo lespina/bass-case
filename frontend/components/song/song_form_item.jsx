@@ -51,6 +51,7 @@ class SongFormItem extends React.Component {
 
   render() {
     const { title, imageUrl } = this.state;
+    const { audio } = this.props;
 
     return (
       <li className="active-uploads-item">
@@ -62,6 +63,10 @@ class SongFormItem extends React.Component {
                 <div className="title-field">
                   <label htmlFor="song-form-title">Title</label>
                   <input onChange={this.handleChange('title')} id="song-form-title" className="input-title" type="text" value={title}></input>
+                </div>
+
+                <div className="upload-file-name">
+                  <span>{audio.name}</span>
                 </div>
 
                 <div className="image-preview" style={{ backgroundImage: `url(${imageUrl})` }}>
@@ -79,7 +84,7 @@ class SongFormItem extends React.Component {
             <div className="active-upload-form-buttons">
               <div className="required-text"><span className="orange">*</span> Required fields</div>
               <button type="submit" className="active-upload-form-save-btn bc-btn">Save</button>
-              <button type="button" className="active-upload-form-cancel-btn bc-btn">Cancel</button>
+              <button onClick={this.props.handleCancel} type="button" className="active-upload-form-cancel-btn bc-btn">Cancel</button>
             </div>
 
           </form>
