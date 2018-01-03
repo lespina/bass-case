@@ -10,7 +10,7 @@ class SongForm extends React.Component {
       title: "",
       image: null,
       audio: null,
-      imageUrl: ""
+      imageUrl: null
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -52,6 +52,15 @@ class SongForm extends React.Component {
     this.props.createSong(formData);
   }
 
+  imagePreview() {
+    const { imageUrl } = this.state;
+    return (
+      (imageUrl === null) ?
+      "" :
+      <img src={imageUrl} />
+    );
+  }
+
   render() {
     const { title, imageUrl } = this.state;
 
@@ -66,7 +75,7 @@ class SongForm extends React.Component {
         <label htmlFor="song-form-file">File</label>
         <input onChange={this.updateFile("audio")} id="song-form-file" type="file"/>
         <button>Upload!</button>
-        <img src={imageUrl} />
+        {this.imagePreview()}
       </form>
     );
   }

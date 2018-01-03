@@ -3,7 +3,7 @@ import { AuthRoute, ProtectedRoute } from '../util/route_util';
 import GreetingContainer from './greeting/greeting_container';
 import SessionFormContainer from './session_form/session_form_container';
 import Landing from './landing_page/landing';
-import SongFormContainer from './song/song_form_container';
+import Upload from './upload/upload';
 // import SongIndexContainer from './song/song_index_container';
 
 class App extends React.Component {
@@ -29,7 +29,7 @@ class App extends React.Component {
         <AuthRoute path="/login" component={SessionFormContainer} toggleModalOpen={this.toggleModalOpen}/>
         <AuthRoute path="/signup" component={SessionFormContainer} toggleModalOpen={this.toggleModalOpen} />
 
-        <ProtectedRoute path="/upload" component={SongFormContainer}/>
+        <ProtectedRoute path="/upload" component={Upload}/>
 
         {/* TODO: Delete this later.  It is solely for filling the page to be able to scroll at the moment. */}
         <div className="full-width-container">
