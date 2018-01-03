@@ -9,8 +9,8 @@ class SongFormItem extends React.Component {
       title: "",
       image: null,
       imageUrl: DEFAULT_IMAGE_URL,
+      isSaving: false,
     };
-
     this.updateImage = this.updateImage.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -41,20 +41,33 @@ class SongFormItem extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
+
+    this.setState({ isSaving: true });
     const formData = new FormData();
     formData.append("song[title]", this.state.title);
     formData.append("song[image]", this.state.image);
     formData.append("song[audio]", this.props.audio);
 
-    this.props.createSong(formData);
+    this.props.createSong(formData).then((song) => {
+      this.props.handleCancel();
+      this.setState({ isSaving: false });
+      return song;
+    }, errors => {
+      console.log(errors);
+      this.setState({ isSaving: false });
+    });
   }
 
   render() {
-    const { title, imageUrl } = this.state;
+    const { isSaving, title, imageUrl } = this.state;
     const { audio } = this.props;
+    const disabled = ((isSaving) ? { disabled: "disabled" } : {});
 
     return (
       <li className="active-uploads-item">
+
+        <div className={(isSaving) ? "loading" : ""} style={{color: "transparent"}}>Loading&#8230;</div>
+
         <section className="active-upload editing">
           <div className="edit-status-text">Ready. Click Save to post this track.</div>
           <form onSubmit={this.handleSubmit} className="active-upload-form">
@@ -62,7 +75,7 @@ class SongFormItem extends React.Component {
               <div className="edit-fields">
                 <div className="title-field">
                   <label htmlFor="song-form-title">Title</label>
-                  <input onChange={this.handleChange('title')} id="song-form-title" className="input-title" type="text" value={title}></input>
+                  <input onChange={this.handleChange('title')} id="song-form-title" className="input-title" type="text" value={title} {...disabled}></input>
                 </div>
 
                 <div className="upload-file-name">
@@ -73,7 +86,7 @@ class SongFormItem extends React.Component {
                   <div className="image-button">
                     <div className="image-chooser">
                       <label className="image-chooser-btn bc-btn" htmlFor="image-chooser-input">Update image</label>
-                      <input id="image-chooser-input" onChange={this.updateImage} type="file"/>
+                      <input id="image-chooser-input" onChange={this.updateImage} type="file" {...disabled}/>
                     </div>
                   </div>
 

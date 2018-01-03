@@ -1,12 +1,7 @@
 import SongForm from './song_form';
 import { connect } from 'react-redux';
 import { createSong } from '../../actions/song_actions';
-
-// const mapStateToProps = (state) => {
-//   return {
-//     currentUser: state.session.currentUser
-//   };
-// };
+import { withRouter } from 'react-router-dom';
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -14,7 +9,9 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(SongForm);
+export default withRouter(
+  connect(
+    null,
+    mapDispatchToProps
+  )(SongForm)
+);

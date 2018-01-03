@@ -13,6 +13,7 @@
  *= require 'styles'
  *= require 'reset'
  *= require 'app'
+ *= require 'loading'
  *= require 'session_form'
  *= require 'landing/trending_songs'
  *= require 'upload'

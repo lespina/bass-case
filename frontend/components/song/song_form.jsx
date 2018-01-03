@@ -42,10 +42,13 @@ class SongForm extends React.Component {
   }
 
   handleCancel(idx) {
-    return () => {
+    return (e) => {
       const updatedAudioFiles = this.state.audioFiles.slice(0);
       updatedAudioFiles.splice(idx, 1);
       this.setState({ audioFiles: updatedAudioFiles });
+      if (updatedAudioFiles.length === 0 && e.target.innerText === "Save") {
+        this.props.history.push('/');
+      }
     };
   }
 
@@ -58,7 +61,11 @@ class SongForm extends React.Component {
         <ul className="active-uploads">
           {
             this.state.audioFiles.reverse().map((audio, idx) => {
-              return <SongFormItem key={idx} audio={audio[0]} createSong={this.props.createSong} handleCancel={this.handleCancel(numFiles - idx)}/>;
+              return <SongFormItem
+                key={idx} audio={audio[0]}
+                createSong={this.props.createSong}
+                handleCancel={this.handleCancel(numFiles - 1 - idx)}
+              />;
             }, this)
           }
         </ul>
