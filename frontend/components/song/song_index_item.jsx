@@ -26,7 +26,7 @@ const SongIndexItem = ({ song }) => {
       </div>
       <Sound
         url={audioUrl}
-        playStatus={(id === 10) ? Sound.status.PLAYING : ""}
+        playStatus={(id === 15) ? Sound.status.PLAYING : ""}
       ></Sound>
     </li>
   );

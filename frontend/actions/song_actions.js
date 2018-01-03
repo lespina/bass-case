@@ -26,3 +26,13 @@ export const fetchSong = () => (dispatch) => {
     return song;
   });
 };
+
+export const createSong = (song) => (dispatch) => {
+  return SongApiUtil.createSong(song).then(song => {
+    dispatch(receiveSong(song));
+    return song;
+  }, errors => {
+    console.log(errors.responseJSON);
+    return errors;
+  });
+};
