@@ -1,0 +1,23 @@
+export const fetchSongs = () => {
+  return $.ajax({
+    url: `api/songs`,
+    method: 'get',
+  });
+};
+
+export const fetchSong = (songId) => {
+  return $.ajax({
+    url: `api/song/${songId}`,
+    method: 'get',
+  });
+};
+
+export const createSong = (formData) => {
+  return $.ajax({
+    url: `api/songs`,
+    method: 'post',
+    contentType: false,
+    processData: false,
+    data: formData,
+  });
+};
