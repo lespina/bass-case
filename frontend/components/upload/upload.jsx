@@ -4,7 +4,7 @@ import SongFormContainer from '../song/song_form_container';
 const Upload = (props) => {
   return (
     <div>
-      <SongFormContainer/>
+      <SongFormContainer />
     </div>
   );
 };

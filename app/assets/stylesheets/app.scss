@@ -7,7 +7,7 @@ body {
 .full-width {
   display: block;
   background-color: white;
-  height: 100vh;
+  min-height: 100vh;
   padding: 0 30px;
   width: 1180px;
   margin: 0 auto;
@@ -79,6 +79,30 @@ body {
 
 .orange-input {
   border-color: #f50 !important;
+}
+
+.bc-btn {
+  display: inline-block;
+  position: relative;
+  height: 26px;
+  margin: 0;
+  padding: 2px 11px 2px 10px;
+  border: 1px solid #e5e5e5;
+  border-radius: 3px;
+  background-color: #fff;
+  cursor: pointer;
+  color: #333;
+  font-size: 14px;
+  line-height: 20px;
+  white-space: nowrap;
+  text-align: center;
+  vertical-align: baseline;
+  box-sizing: border-box;
+  font-weight: 300;
+}
+
+.orange {
+  color: orange;
 }
 
 .full-width-container {

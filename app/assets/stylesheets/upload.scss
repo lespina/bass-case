@@ -1,0 +1,223 @@
+.upload {
+  margin: -30px auto 0;
+  padding: 30px 0;
+  width: 800px;
+}
+
+.upload-background {
+  width: 800px;
+  height: 90px;
+  transition: height .1s ease-in-out;
+}
+
+.upload.has-active-uploads .upload-background {
+  height: 18px;
+}
+
+.upload-chooser-container {
+  position: relative;
+  margin: 0 0 5px 0;
+  border-radius: 2px;
+  background-color: #fff;
+  text-align: center;
+  border: 1px solid #f2f2f2;
+}
+
+.upload.has-active-uploads .upload-chooser-container {
+  box-shadow: none;
+  border-color: transparent;
+}
+
+.upload-title {
+  padding: 36px 0 0;
+  font-size: 24px;
+  line-height: 1;
+  margin: 18px 0 0;
+  font-weight: 500;
+}
+
+.upload-chooser {
+  margin: 90px 0 210px;
+  transition: margin .3s cubic-bezier(.175,.885,.32,1.275);
+}
+
+.upload.has-active-uploads .upload-chooser{
+  margin: 35px 0 0;
+}
+
+#audio-upload {
+  display: none;
+}
+
+.choose-file-btn {
+  background-color: #f50;
+  border-color: #f50;
+  color: #fff;
+}
+
+/* ---------------- */
+
+.active-uploads-item {
+  position: relative;
+  margin: 30px 0 0 0;
+}
+
+.active-upload {
+  position: relative;
+}
+
+.edit-status-text {
+  color: #666;
+  font: 12px/1.4 "Lucida Grande";
+  padding-bottom: 4px;
+  min-height: 15px;
+  transition: min-height .3s cubic-bezier(.28,.42,.18,1);
+}
+
+.active-upload-form {
+  background-color: #fff;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  padding: 25px;
+  box-shadow: 0 2px 12px -5px rgba(0,0,0,.1);
+  overflow: hidden;
+  border: 1px solid #f2f2f2;
+  position: relative;
+}
+
+.active-upload.editing .active-upload-form {
+  padding: 14px 25px 0;
+}
+
+.active-upload-form-edit {
+  margin-top: 25px;
+  position: relative;
+  min-height: 305px;
+}
+
+.edit-fields {
+  position: relative;
+  padding-left: 278px;
+}
+
+.title-field {
+  margin: 3px 0 10px;
+  position: relative;
+}
+
+.title-field label, .required-text {
+  display: inline-block;
+  margin-bottom: 6px;
+  font-family: "Lucida Grande";
+  font-size: 12px;
+}
+
+.title-field label:after {
+  content: '*';
+  color: #f50;
+  display: inline-block;
+  margin-left: 2px;
+}
+
+.title-field input[type="text"] {
+  box-sizing: border-box;
+  width: 100%;
+  display: inline-block;
+  font-size: 14px;
+  line-height: 20px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  transition: border-color .1s;
+  font-weight: 300;
+}
+
+.title-field input[type="text"]:focus {
+  outline: 0;
+  border-color: #999;
+}
+
+.image-preview {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 260px;
+  width: 260px;
+  text-align: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.image-button {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 20%;
+  transition: opacity .1s linear;
+  overflow: hidden;
+}
+
+.image-chooser {
+  position: relative;
+  height: 100%;
+  cursor: pointer;
+}
+
+.image-chooser-btn {
+  position: relative;
+  background-color: rgba(255,255,255,.8);
+  border-color: rgba(0,0,0,.1);
+  background-clip: padding-box;
+  transition: background-color .2s ease-in-out,border-color .2s ease-in-out;
+  text-indent: 19px;
+}
+
+.image-chooser-btn:before {
+  content: "";
+  display: block;
+  position: absolute;
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 20px;
+  height: 20px;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+  left: 5px;
+  background-size: 14px;
+  background-image: image-url('camera-icon.svg');
+}
+
+.image-chooser-btn:hover {
+  background-color: rgba(255,255,255,1);
+  border-color: rgba(0,0,0,.3);
+}
+
+#image-chooser-input {
+  display: none;
+}
+
+.active-upload-form-buttons {
+  margin: 20px -25px 0;
+  padding: 20px 25px;
+  border-top: 1px solid #f2f2f2;
+}
+
+.active-upload-form-save-btn {
+  float: right;
+  margin-right: 0;
+  background-color: #f50;
+  border-color: #f50;
+  color: #fff;
+}
+
+.active-upload-form-cancel-btn {
+  margin-right: 0;
+  float: right;
+  border: 0;
+  background: 0 0;
+  transition: none;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}

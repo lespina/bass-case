@@ -31,6 +31,7 @@ input[type="password"],
 input[type="email"],
 input[type="text"],
 input[type="submit"],
+input[type="file"],
 textarea,
 button {
   /*
@@ -40,7 +41,6 @@ button {
   -webkit-appearance: none;
   -moz-appearance: none;
 }
-
 button,
 input[type="submit"] {
   cursor: pointer;

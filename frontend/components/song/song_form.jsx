@@ -1,5 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
+import SongFormItem from './song_form_item';
 // const jsmediatags = require("../../../jsmediatags.min.js");
 
 class SongForm extends React.Component {
@@ -7,31 +8,18 @@ class SongForm extends React.Component {
     super(props);
 
     this.state = {
-      title: "",
-      image: null,
-      audio: null,
+      audioFiles: [],
       imageUrl: null
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.addAudio = this.addAudio.bind(this);
   }
 
-  updateFile(attrName) {
-    return (e) => {
-      e.preventDefault();
-      const file = e.currentTarget.files[0];
-      let fileReader;
-      if (file.type.slice(0, 5) === "image") {
-        fileReader = new FileReader();
-        fileReader.onloadend = () => {
-          this.setState({ imageUrl: fileReader.result });
-        };
-
-        fileReader.readAsDataURL(file);
-      }
-
-      this.setState({ [attrName]: file });
-    };
+  addAudio(e) {
+    e.preventDefault();
+    const file = e.currentTarget.files;
+    this.setState({ audioFiles: this.state.audioFiles.concat(file)});
   }
 
   handleChange(attrName) {
@@ -52,31 +40,40 @@ class SongForm extends React.Component {
     this.props.createSong(formData);
   }
 
-  imagePreview() {
-    const { imageUrl } = this.state;
-    return (
-      (imageUrl === null) ?
-      "" :
-      <img src={imageUrl} />
-    );
+  activeUploads() {
+    const { createSong } = this.props.createSong;
+    if (this.state.audioFiles.length > 0) {
+      return (
+        <ul className="active-uploads">
+          {
+            this.state.audioFiles.slice(0).map((audio, idx) => {
+              return <SongFormItem key={idx} audio={audio[0]} createSong={this.props.createSong}/>;
+            }, this)
+          }
+        </ul>
+      );
+    } else {
+      return <div></div>;
+    }
   }
 
   render() {
-    const { title, imageUrl } = this.state;
-
+    const { audioFiles, title, imageUrl } = this.state;
+    const hasUploads = (audioFiles.length > 0);
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label htmlFor="song-form-title">Title</label>
-        <input onChange={this.handleChange('title')} id="song-form-title" type="text" value={title}/>
-
-        <label htmlFor="song-form-image">Image</label>
-        <input onChange={this.updateFile("image")} id="song-form-image" type="file"/>
-
-        <label htmlFor="song-form-file">File</label>
-        <input onChange={this.updateFile("audio")} id="song-form-file" type="file"/>
-        <button>Upload!</button>
-        {this.imagePreview()}
-      </form>
+      <section className={`upload ${(hasUploads) ? "has-active-uploads" : ""}`}>
+        <div className="upload-background"></div>
+        <section className="upload-chooser-container">
+          <h1 className="upload-title">Upload to BassCase</h1>
+          <div className="upload-chooser">
+            <form>
+              <label className="choose-file-btn bc-btn" htmlFor="audio-upload">Choose a file to upload</label>
+              <input id="audio-upload" onChange={this.addAudio} type="file"></input>
+            </form>
+          </div>
+        </section>
+        {this.activeUploads()}
+      </section>
     );
   }
 }

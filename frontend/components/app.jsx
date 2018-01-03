@@ -32,9 +32,9 @@ class App extends React.Component {
         <ProtectedRoute path="/upload" component={Upload}/>
 
         {/* TODO: Delete this later.  It is solely for filling the page to be able to scroll at the moment. */}
-        <div className="full-width-container">
+        {/* <div className="full-width-container">
           <div className="allow-scroll"></div>
-        </div>
+        </div> */}
       </div>
     );
   }
