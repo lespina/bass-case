@@ -80,3 +80,14 @@ body {
 .orange-input {
   border-color: #f50 !important;
 }
+
+.full-width-container {
+  margin-left: -30px;
+  margin-right: -30px;
+}
+
+.allow-scroll {
+  display: block;
+  height: 800px;
+  background-color: white;
+}

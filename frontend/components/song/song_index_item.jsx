@@ -2,7 +2,7 @@ import React from 'react';
 import Sound from 'react-sound'
 
 const SongIndexItem = ({ song }) => {
-  const { title, artist, imageUrl, audioUrl } = song;
+  const { id, title, artist, imageUrl, audioUrl } = song;
 
   return (
     <li className="song-index-item">
@@ -26,7 +26,7 @@ const SongIndexItem = ({ song }) => {
       </div>
       <Sound
         url={audioUrl}
-        playStatus={Sound.status.PLAYING}
+        playStatus={(id === 10) ? Sound.status.PLAYING : ""}
       ></Sound>
     </li>
   );

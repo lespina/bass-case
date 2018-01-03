@@ -27,6 +27,11 @@ class App extends React.Component {
         <GreetingContainer />
         <AuthRoute path="/login" component={SessionFormContainer} toggleModalOpen={this.toggleModalOpen}/>
         <AuthRoute path="/signup" component={SessionFormContainer} toggleModalOpen={this.toggleModalOpen} />
+
+        {/* TODO: Delete this later.  It is solely for filling the page to be able to scroll at the moment. */}
+        <div class="full-width-container">
+          <div class="allow-scroll"></div>
+        </div>
       </div>
     );
   }
