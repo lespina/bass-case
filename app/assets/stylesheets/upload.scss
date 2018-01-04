@@ -182,7 +182,6 @@
 .image-chooser {
   position: relative;
   height: 100%;
-  cursor: pointer;
 }
 
 .image-chooser-btn {
@@ -215,7 +214,7 @@
   border-color: rgba(0,0,0,.3);
 }
 
-#image-chooser-input {
+[id^="image-chooser-input-"] {
   display: none;
 }
 
