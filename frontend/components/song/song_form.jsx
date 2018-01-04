@@ -20,7 +20,9 @@ class SongForm extends React.Component {
   addAudio(e) {
     e.preventDefault();
     const file = e.currentTarget.files;
-    this.setState({ audioFiles: this.state.audioFiles.concat(file)});
+    if (file.length > 0) {
+      this.setState({ audioFiles: this.state.audioFiles.concat(file)});
+    }
   }
 
   handleChange(attrName) {
@@ -46,7 +48,7 @@ class SongForm extends React.Component {
       const updatedAudioFiles = this.state.audioFiles.slice(0);
       updatedAudioFiles.splice(idx, 1);
       this.setState({ audioFiles: updatedAudioFiles });
-      if (updatedAudioFiles.length === 0 && e.target.innerText === "Save") {
+      if (updatedAudioFiles.length === 0 && !e) {
         this.props.history.push('/');
       }
     };
