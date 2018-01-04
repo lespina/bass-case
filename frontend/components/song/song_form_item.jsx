@@ -1,4 +1,4 @@
-const DEFAULT_IMAGE_URL = "https://s3.amazonaws.com/basscase-dev/default-track-image.png";
+export const DEFAULT_IMAGE_URL = "https://s3.amazonaws.com/basscase-dev/default-track-image.png";
 
 import React from 'react';
 
@@ -43,10 +43,14 @@ class SongFormItem extends React.Component {
     e.preventDefault();
 
     this.setState({ isSaving: true });
+
     const formData = new FormData();
     formData.append("song[title]", this.state.title);
-    formData.append("song[image]", this.state.image);
     formData.append("song[audio]", this.props.audio);
+
+    if (this.state.image) {
+      formData.append("song[image]", this.state.image);
+    }
 
     this.props.createSong(formData).then((song) => {
       this.props.handleCancel();
@@ -66,11 +70,12 @@ class SongFormItem extends React.Component {
     return (
       <li className="active-uploads-item">
 
-        <div className={(isSaving) ? "loading" : ""} style={{color: "transparent"}}>Loading&#8230;</div>
-
         <section className="active-upload editing">
           <div className="edit-status-text">Ready. Click Save to post this track.</div>
           <form onSubmit={this.handleSubmit} className="active-upload-form">
+
+            <div className={(isSaving) ? "loading loading-bg" : "loading-bg"} style={{color: "transparent"}}>Loading&#8230;</div>
+
             <div className="active-upload-form-edit">
               <div className="edit-fields">
                 <div className="title-field">

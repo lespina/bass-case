@@ -17,12 +17,15 @@
 #  audio_updated_at   :datetime
 #
 
+
 class Song < ApplicationRecord
+  DEFAULT_IMAGE_URL = "https://s3.amazonaws.com/basscase-dev/default-track-image.png"
+  
   validates :title, presence: true
 
   belongs_to :user
-  # styles: { medium: "#300x300", thumb: "100x100>" }
-  has_attached_file :image, styles: { medium: "500x500>" }, default_url: "null-image"
+
+  has_attached_file :image, styles: { medium: "500x500>" }, default_url: DEFAULT_IMAGE_URL
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\z/
 
   has_attached_file :audio

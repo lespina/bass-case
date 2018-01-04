@@ -1,6 +1,6 @@
 /* Absolute Center Spinner */
 .loading {
-  position: fixed;
+  position: absolute;
   z-index: 999;
   height: 2em;
   width: 2em;
@@ -13,15 +13,23 @@
 }
 
 /* Transparent Overlay */
-.loading:before {
+.loading-bg:before {
   content: '';
   display: block;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  top: -223px;
+  left: -400px;
+  width: 800px;
+  height: 446px;
+  transition: opacity 700ms ease-in;
   background-color: rgba(0,0,0,0.3);
+  opacity: 0;
+  z-index: -1;
+}
+
+.loading:before {
+  z-index: 1;
+  opacity: 1;
 }
 
 /* :not(:required) hides these rules from IE9 and below */
