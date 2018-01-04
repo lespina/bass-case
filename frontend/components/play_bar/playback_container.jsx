@@ -24,6 +24,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    next: () => dispatch(next()),
     seekTo: (position) => dispatch(seekTo(position)),
     receivePosition: (duration) => dispatch(receivePosition(duration)),
     receiveDuration: (duration) => dispatch(receiveDuration(duration)),

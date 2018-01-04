@@ -50,6 +50,10 @@ class Playback extends React.Component {
     console.log(errorCode, description);
   }
 
+  onFinishedPlaying() {
+    this.props.next();
+  }
+
   render() {
     const { songs, playback } = this.props;
     const {

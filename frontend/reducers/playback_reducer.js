@@ -26,7 +26,7 @@ const initialState = {
   shuffle: false,
   loop: null,
   position: 0,
-  playing: true,
+  playing: false,
   volume: 50,
   lastAction: null,
 };
@@ -130,6 +130,7 @@ const playbackReducer = (state = initialState, action) => {
       newState.unshuffled = newState.songQueue.slice(0);
       newState.position = 0;
       newState.lastAction = action.type;
+      newState.playing = true;
       return newState;
     default:
       return state;

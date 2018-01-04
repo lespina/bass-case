@@ -103,7 +103,7 @@ class PlayBar extends React.Component {
       return <div></div>;
     }
 
-    const pauseStatus = ((playing) ? "" : "playbar-pause");
+    const buttonStatus = ((playing) ? "playbar-pause" : "");
     const shuffleStatus = ((shuffle) ? "shuffle-toggle" : "");
     let loopStatus;
     switch (loop) {
@@ -129,7 +129,7 @@ class PlayBar extends React.Component {
               <div onClick={this.handleSimpleAction('previous')} className="playbar-prev controls">
 
               </div>
-              <div onClick={this.handleSimpleAction('togglePlayback')} className={`playbar-play controls ${pauseStatus}`}>
+              <div onClick={this.handleSimpleAction('togglePlayback')} className={`playbar-play controls ${buttonStatus}`}>
 
               </div>
               <div onClick={this.handleSimpleAction('next')} className="playbar-next controls">
