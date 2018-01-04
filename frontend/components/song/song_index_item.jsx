@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SongIndexItem = ({ idx, song }) => {
+const SongIndexItem = ({ handleTogglePlayback, idx, song }) => {
   const { title, artist, imageUrl, audioUrl } = song;
 
   return (
@@ -9,7 +9,7 @@ const SongIndexItem = ({ idx, song }) => {
         <div className="playable-tile">
           <div className="playable-tile-artwork" style={{"backgroundImage": `url(${imageUrl})`}}>
             <div className="play-button">
-              <a href="#">Play</a>
+              <a onClick={handleTogglePlayback} href="#">Play</a>
             </div>
           </div>
 

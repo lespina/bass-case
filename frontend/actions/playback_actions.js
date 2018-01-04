@@ -60,9 +60,9 @@ export const receivePlaybackSongs = (songs) => ({
   songs
 });
 
-export const receivePlaybackSong = (song) => ({
+export const receivePlaybackSong = (songId) => ({
   type: RECEIVE_PLAYBACK_SONG,
-  song
+  songId
 });
 
 export const fetchPlaybackSongs = (songIds) => (dispatch) => {
@@ -72,9 +72,9 @@ export const fetchPlaybackSongs = (songIds) => (dispatch) => {
   });
 };
 
-export const fetchPlaybackSong = (songId) => (dispatch) => {
-  return PlaybackApiUtil.fetchPlaybackSong(songId).then(song => {
-    dispatch(receivePlaybackSong(song));
-    return song;
-  });
-};
+// export const fetchPlaybackSong = (songId) => (dispatch) => {
+//   return PlaybackApiUtil.fetchPlaybackSong(songId).then(song => {
+//     dispatch(receivePlaybackSong(song));
+//     return song;
+//   });
+// };
