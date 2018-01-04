@@ -1,6 +1,13 @@
+require "rubygems"
+require "mp3info"
+
 class Api::SongsController < ApplicationController
   def index
-    @songs = Song.includes(:user).all.order(created_at: :desc)
+    if (params[:songIds])
+      @songs = Song.includes(:user).where(id: params[:songIds])
+    else
+      @songs = Song.includes(:user).all.order(created_at: :desc)
+    end
   end
 
   def create

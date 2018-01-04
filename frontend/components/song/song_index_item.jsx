@@ -1,5 +1,4 @@
 import React from 'react';
-import Sound from 'react-sound'
 
 const SongIndexItem = ({ idx, song }) => {
   const { title, artist, imageUrl, audioUrl } = song;
@@ -24,10 +23,6 @@ const SongIndexItem = ({ idx, song }) => {
           </div>
         </div>
       </div>
-      <Sound
-        url={audioUrl}
-        playStatus={(idx === 0) ? Sound.status.PLAYING : ""}
-      ></Sound>
     </li>
   );
 };

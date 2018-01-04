@@ -36,4 +36,7 @@ import * as SongApiUtil from './util/song_api_util';
 import * as SongActions from './actions/song_actions';
 window.SongApiUtil = SongApiUtil;
 window.SongActions = SongActions;
+
+import * as PlaybackActions from './actions/playback_actions';
+window.PlaybackActions = PlaybackActions;
 // TESTING END
