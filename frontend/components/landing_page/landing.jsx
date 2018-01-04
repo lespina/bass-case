@@ -6,8 +6,8 @@ const Landing = (props) => {
   return (
     <div>
       <HeroImage />
-      <section class="trending-songs">
-        <div class="trending-songs-title">
+      <section className="trending-songs">
+        <div className="trending-songs-title">
           Hear what’s trending for free in the BassCase community
         </div>
         <SongIndexContainer />

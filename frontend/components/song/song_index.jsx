@@ -1,5 +1,6 @@
 import React from 'react';
 import SongIndexItem from './song_index_item';
+import shuffle from 'shuffle-array';
 
 class SongIndex extends React.Component {
   constructor(props) {
@@ -12,11 +13,11 @@ class SongIndex extends React.Component {
 
   render() {
     return (
-      <div class="song-index-container">
-        <ul>
+      <div className="song-index-container">
+        <ul className="song-index">
           {
-            this.props.songs.map(song => {
-              return <SongIndexItem key={song.id} song={song}/>;
+            shuffle(this.props.songs, { copy: true }).slice(0, 12).map((song, idx) => {
+              return <SongIndexItem key={song.id} song={song} idx={idx}/>;
             })
           }
         </ul>
