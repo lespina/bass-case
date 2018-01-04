@@ -96,14 +96,15 @@ class PlayBar extends React.Component {
   render() {
     const { start, time } = this.state;
     const { songs, playback } = this.props;
-    const { duration, position, shuffle, loop } = playback;
+    const { playing, duration, position, shuffle, loop } = playback;
     const song = songs[playback.songQueue[playback.songIdx]];
 
     if (!song) {
       return <div></div>;
     }
 
-    const shuffleStatus = ((shuffle) ? "shuffle-toggled" : "");
+    const pauseStatus = ((playing) ? "" : "playbar-pause");
+    const shuffleStatus = ((shuffle) ? "shuffle-toggle" : "");
     let loopStatus;
     switch (loop) {
       case null:
@@ -128,7 +129,7 @@ class PlayBar extends React.Component {
               <div onClick={this.handleSimpleAction('previous')} className="playbar-prev controls">
 
               </div>
-              <div onClick={this.handleSimpleAction('togglePlayback')} className="playbar-play controls">
+              <div onClick={this.handleSimpleAction('togglePlayback')} className={`playbar-play controls ${pauseStatus}`}>
 
               </div>
               <div onClick={this.handleSimpleAction('next')} className="playbar-next controls">

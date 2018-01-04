@@ -48,6 +48,7 @@ const playbackReducer = (state = initialState, action) => {
       }
       newState.position = 0;
       newState.lastAction = action.type;
+      newState.playing = true;
       return newState;
     case NEXT:
       newState = _.merge({}, state);
@@ -68,6 +69,7 @@ const playbackReducer = (state = initialState, action) => {
       newState.position = 0;
       newState.unshuffled = newState.songQueue;
       newState.lastAction = action.type;
+      newState.playing = true;
       return newState;
     case TOGGLE_PLAYBACK:
       newState = _.merge({}, state);
