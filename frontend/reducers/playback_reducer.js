@@ -2,6 +2,7 @@ import _ from 'lodash';
 import shuffle from 'shuffle-array';
 
 import {
+  RECEIVE_POSITION,
   RECEIVE_DURATION,
   PREVIOUS,
   TOGGLE_PLAYBACK,
@@ -42,11 +43,10 @@ const playbackReducer = (state = initialState, action) => {
       return newState;
     case PREVIOUS:
       newState = _.merge({}, state);
-      if (newState.songIdx !== 0 && newState.position > 1000) {
+      if (newState.songIdx !== 0 && newState.position < 1000) {
         newState.songIdx -= 1;
-      } else {
-        newState.position = 0;
       }
+      newState.position = 0;
       newState.lastAction = action.type;
       return newState;
     case NEXT:
@@ -103,6 +103,7 @@ const playbackReducer = (state = initialState, action) => {
       }
       newState.lastAction = action.type;
       return newState;
+    case RECEIVE_POSITION:
     case SEEK:
       newState = _.merge({}, state);
       newState.position = action.position;

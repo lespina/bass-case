@@ -15,14 +15,14 @@ const songsReducer = (state = initialState, action) => {
       newState = _.merge({}, state);
       newState[action.song.id] = action.song;
       return newState;
-    case RECEIVE_PLAYBACK_SONGS:
-      newState = _.merge({}, state);
-      newState = action.songs;
-      return newState;
-    case RECEIVE_PLAYBACK_SONG:
-      newState = _.merge({}, state);
-      newState[action.song.id] = action.song;
-      return newState;
+    // case RECEIVE_PLAYBACK_SONGS:
+    //   newState = _.merge({}, state);
+    //   newState = action.songs;
+    //   return newState;
+    // case RECEIVE_PLAYBACK_SONG:
+    //   newState = _.merge({}, state);
+    //   newState[action.song.id] = action.song;
+    //   return newState;
     default:
       return state;
   }

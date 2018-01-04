@@ -7,6 +7,13 @@ class SongIndex extends React.Component {
     super(props);
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    if (Object.keys(nextProps.songs).join('') === Object.keys(this.props.songs).join('')) {
+      return false;
+    }
+    return true;
+  }
+
   componentDidMount() {
     this.props.fetchSongs();
   }

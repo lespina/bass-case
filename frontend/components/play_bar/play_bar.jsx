@@ -1,41 +1,6 @@
-import {
-  RECEIVE_DURATION,
-  TOGGLE_SHUFFLE,
-  TOGGLE_LOOP,
-  RECEIVE_VOLUME
-} from '../../actions/playback_actions';
-
 import React from 'react';
-import Sound from 'react-sound';
 
 class PlayBar extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.playing = false;
-    this.position = 0;
-  }
-
-  componentDidMount() {
-    this.props.fetchPlaybackSongs();
-  }
-
-  shouldComponentUpdate(nextProps) {
-    const { lastAction } = nextProps.playback;
-    switch (lastAction) {
-      case RECEIVE_DURATION:
-        return false;
-      case TOGGLE_SHUFFLE:
-        return false;
-      case TOGGLE_LOOP:
-        return false;
-      case RECEIVE_VOLUME:
-        this.props.seekTo(this.position + 350);
-        return false;
-      default:
-        return true;
-    }
-  }
 
   handleSimpleAction(name) {
     return (e) => {
@@ -44,74 +9,78 @@ class PlayBar extends React.Component {
     };
   }
 
-  onLoading({ duration }) {
-    if (duration !== undefined && this.props.playback.duration === null) {
-      this.props.receiveDuration(duration);
-    }
-  }
-
-  // seekToNormalized(normalizedPosition) {
-  //   const { duration, seekTo } = this.props;
-  //   seekTo(normalizedPosition * duration / 100);
-  // }
-
-  onResume({ position }) {
-    this.position = position;
-    this.playing = true;
-    console.log("I'm resuming!");
-  }
-
-  onPlaying({ position }) {
-    this.position = position;
-    this.playing = true;
-  }
-
-  onPause({ position }) {
-    this.position = position;
-    this.playing = false;
-    console.log("I'm paused!");
-  }
-
-  onError({ errorCode, description }) {
-    console.log(errorCode, description);
-    this.setState(this.state);
-  }
-
   render() {
     const { songs, playback } = this.props;
-    const {
-      songQueue,
-      songIdx,
-      shuffle,
-      loop,
-      position,
-      playing,
-      volume,
-    } = playback;
+    const song = songs[playback.songQueue[playback.songIdx]];
 
-    const song = songs[playback.songQueue[songIdx]];
-
-    if (song) {
-      const soundProps = {
-        url: song.audioUrl,
-        playStatus: ((playing) ? Sound.status.PLAYING : Sound.status.PAUSED),
-        playFromPosition: position || 0,
-        volume: volume,
-        autoLoad: true,
-        onPause: this.onPause.bind(this),
-        onPlaying: this.onPlaying.bind(this),
-        onResume: this.onResume.bind(this),
-        onLoading: this.onLoading.bind(this),
-      };
-
-      return (
-        <div>
-          <Sound {...soundProps} />
-        </div>
-      );
-    } else {
+    if (!song) {
       return <div></div>;
     }
+
+    return (
+      <div>
+        <div className="playbar-bg">Playbar Background</div>
+        <div className="full-width-container">
+          <section className="playbar">
+            <section className="playbar-control-buttons">
+              <div onClick={this.handleSimpleAction('previous')} className="playbar-prev controls">
+
+              </div>
+              <div onClick={this.handleSimpleAction('togglePlayback')} className="playbar-play controls">
+
+              </div>
+              <div onClick={this.handleSimpleAction('next')} className="playbar-next controls">
+
+              </div>
+              <div onClick={this.handleSimpleAction('toggleShuffle')} className="playbar-shuffle controls">
+
+              </div>
+              <div onClick={this.handleSimpleAction('toggleLoop')} className="playbar-loop controls">
+
+              </div>
+            </section>
+            <span className="playbar-timeline-time-passed">
+             33:52
+            </span>
+            <section className="playbar-timeline">
+              <div className="progress-background"></div>
+              <div className="progress-bar"></div>
+            </section>
+            <div className="playbar-timeline-time-left">
+              -2:30:00
+            </div>
+            <div className="playbar-volume">
+              <div className="playbar-volume-slider">
+
+              </div>
+            </div>
+            <section className="playbar-song-info">
+              <div className="playbar-image">
+                <a className="playbar-image" href="#" style={{backgroundImage: `image-url(${song.imageUrl})`}}>Artwork</a>
+              </div>
+              <section className="playbar-song-text-container">
+                <a className="playbar-artist truncate" href="#">{song.artist.username}</a>
+                <a className="playbar-title truncate" href="#">{song.title}</a>
+              </section>
+              <div className="playbar-like">
+
+              </div>
+
+              <div className="playback-queue">
+                <svg width="24" height="24" viewBox="0 0 24 24">
+                  <g fill="none" fill-rule="evenodd">
+                    <g fill="#000" fill-rule="nonzero">
+                      <path d="M6 11h12v2H6zM6 7h8v2H6zM6 15h12v2H6zM16 3v6l4-3z"></path>
+                    </g>
+                  </g>
+                </svg>
+              </div>
+
+            </section>
+          </section>
+        </div>
+      </div>
+    );
   }
 }
 

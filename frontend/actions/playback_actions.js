@@ -1,5 +1,6 @@
 import * as PlaybackApiUtil from '../util/playback_api_util';
 
+export const RECEIVE_POSITION = "RECEIVE_POSITION";
 export const RECEIVE_DURATION = "RECEIVE_DURATION";
 
 export const PREVIOUS = "PREVIOUS";
@@ -13,6 +14,11 @@ export const SEEK = "SEEK";
 export const RECEIVE_VOLUME = "RECEIVE_VOLUME";
 export const RECEIVE_PLAYBACK_SONGS = "RECEIVE_PLAYBACK_SONGS";
 export const RECEIVE_PLAYBACK_SONG = "RECEIVE_PLAYBACK_SONG";
+
+export const receivePosition = (position) => ({
+  type: RECEIVE_POSITION,
+  position
+});
 
 export const receiveDuration = (duration) => ({
   type: RECEIVE_DURATION,

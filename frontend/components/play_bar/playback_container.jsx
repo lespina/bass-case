@@ -1,7 +1,8 @@
 import _ from 'lodash';
-import PlayBar from './play_bar';
+import Playback from './playback';
 import { connect } from 'react-redux';
 import {
+  receivePosition,
   receiveDuration,
   previous,
   togglePlayback,
@@ -23,17 +24,15 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    previous: () => dispatch(previous()),
-    togglePlayback: () => dispatch(togglePlayback()),
-    next: () => dispatch(next()),
-    toggleShuffle: () => dispatch(toggleShuffle()),
-    toggleLoop: () => dispatch(toggleLoop()),
     seekTo: (position) => dispatch(seekTo(position)),
-    receiveVolume: (volume) => dispatch(receiveVolume(volume)),
+    receivePosition: (duration) => dispatch(receivePosition(duration)),
+    receiveDuration: (duration) => dispatch(receiveDuration(duration)),
+    fetchPlaybackSongs: (songIds) => dispatch(fetchPlaybackSongs(songIds)),
+    fetchPlaybackSong: (songId) => dispatch(fetchPlaybackSong(songId)),
   };
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PlayBar);
+)(Playback);

@@ -17,6 +17,7 @@
  *= require 'session_form'
  *= require 'landing/trending_songs'
  *= require 'upload'
+ *= require 'playbar'
  *= require_tree .
  *= require_self
  */
