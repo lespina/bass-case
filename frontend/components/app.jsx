@@ -23,9 +23,9 @@ class App extends React.Component {
   render() {
     return (
       <div className={"full-width" + ((this.state.modalOpen) ? " modal-open" : "")}>
-        <AuthRoute exact path="/" component={Landing} />
-
         <GreetingContainer />
+
+        <AuthRoute path="/" component={Landing} />
         <AuthRoute path="/login" component={SessionFormContainer} toggleModalOpen={this.toggleModalOpen}/>
         <AuthRoute path="/signup" component={SessionFormContainer} toggleModalOpen={this.toggleModalOpen} />
 

@@ -2,6 +2,7 @@ import * as SongApiUtil from '../util/song_api_util';
 
 export const RECEIVE_SONGS = "RECEIVE_SONGS";
 export const RECEIVE_SONG = "RECEIVE_SONG";
+export const RECEIVE_SONG_ERRORS = "RECEIVE_SONG_ERRORS";
 
 export const receiveSongs = (songs) => ({
   type: RECEIVE_SONGS,
@@ -11,6 +12,11 @@ export const receiveSongs = (songs) => ({
 export const receiveSong = (song) => ({
   type: RECEIVE_SONG,
   song
+});
+
+export const receiveSongErrors = (errors) => ({
+  type: RECEIVE_SONG_ERRORS,
+  errors
 });
 
 export const fetchSongs = () => (dispatch) => {
@@ -32,7 +38,7 @@ export const createSong = (song) => (dispatch) => {
     dispatch(receiveSong(song));
     return song;
   }, errors => {
-    console.log(errors.responseJSON);
+    dispatch(receiveSongErrors(errors.responseJSON));
     return errors;
   });
 };

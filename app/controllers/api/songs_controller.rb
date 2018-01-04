@@ -8,7 +8,7 @@ class Api::SongsController < ApplicationController
     if @song.save
       render :show
     else
-      render @song.errors.full_messages, status: 422
+      render json: { params[:formIdx] => @song.errors.full_messages }, status: 422
     end
   end
 

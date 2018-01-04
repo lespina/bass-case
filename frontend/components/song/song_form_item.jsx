@@ -47,6 +47,7 @@ class SongFormItem extends React.Component {
     const formData = new FormData();
     formData.append("song[title]", this.state.title);
     formData.append("song[audio]", this.props.audio);
+    formData.append("formIdx", this.props.idx);
 
     if (this.state.image) {
       formData.append("song[image]", this.state.image);
@@ -62,6 +63,24 @@ class SongFormItem extends React.Component {
     });
   }
 
+  errors() {
+    const { errors } = this.props;
+
+    if (errors !== undefined) {
+      return (
+        <ul className="upload-errors">
+          {
+            errors.map((error, idx) => {
+              return <li key={idx}>{error}</li>;
+            })
+          }
+        </ul>
+      );
+    } else {
+      return;
+    }
+  }
+
   render() {
     const { isSaving, title, imageUrl } = this.state;
     const { audio } = this.props;
@@ -72,6 +91,7 @@ class SongFormItem extends React.Component {
 
         <section className="active-upload editing">
           <div className="edit-status-text">Ready. Click Save to post this track.</div>
+          {this.errors()}
           <form onSubmit={this.handleSubmit} className="active-upload-form">
 
             <div className={(isSaving) ? "loading loading-bg" : "loading-bg"} style={{color: "transparent"}}>Loading&#8230;</div>
@@ -82,6 +102,7 @@ class SongFormItem extends React.Component {
                   <label htmlFor="song-form-title">Title</label>
                   <input onChange={this.handleChange('title')} id="song-form-title" className="input-title" type="text" value={title} {...disabled}></input>
                 </div>
+
 
                 <div className="upload-file-name">
                   <span>{audio.name}</span>

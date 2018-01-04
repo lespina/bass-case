@@ -64,10 +64,12 @@ class SongForm extends React.Component {
           {
             this.state.audioFiles.reverse().map((audio, idx) => {
               return <SongFormItem
-                key={idx} 
+                key={idx}
+                idx={idx}
                 audio={audio[0]}
                 createSong={this.props.createSong}
                 handleCancel={this.handleCancel(numFiles - 1 - idx)}
+                errors={this.props.errors[idx]}
               />;
             }, this)
           }
