@@ -14,11 +14,8 @@ import {
 } from '../../actions/playback_actions';
 
 const mapStateToProps = (state) => {
-  const { display, playback } = state.entities.songs;
-  const songs = _.merge(display, playback);
-
   return {
-    songs,
+    songs: state.entities.songs,
     playback: state.ui.playback,
   };
 };

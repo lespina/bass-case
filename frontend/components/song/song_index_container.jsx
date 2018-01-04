@@ -5,7 +5,7 @@ import { fetchSongs } from '../../actions/song_actions';
 
 const mapStateToProps = (state) => {
   return {
-    songs: _.values(state.entities.songs.display),
+    songs: _.values(state.entities.songs),
   };
 };
 

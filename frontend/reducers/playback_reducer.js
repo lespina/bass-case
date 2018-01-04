@@ -17,12 +17,13 @@ const LOOP_ONE = "LOOP_ONE";
 const LOOP_ALL = "LOOP_ALL";
 
 const initialState = {
+  unshuffled: [],
   songQueue: [],
   songIdx: 0,
   shuffle: false,
   loop: null,
   position: 0,
-  playing: false,
+  playing: true,
   volume: 100,
 };
 
@@ -37,10 +38,22 @@ const playbackReducer = (state = initialState, action) => {
       return newState;
     case NEXT:
       newState = _.merge({}, state);
-      if (state.loop) {
-        newState.position = 0;
-      } else if (newState.songIdx !== newState.songQueue.length - 1) {
-        newState.songIdx += 1;
+      switch (state.loop) {
+        case LOOP_ONE:
+          newState.position = 0;
+          break;
+        case LOOP_ALL:
+          if (newState.songIdx === newState.songQueue.length - 1) {
+            newState.songIdx = 0;
+          } else {
+            newState.songIdx += 1;
+          }
+          break;
+        case null:
+          if (newState.songIdx !== newState.songQueue.length - 1) {
+            newState.songIdx += 1;
+          }
+          break;
       }
       return newState;
     case TOGGLE_PLAYBACK:
@@ -50,8 +63,14 @@ const playbackReducer = (state = initialState, action) => {
     case TOGGLE_SHUFFLE:
       newState = _.merge({}, state);
       newState.shuffle = !newState.shuffle;
+      const { songQueue, songIdx } = newState;
       if (newState.shuffle) {
-        shuffle(newState.songQueue);
+        const currentSong = songQueue[songIdx];
+        songQueue.splice(songIdx, 1);
+        newState.songQueue = [currentSong].concat(shuffle(songQueue));
+        newState.songIdx = 0;
+      } else {
+        newState.songQueue = newState.unshuffled;
       }
       return newState;
     case TOGGLE_LOOP:
@@ -79,12 +98,14 @@ const playbackReducer = (state = initialState, action) => {
     case RECEIVE_PLAYBACK_SONGS:
       newState = _.merge({}, state);
       newState.songQueue = Object.keys(action.songs);
+      newState.unshuffled = newState.songQueue.slice(0);
       newState.songIdx = 0;
       newState.position = 0;
       return newState;
     case RECEIVE_PLAYBACK_SONG:
       newState = _.merge({}, state);
       newState.songQueue.splice(songIdx, 0, action.song.id);
+      newState.unshuffled = newState.songQueue.slice(0);
       newState.position = 0;
       return newState;
     default:

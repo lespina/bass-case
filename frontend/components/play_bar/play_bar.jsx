@@ -9,6 +9,11 @@ class PlayBar extends React.Component {
     };
   }
 
+  // componentShouldUpdate(nextProps) {
+  //   //TODO: write this to keep the music from rerendering unnecessarily.
+  //
+  // }
+
   componentDidMount() {
     this.props.fetchPlaybackSongs();
   }
@@ -24,10 +29,10 @@ class PlayBar extends React.Component {
     this.setState({ duration });
   }
 
-  seekToNormalized(normalizedPosition) {
-    const { duration, seekTo } = this.props;
-    seekTo(normalizedPosition * duration / 100);
-  }
+  // seekToNormalized(normalizedPosition) {
+  //   const { duration, seekTo } = this.props;
+  //   seekTo(normalizedPosition * duration / 100);
+  // }
 
   onPause({ position }) {
     this.props.seekTo(position);
@@ -45,22 +50,27 @@ class PlayBar extends React.Component {
       volume,
     } = playback;
 
-    const song = songs[playback.songQueue[0]];
-    const soundProps = {};
+    const song = songs[playback.songQueue[songIdx]];
+
     if (song) {
-      soundProps.url = songs[playback.songQueue[songIdx]].audioUrl;
-      soundProps.playStatus = ((playing) ? Sound.status.PLAYING : Sound.status.PAUSED);
-      soundProps.playFromPosition = position || 0;
-      soundProps.volume = volume;
-      soundProps.autoLoad = true;
-      soundProps.onPause = this.onPause.bind(this);
-      soundProps.onLoading = this.onLoading.bind(this);
+      const soundProps = {
+        url: song.audioUrl,
+        playStatus: ((playing) ? Sound.status.PLAYING : Sound.status.PAUSED),
+        playFromPosition: position || 0,
+        volume: volume,
+        autoLoad: true,
+        onPause: this.onPause.bind(this),
+        onLoading: this.onLoading.bind(this),
+      };
+
+      return (
+        <div>
+          <Sound {...soundProps}/>
+        </div>
+      );
+    } else {
+      return <div></div>;
     }
-    return (
-      <div>
-        <Sound {...soundProps}/>
-      </div>
-    );
   }
 }
 
