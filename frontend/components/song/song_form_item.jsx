@@ -83,7 +83,7 @@ class SongFormItem extends React.Component {
 
   render() {
     const { isSaving, title, imageUrl } = this.state;
-    const { audio } = this.props;
+    const { idx, audio } = this.props;
     const disabled = ((isSaving) ? { disabled: "disabled" } : {});
 
     return (
@@ -99,8 +99,8 @@ class SongFormItem extends React.Component {
             <div className="active-upload-form-edit">
               <div className="edit-fields">
                 <div className="title-field">
-                  <label htmlFor="song-form-title">Title</label>
-                  <input onChange={this.handleChange('title')} id="song-form-title" className="input-title" type="text" value={title} {...disabled}></input>
+                  <label htmlFor={`song-form-title-${idx}`}>Title</label>
+                  <input onChange={this.handleChange('title')} id={`song-form-title-${idx}`} className="input-title" type="text" value={title} {...disabled}></input>
                 </div>
 
 
@@ -111,8 +111,8 @@ class SongFormItem extends React.Component {
                 <div className="image-preview" style={{ backgroundImage: `url(${imageUrl})` }}>
                   <div className="image-button">
                     <div className="image-chooser">
-                      <label className="image-chooser-btn bc-btn" htmlFor="image-chooser-input">Update image</label>
-                      <input id="image-chooser-input" onChange={this.updateImage} type="file" {...disabled}/>
+                      <label className="image-chooser-btn bc-btn" htmlFor={`image-chooser-input-${idx}`}>Update image</label>
+                      <input id={`image-chooser-input-${idx}`} onChange={this.updateImage} type="file" {...disabled}/>
                     </div>
                   </div>
 
