@@ -13,7 +13,6 @@ import Sound from 'react-sound';
 class Playback extends React.Component {
   constructor(props) {
     super(props);
-
     this.position = 0;
   }
 
@@ -29,27 +28,13 @@ class Playback extends React.Component {
       case TOGGLE_SHUFFLE:
       case TOGGLE_LOOP:
         return false;
-      // case RECEIVE_VOLUME:
-      //   this.props.seekTo(this.position + 350);
-      //   return false;
       default:
         return true;
     }
   }
 
   onLoading({ duration }) {
-    if (duration !== undefined && this.props.playback.duration === null) {
-      this.props.receiveDuration(duration);
-    }
-  }
-
-  // seekToNormalized(normalizedPosition) {
-  //   const { duration, seekTo } = this.props;
-  //   seekTo(normalizedPosition * duration / 100);
-  // }
-
-  onResume({ position }) {
-    this.position = position;
+    this.props.receiveDuration(duration);
   }
 
   onPlaying({ position }) {
@@ -58,13 +43,11 @@ class Playback extends React.Component {
   }
 
   onPause({ position }) {
-    this.position = position;
     this.props.seekTo(position);
   }
 
   onError({ errorCode, description }) {
     console.log(errorCode, description);
-    this.setState(this.state);
   }
 
   render() {
@@ -85,18 +68,17 @@ class Playback extends React.Component {
       const soundProps = {
         url: song.audioUrl,
         playStatus: ((playing) ? Sound.status.PLAYING : Sound.status.PAUSED),
-        playFromPosition: position || 0,
+        playFromPosition: position,
         volume: volume,
         autoLoad: true,
         onPause: this.onPause.bind(this),
         onPlaying: this.onPlaying.bind(this),
-        onResume: this.onResume.bind(this),
         onLoading: this.onLoading.bind(this),
       };
 
       return (
         <div>
-          <Sound {...soundProps} ref={(s) => { this.sound = s; }} />
+          <Sound {...soundProps} />
         </div>
       );
     } else {
