@@ -2,6 +2,7 @@ import _ from 'lodash';
 import shuffle from 'shuffle-array';
 
 import {
+  RECEIVE_DURATION,
   PREVIOUS,
   TOGGLE_PLAYBACK,
   NEXT,
@@ -17,6 +18,7 @@ const LOOP_ONE = "LOOP_ONE";
 const LOOP_ALL = "LOOP_ALL";
 
 const initialState = {
+  duration: null,
   unshuffled: [],
   songQueue: [],
   songIdx: 0,
@@ -24,24 +26,32 @@ const initialState = {
   loop: null,
   position: 0,
   playing: true,
-  volume: 100,
+  volume: 50,
+  lastAction: null,
 };
 
 const playbackReducer = (state = initialState, action) => {
+  Object.freeze(state);
+
   let newState;
   switch (action.type) {
+    case RECEIVE_DURATION:
+      newState = _.merge({}, state);
+      newState.duration = action.duration;
+      newState.lastAction = action.type;
+      return newState;
     case PREVIOUS:
       newState = _.merge({}, state);
-      if (newState.songIdx !== 0 && newState.position > 1) {
+      if (newState.songIdx !== 0 && newState.position > 1000) {
         newState.songIdx -= 1;
+      } else {
+        newState.position = 0;
       }
+      newState.lastAction = action.type;
       return newState;
     case NEXT:
       newState = _.merge({}, state);
       switch (state.loop) {
-        case LOOP_ONE:
-          newState.position = 0;
-          break;
         case LOOP_ALL:
           if (newState.songIdx === newState.songQueue.length - 1) {
             newState.songIdx = 0;
@@ -55,10 +65,14 @@ const playbackReducer = (state = initialState, action) => {
           }
           break;
       }
+      newState.position = 0;
+      newState.unshuffled = newState.songQueue;
+      newState.lastAction = action.type;
       return newState;
     case TOGGLE_PLAYBACK:
       newState = _.merge({}, state);
       newState.playing = !newState.playing;
+      newState.lastAction = action.type;
       return newState;
     case TOGGLE_SHUFFLE:
       newState = _.merge({}, state);
@@ -72,6 +86,7 @@ const playbackReducer = (state = initialState, action) => {
       } else {
         newState.songQueue = newState.unshuffled;
       }
+      newState.lastAction = action.type;
       return newState;
     case TOGGLE_LOOP:
       newState = _.merge({}, state);
@@ -86,27 +101,32 @@ const playbackReducer = (state = initialState, action) => {
           newState.loop = null;
           break;
       }
+      newState.lastAction = action.type;
       return newState;
     case SEEK:
       newState = _.merge({}, state);
       newState.position = action.position;
+      newState.lastAction = action.type;
       return newState;
     case RECEIVE_VOLUME:
       newState = _.merge({}, state);
       newState.volume = action.volume;
+      newState.lastAction = action.type;
       return newState;
     case RECEIVE_PLAYBACK_SONGS:
       newState = _.merge({}, state);
-      newState.songQueue = Object.keys(action.songs);
+      newState.songQueue = shuffle(Object.keys(action.songs));
       newState.unshuffled = newState.songQueue.slice(0);
       newState.songIdx = 0;
       newState.position = 0;
+      newState.lastAction = action.type;
       return newState;
     case RECEIVE_PLAYBACK_SONG:
       newState = _.merge({}, state);
       newState.songQueue.splice(songIdx, 0, action.song.id);
       newState.unshuffled = newState.songQueue.slice(0);
       newState.position = 0;
+      newState.lastAction = action.type;
       return newState;
     default:
       return state;

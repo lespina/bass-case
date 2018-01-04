@@ -2,6 +2,7 @@ import _ from 'lodash';
 import PlayBar from './play_bar';
 import { connect } from 'react-redux';
 import {
+  receiveDuration,
   previous,
   togglePlayback,
   next,
@@ -22,13 +23,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    previous: () => dispatch(previous()),
-    togglePlayback: () => dispatch(togglePlayback()),
-    next: () => dispatch(next()),
-    toggleShuffle: () => dispatch(toggleShuffle()),
-    toggleLoop: () => dispatch(toggleLoop()),
     seekTo: (position) => dispatch(seekTo(position)),
-    receiveVolume: (volume) => dispatch(receiveVolume(volume)),
+    receiveDuration: (duration) => dispatch(receiveDuration(duration)),
     fetchPlaybackSongs: (songIds) => dispatch(fetchPlaybackSongs(songIds)),
     fetchPlaybackSong: (songId) => dispatch(fetchPlaybackSong(songId)),
   };

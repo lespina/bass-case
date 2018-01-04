@@ -1,21 +1,40 @@
+import {
+  RECEIVE_DURATION,
+  TOGGLE_SHUFFLE,
+  TOGGLE_LOOP,
+  RECEIVE_VOLUME
+} from '../../actions/playback_actions';
+
 import React from 'react';
 import Sound from 'react-sound';
 
 class PlayBar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      duration: null
-    };
-  }
 
-  // componentShouldUpdate(nextProps) {
-  //   //TODO: write this to keep the music from rerendering unnecessarily.
-  //
-  // }
+    this.playing = false;
+    this.position = 0;
+  }
 
   componentDidMount() {
     this.props.fetchPlaybackSongs();
+  }
+
+  shouldComponentUpdate(nextProps) {
+    const { lastAction } = nextProps.playback;
+    switch (lastAction) {
+      case RECEIVE_DURATION:
+        return false;
+      case TOGGLE_SHUFFLE:
+        return false;
+      case TOGGLE_LOOP:
+        return false;
+      case RECEIVE_VOLUME:
+        this.props.seekTo(this.position + 350);
+        return false;
+      default:
+        return true;
+    }
   }
 
   handleSimpleAction(name) {
@@ -26,7 +45,9 @@ class PlayBar extends React.Component {
   }
 
   onLoading({ duration }) {
-    this.setState({ duration });
+    if (duration !== undefined && this.props.playback.duration === null) {
+      this.props.receiveDuration(duration);
+    }
   }
 
   // seekToNormalized(normalizedPosition) {
@@ -34,8 +55,26 @@ class PlayBar extends React.Component {
   //   seekTo(normalizedPosition * duration / 100);
   // }
 
+  onResume({ position }) {
+    this.position = position;
+    this.playing = true;
+    console.log("I'm resuming!");
+  }
+
+  onPlaying({ position }) {
+    this.position = position;
+    this.playing = true;
+  }
+
   onPause({ position }) {
-    this.props.seekTo(position);
+    this.position = position;
+    this.playing = false;
+    console.log("I'm paused!");
+  }
+
+  onError({ errorCode, description }) {
+    console.log(errorCode, description);
+    this.setState(this.state);
   }
 
   render() {
@@ -60,12 +99,14 @@ class PlayBar extends React.Component {
         volume: volume,
         autoLoad: true,
         onPause: this.onPause.bind(this),
+        onPlaying: this.onPlaying.bind(this),
+        onResume: this.onResume.bind(this),
         onLoading: this.onLoading.bind(this),
       };
 
       return (
         <div>
-          <Sound {...soundProps}/>
+          <Sound {...soundProps} />
         </div>
       );
     } else {

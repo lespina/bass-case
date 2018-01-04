@@ -1,5 +1,7 @@
 import * as PlaybackApiUtil from '../util/playback_api_util';
 
+export const RECEIVE_DURATION = "RECEIVE_DURATION";
+
 export const PREVIOUS = "PREVIOUS";
 export const TOGGLE_PLAYBACK = "TOGGLE_PLAYBACK";
 export const NEXT = "NEXT";
@@ -12,12 +14,17 @@ export const RECEIVE_VOLUME = "RECEIVE_VOLUME";
 export const RECEIVE_PLAYBACK_SONGS = "RECEIVE_PLAYBACK_SONGS";
 export const RECEIVE_PLAYBACK_SONG = "RECEIVE_PLAYBACK_SONG";
 
+export const receiveDuration = (duration) => ({
+  type: RECEIVE_DURATION,
+  duration
+});
+
 export const previous = () => ({
   type: PREVIOUS
 });
 
 export const togglePlayback = () => ({
-  type: TOGGLE_PLAYBACK
+  type: TOGGLE_PLAYBACK,
 });
 
 export const next = () => ({
@@ -25,11 +32,11 @@ export const next = () => ({
 });
 
 export const toggleShuffle = () => ({
-  type: TOGGLE_SHUFFLE
+  type: TOGGLE_SHUFFLE,
 });
 
 export const toggleLoop = () => ({
-  type: TOGGLE_LOOP
+  type: TOGGLE_LOOP,
 });
 
 export const seekTo = (position) => ({
