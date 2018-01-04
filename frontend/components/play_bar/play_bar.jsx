@@ -1,4 +1,5 @@
 import React from 'react';
+import { LOOP_ALL, LOOP_ONE } from '../../reducers/playback_reducer';
 import { PREVIOUS, NEXT, RECEIVE_POSITION, TOGGLE_PLAYBACK } from '../../actions/playback_actions';
 
 class PlayBar extends React.Component {
@@ -95,11 +96,27 @@ class PlayBar extends React.Component {
   render() {
     const { start, time } = this.state;
     const { songs, playback } = this.props;
-    const { duration, position } = playback;
+    const { duration, position, shuffle, loop } = playback;
     const song = songs[playback.songQueue[playback.songIdx]];
 
     if (!song) {
       return <div></div>;
+    }
+
+    const shuffleStatus = ((shuffle) ? "shuffle-toggled" : "");
+    let loopStatus;
+    switch (loop) {
+      case null:
+        loopStatus = "";
+        break;
+      case LOOP_ONE:
+        loopStatus = "loop-one";
+        break;
+      case LOOP_ALL:
+        loopStatus = "loop-all";
+        break;
+      default:
+        loopStatus = "brown";
     }
 
     return (
@@ -117,10 +134,10 @@ class PlayBar extends React.Component {
               <div onClick={this.handleSimpleAction('next')} className="playbar-next controls">
 
               </div>
-              <div onClick={this.handleSimpleAction('toggleShuffle')} className="playbar-shuffle controls">
+              <div onClick={this.handleSimpleAction('toggleShuffle')} className={`playbar-shuffle controls ${shuffleStatus}`}>
 
               </div>
-              <div onClick={this.handleSimpleAction('toggleLoop')} className="playbar-loop controls">
+              <div onClick={this.handleSimpleAction('toggleLoop')} className={`playbar-loop controls ${loopStatus}`}>
 
               </div>
             </section>
@@ -153,8 +170,8 @@ class PlayBar extends React.Component {
 
               <div className="playback-queue">
                 <svg width="24" height="24" viewBox="0 0 24 24">
-                  <g fill="none" fill-rule="evenodd">
-                    <g fill="#000" fill-rule="nonzero">
+                  <g fill="none" fillRule="evenodd">
+                    <g fill="#000" fillRule="nonzero">
                       <path d="M6 11h12v2H6zM6 7h8v2H6zM6 15h12v2H6zM16 3v6l4-3z"></path>
                     </g>
                   </g>

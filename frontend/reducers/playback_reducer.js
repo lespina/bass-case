@@ -15,8 +15,8 @@ import {
   RECEIVE_PLAYBACK_SONG
 } from '../actions/playback_actions';
 
-const LOOP_ONE = "LOOP_ONE";
-const LOOP_ALL = "LOOP_ALL";
+export const LOOP_ONE = "LOOP_ONE";
+export const LOOP_ALL = "LOOP_ALL";
 
 const initialState = {
   duration: null,

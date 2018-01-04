@@ -60,9 +60,21 @@
   background-position: center center;
 }
 
+.shuffle-toggled {
+  background-image: image-url('shuffle-on.svg');
+}
+
 .playbar-loop {
   background-image: image-url('loop-none.svg');
   background-position: center center;
+}
+
+.loop-one {
+  background-image: image-url('loop-one.svg');
+}
+
+.loop-all {
+  background-image: image-url('loop-all.svg');
 }
 
 .playbar-timeline {
