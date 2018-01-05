@@ -10,9 +10,12 @@ class PlayBar extends React.Component {
     this.state = {
       start: new Date(0),
       time: new Date(0),
+      queueVisible: "",
     };
     this.increment = this.increment.bind(this);
     this.toggleTimer = this.toggleTimer.bind(this);
+    this.toggleQueue = this.toggleQueue.bind(this);
+    this.hideQueue = this.hideQueue.bind(this);
   }
 
   componentDidMount() {
@@ -90,6 +93,16 @@ class PlayBar extends React.Component {
     };
   }
 
+  hideQueue() {
+    const queueVisible = "";
+    this.setState({ queueVisible });
+  }
+
+  toggleQueue() {
+    const queueVisible = (this.state.queueVisible === "") ? "queue-visible" : "";
+    this.setState({ queueVisible });
+  }
+
   parseSec(ms) {
     return Math.floor(ms/1000);
   }
@@ -107,7 +120,6 @@ class PlayBar extends React.Component {
     const buttonStatus = ((playing) ? "playbar-pause" : "");
     const shuffleStatus = ((shuffle) ? "shuffle-toggle" : "");
     const muteStatus = ((mute) ? "mute-toggle" : "");
-    // const queueVisible = ((queueVisible) ? "queue-visible" : "")
 
     let loopStatus;
     switch (loop) {
@@ -128,7 +140,7 @@ class PlayBar extends React.Component {
       <div>
         <div className="playbar-bg">Playbar Background</div>
         <div className="full-width-container">
-          <section className={`playbar ${"queue-visible"}`}>
+          <section className={`playbar ${this.state.queueVisible}`}>
             <section className="playbar-control-buttons">
               <div onClick={this.handleSimpleAction('previous')} className="playbar-prev controls">
 
@@ -174,7 +186,7 @@ class PlayBar extends React.Component {
 
               </div>
 
-              <div className="playback-queue">
+              <div onClick={this.toggleQueue} className="playback-queue">
                 <svg width="24" height="24" viewBox="0 0 24 24">
                   <g fill="none" fillRule="evenodd">
                     <g fill="#000" fillRule="nonzero">
@@ -184,7 +196,7 @@ class PlayBar extends React.Component {
                 </svg>
               </div>
 
-              <PlayBarQueueContainer/>
+              <PlayBarQueueContainer hideQueue={this.hideQueue}/>
 
             </section>
           </section>
