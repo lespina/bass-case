@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SongIndexItem = ({ handleTogglePlayback, idx, song }) => {
+const SongIndexItem = ({ handleTogglePlayback, song }) => {
   const { title, artist, imageUrl, audioUrl } = song;
 
   return (

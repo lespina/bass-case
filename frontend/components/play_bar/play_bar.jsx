@@ -1,6 +1,7 @@
 import React from 'react';
 import { LOOP_ALL, LOOP_ONE } from '../../reducers/playback_reducer';
 import { PREVIOUS, NEXT, RECEIVE_POSITION, TOGGLE_PLAYBACK } from '../../actions/playback_actions';
+import PlayBarQueueContainer from './play_bar_queue_container';
 
 class PlayBar extends React.Component {
 
@@ -106,6 +107,8 @@ class PlayBar extends React.Component {
     const buttonStatus = ((playing) ? "playbar-pause" : "");
     const shuffleStatus = ((shuffle) ? "shuffle-toggle" : "");
     const muteStatus = ((mute) ? "mute-toggle" : "");
+    // const queueVisible = ((queueVisible) ? "queue-visible" : "")
+
     let loopStatus;
     switch (loop) {
       case null:
@@ -125,7 +128,7 @@ class PlayBar extends React.Component {
       <div>
         <div className="playbar-bg">Playbar Background</div>
         <div className="full-width-container">
-          <section className="playbar">
+          <section className={`playbar ${"queue-visible"}`}>
             <section className="playbar-control-buttons">
               <div onClick={this.handleSimpleAction('previous')} className="playbar-prev controls">
 
@@ -180,6 +183,8 @@ class PlayBar extends React.Component {
                   </g>
                 </svg>
               </div>
+
+              <PlayBarQueueContainer/>
 
             </section>
           </section>
