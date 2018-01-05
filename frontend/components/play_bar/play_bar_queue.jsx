@@ -18,24 +18,20 @@ class PlayBarQueue extends React.Component {
     };
   }
 
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   if (
-  //     nextProps.songQueue.join('') === this.props.songQueue.join('') &&
-  //     nextProps.currentSongId === this.props.currentSongId
-  //   ) {
-  //     return false;
-  //   }
-  //   return true;
-  // }
-
   orderedSongs() {
     return this.props.songQueue.map(songId => {
       return this.props.songs[songId];
     });
   }
 
+  currentSongId() {
+    const { songQueue, songIdx } = this.props;
+    return songQueue[songIdx];
+  }
+
   render() {
-    const { handleTogglePlayback, songs } = this.props;
+    const { handleTogglePlayback, songs, playing, songIdx } = this.props;
+    const paused = ((playing) ? "paused" : "");
 
     return (
       <section className="playbar-queue-body">
@@ -52,14 +48,16 @@ class PlayBarQueue extends React.Component {
                 <div className="queue-items-wrapper">
                   {
                     this.orderedSongs().map((song, idx) => {
-                      const dimmed = ((idx === 0) ? "" : "dimmed");
+                      const dimmed = ((idx === this.props.songIdx) ? "" : "dimmed");
                       return <QueueItem
-                        key={song.id}
+                        key={idx}
                         song={song}
                         dimmed={dimmed}
                         handleTogglePlayback={this.handleTogglePlayback(song.id)}
+                        paused={paused}
+                        currentSongId={this.currentSongId()}
                       />;
-                    })
+                    }, this)
                   }
                 </div>
               </div>

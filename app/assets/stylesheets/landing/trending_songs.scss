@@ -72,7 +72,7 @@
   visibility: visible;
 }
 
-.play-button a {
+.play-button-link {
   color: transparent;
     position: absolute;
     z-index: 1;
@@ -86,6 +86,11 @@
   background-repeat: no-repeat;
   transition: opacity .3s;
   opacity: 1;
+}
+
+.play-button-paused {
+  background-image: image-url('pause.svg');
+  background-size: 100% 50%;
 }
 
 .play-button a:hover {

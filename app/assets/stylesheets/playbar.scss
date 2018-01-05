@@ -436,6 +436,11 @@
   left: 5px;
 }
 
+.paused {
+  background-image: image-url('pause.svg');
+  background-position: 50% 50%;
+}
+
 .queue-item:hover .queue-item-artwork-play-btn {
   visibility: visible;
   opacity: 1;

@@ -5,12 +5,13 @@ import { fetchSongs } from '../../actions/song_actions';
 import { receivePlaybackSong, togglePlayback } from '../../actions/playback_actions';
 
 const mapStateToProps = (state) => {
-  const { songQueue, songIdx } = state.ui.playback;
+  const { songQueue, songIdx, playing } = state.ui.playback;
   const currentSongId = songQueue[songIdx];
 
   return {
     songs: _.values(state.entities.songs),
     currentSongId,
+    playing,
   };
 };
 

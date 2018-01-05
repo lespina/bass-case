@@ -1,6 +1,8 @@
 import React from 'react';
 
-const QueueItem = ({ song, dimmed, handleTogglePlayback }) => {
+const QueueItem = ({ currentSongId, paused, song, dimmed, handleTogglePlayback }) => {
+  let ourPausedClass = paused;
+  if (song.id !== parseInt(currentSongId)) { ourPausedClass = ""; }
   const { title, artist, imageUrl } = song;
 
   return (
@@ -9,13 +11,13 @@ const QueueItem = ({ song, dimmed, handleTogglePlayback }) => {
       <div className="queue-item-drag-handle"></div>
       <div className="queue-item-artwork">
         <div className="queue-item-artwork-image" style={{"backgroundImage": `url(${imageUrl})`}}></div>
-        <div onClick={handleTogglePlayback} className="bc-btn queue-item-artwork-play-btn"></div>
+        <div onClick={handleTogglePlayback} className={`bc-btn queue-item-artwork-play-btn ${ourPausedClass}`}></div>
       </div>
       <div className="queue-item-details-wrapper">
         <a className="queue-item-details-artist truncate">{artist.username}</a>
         <a className="queue-item-details-title truncate">{title}</a>
       </div>
-      <div className="queue-item-details-duration">1:44</div>
+      {/* <div className="queue-item-details-duration">1:44</div> */}
     </div>
   );
 };

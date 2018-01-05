@@ -1,30 +1,35 @@
 import React from 'react';
 
-const SongIndexItem = ({ handleTogglePlayback, song }) => {
-  const { title, artist, imageUrl, audioUrl } = song;
+class SongIndexItem extends React.Component {
 
-  return (
-    <li className="song-index-item">
-      <div>
-        <div className="playable-tile">
-          <div className="playable-tile-artwork" style={{"backgroundImage": `url(${imageUrl})`}}>
-            <div className="play-button">
-              <a onClick={handleTogglePlayback} href="#">Play</a>
-            </div>
-          </div>
+  render() {
+    const { paused, handleTogglePlayback, song } = this.props;
+    console.log("LOOK AT ME", paused);
+    const { title, artist, imageUrl, audioUrl } = song;
 
-          <div className="playable-tile-description">
-            <div className="playable-tile-description-title">
-              <a className="truncate" href="#">{title}</a>
+    return (
+      <li className="song-index-item">
+        <div>
+          <div className="playable-tile">
+            <div className="playable-tile-artwork" style={{"backgroundImage": `url(${imageUrl})`}}>
+              <div className="play-button">
+                <a className={`play-button-link ${paused}`} onClick={handleTogglePlayback} href="#">Play</a>
+              </div>
             </div>
-            <div className="playable-tile-description-username">
-              <a className="truncate" href="#">{artist.username}</a>
+
+            <div className="playable-tile-description">
+              <div className="playable-tile-description-title">
+                <a className="truncate" href="#">{title}</a>
+              </div>
+              <div className="playable-tile-description-username">
+                <a className="truncate" href="#">{artist.username}</a>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </li>
-  );
-};
+      </li>
+    );
+  }
+}
 
 export default SongIndexItem;
