@@ -126,7 +126,7 @@ const playbackReducer = (state = initialState, action) => {
       return newState;
     case RECEIVE_PLAYBACK_SONG:
       newState = _.merge({}, state);
-      newState.songQueue.splice(songIdx, 0, action.songId);
+      newState.songQueue.splice(songIdx, 0, action.songId.toString());
       newState.unshuffled = newState.songQueue.slice(0);
       newState.position = 0;
       newState.lastAction = action.type;
