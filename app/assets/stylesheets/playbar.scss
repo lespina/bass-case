@@ -140,6 +140,18 @@
   cursor: pointer;
 }
 
+.mute-toggle {
+  background-image: image-url('volume-muted-button.svg');
+}
+
+.volume-mute-div {
+  position: absolute;
+  right: 2px;
+  height: 46px;
+  width: 24px;
+  color: transparent;
+}
+
 /* ---------------- */
 
 .playbar-song-info {

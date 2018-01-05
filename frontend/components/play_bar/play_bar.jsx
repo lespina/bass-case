@@ -96,7 +96,7 @@ class PlayBar extends React.Component {
   render() {
     const { start, time } = this.state;
     const { songs, playback } = this.props;
-    const { playing, duration, position, shuffle, loop } = playback;
+    const { mute, playing, duration, position, shuffle, loop } = playback;
     const song = songs[playback.songQueue[playback.songIdx]];
 
     if (!song) {
@@ -105,6 +105,7 @@ class PlayBar extends React.Component {
 
     const buttonStatus = ((playing) ? "playbar-pause" : "");
     const shuffleStatus = ((shuffle) ? "shuffle-toggle" : "");
+    const muteStatus = ((mute) ? "mute-toggle" : "");
     let loopStatus;
     switch (loop) {
       case null:
@@ -152,7 +153,8 @@ class PlayBar extends React.Component {
             <div className="playbar-timeline-time-left">
               -{this.format(this.parseSec(duration - time.getTime()))}
             </div>
-            <div className="playbar-volume">
+            <div className={`playbar-volume ${muteStatus}`}>
+              <div onClick={this.handleSimpleAction('toggleMute')} className="volume-mute-div">Content</div>
               <div className="playbar-volume-slider">
 
               </div>

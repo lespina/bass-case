@@ -11,8 +11,7 @@ import {
   toggleLoop,
   seekTo,
   receiveVolume,
-  fetchPlaybackSongs,
-  fetchPlaybackSong
+  fetchPlaybackSongs
 } from '../../actions/playback_actions';
 
 const mapStateToProps = (state) => {
