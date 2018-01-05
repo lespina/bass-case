@@ -116,6 +116,7 @@ const playbackReducer = (state = initialState, action) => {
     case TOGGLE_MUTE:
       newState = _.merge({}, state);
       newState.mute = !newState.mute;
+      newState.lastAction = action.type;
       return newState;
     case RECEIVE_VOLUME:
       newState = _.merge({}, state);

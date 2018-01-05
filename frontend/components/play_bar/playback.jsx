@@ -64,6 +64,7 @@ class Playback extends React.Component {
       loop,
       playing,
       volume,
+      mute,
     } = playback;
 
     const song = songs[playback.songQueue[songIdx]];
@@ -73,7 +74,7 @@ class Playback extends React.Component {
         url: song.audioUrl,
         playStatus: ((playing) ? Sound.status.PLAYING : Sound.status.PAUSED),
         playFromPosition: position,
-        volume: volume,
+        volume: ((mute) ? 0 : volume),
         autoLoad: true,
         onPause: this.onPause.bind(this),
         onPlaying: this.onPlaying.bind(this),

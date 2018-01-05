@@ -9,10 +9,13 @@ class PlayBar extends React.Component {
     this.state = {
       start: new Date(0),
       time: new Date(0),
+      volumeDragStart: this.props.playback.volume,
+      draggableHeight: { bottom: `${Math.floor(this.props.playback.volume)}px` },
     };
     this.increment = this.increment.bind(this);
     this.toggleTimer = this.toggleTimer.bind(this);
-    // this.handleDrag = this.handleDrag.bind(this);
+    this.handleDrag = this.handleDrag.bind(this);
+    this.handleDragEnd = this.handleDragEnd.bind(this);
   }
 
   componentDidMount() {
@@ -91,26 +94,32 @@ class PlayBar extends React.Component {
   }
 
   toVolRange(pos) {
-    if (pos === 0) { return null; }
-    if (pos <= 86) { return 100; }
-    if (pos >= 176) { return 0; }
-    return Math.floor((100 / 90) * (176 - pos) / 10);
+    const start = this.state.volumeDragStart;
+    let result = Math.floor((start - (10 / 9) * pos) / 10);
+    result = result + 3;
+    if (result > 10) { return undefined; }
+    if (result < 0) { return null; }
+    return result;
   }
 
-  // handleDrag(e) {
-  //   e.persist();
-  //   if (!this.clear && !this.wait) {
-  //     this.clear = window.setTimeout(() => {
-  //       const newVol = this.toVolRange(e.clientY);
-  //       if (newVol) { this.props.receiveVolume(newVol); }
-  //       this.wait = 'wait';
-  //     }, 400).bind(this);
-  //   } else if (this.clear && this.wait) {
-  //     return;
-  //   } else if (this.wait) {
-  //     this.wait = null;
-  //   }
-  // }
+  handleDrag(e) {
+    const currentVol = Math.ceil(this.props.playback.volume / 10);
+    const yCoord = (e.clientY - e.target.getClientRects()[0].y);
+    const newVol = this.toVolRange(yCoord);
+    if (newVol !== null && newVol !== undefined && newVol !== currentVol) {
+      this.props.receiveVolume(newVol * 10);
+    }
+  }
+
+  handleDragEnd(e) {
+    const newBottom = `${Math.floor(this.props.playback.volume)}px`;
+    const draggableHeight = { bottom: newBottom };
+    this.setState({ draggableHeight });
+  }
+
+  handleDragStart(e) {
+    e.dataTransfer.setDragImage(document.getElementById('empty'), 0, 0);
+  }
 
   parseSec(ms) {
     return Math.floor(ms/1000);
@@ -143,6 +152,10 @@ class PlayBar extends React.Component {
       default:
         loopStatus = "brown";
     }
+
+    const sliderHeight = { height: `${this.props.playback.volume}px` };
+    const handleBottom = { bottom: `${this.props.playback.volume}px` };
+    const draggableHeight = this.state.draggableHeight;
 
     return (
       <div>
@@ -180,8 +193,9 @@ class PlayBar extends React.Component {
               <div onClick={this.handleSimpleAction('toggleMute')} className="volume-mute-div">Content</div>
               <div className="playbar-volume-wrapper-slider">
                 <div className="volume-slider-bg"></div>
-                <div className="volume-slider-progress"></div>
-                <div className="volume-slider-handle"></div>
+                <div className="volume-slider-progress" style={sliderHeight}></div>
+                <div className="volume-slider-handle" style={handleBottom}></div>
+                <div className="volume-slider-draggable" style={draggableHeight} onDrag={this.handleDrag} onDragEnd={this.handleDragEnd} onDragStart={this.handleDragStart} draggable></div>
               </div>
             </div>
             <section className="playbar-song-info">
@@ -209,6 +223,8 @@ class PlayBar extends React.Component {
             </section>
           </section>
         </div>
+
+        <div id="empty">empty</div>
       </div>
     );
   }
