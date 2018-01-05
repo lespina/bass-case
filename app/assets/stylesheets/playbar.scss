@@ -301,6 +301,10 @@
   margin-right: 16px;
 }
 
+.queue-clear:hover {
+  border-color: #ccc;
+}
+
 .queue-hide {
   height: 46px;
   background-image: image-url('modal-close-button.svg');

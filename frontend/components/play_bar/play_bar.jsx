@@ -96,11 +96,13 @@ class PlayBar extends React.Component {
   hideQueue() {
     const queueVisible = "";
     this.setState({ queueVisible });
+    this.forceUpdate();
   }
 
   toggleQueue() {
     const queueVisible = (this.state.queueVisible === "") ? "queue-visible" : "";
     this.setState({ queueVisible });
+    this.forceUpdate();
   }
 
   parseSec(ms) {
@@ -182,9 +184,7 @@ class PlayBar extends React.Component {
                 <a className="playbar-artist truncate" href="#">{song.artist.username}</a>
                 <a className="playbar-title truncate" href="#">{song.title}</a>
               </section>
-              <div className="playbar-like">
-
-              </div>
+              {/* <div className="playbar-like"></div> */}
 
               <div onClick={this.toggleQueue} className="playback-queue">
                 <svg width="24" height="24" viewBox="0 0 24 24">

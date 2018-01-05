@@ -79,6 +79,7 @@ class Playback extends React.Component {
         onPause: this.onPause.bind(this),
         onPlaying: this.onPlaying.bind(this),
         onLoading: this.onLoading.bind(this),
+        onFinishedPlaying: this.onFinishedPlaying.bind(this),
       };
 
       return (

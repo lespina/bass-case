@@ -15,6 +15,9 @@ export const TOGGLE_MUTE = "TOGGLE_MUTE";
 export const RECEIVE_VOLUME = "RECEIVE_VOLUME";
 export const RECEIVE_PLAYBACK_SONGS = "RECEIVE_PLAYBACK_SONGS";
 export const RECEIVE_PLAYBACK_SONG = "RECEIVE_PLAYBACK_SONG";
+export const RECEIVE_PLAYBACK_SONG_FROM_QUEUE = "RECEIVE_PLAYBACK_SONG_FROM_QUEUE";
+
+export const CLEAR_QUEUE = "CLEAR_QUEUE";
 
 export const receivePosition = (position) => ({
   type: RECEIVE_POSITION,
@@ -68,6 +71,15 @@ export const receivePlaybackSongs = (songs) => ({
 export const receivePlaybackSong = (songId) => ({
   type: RECEIVE_PLAYBACK_SONG,
   songId
+});
+
+export const receivePlaybackSongFromQueue = (songIdx) => ({
+  type: RECEIVE_PLAYBACK_SONG_FROM_QUEUE,
+  songIdx
+});
+
+export const clearQueue = () => ({
+  type: CLEAR_QUEUE,
 });
 
 export const fetchPlaybackSongs = (songIds) => (dispatch) => {

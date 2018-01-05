@@ -13,7 +13,9 @@ import {
   TOGGLE_MUTE,
   RECEIVE_VOLUME,
   RECEIVE_PLAYBACK_SONGS,
-  RECEIVE_PLAYBACK_SONG
+  RECEIVE_PLAYBACK_SONG,
+  RECEIVE_PLAYBACK_SONG_FROM_QUEUE,
+  CLEAR_QUEUE
 } from '../actions/playback_actions';
 
 export const LOOP_ONE = "LOOP_ONE";
@@ -133,11 +135,26 @@ const playbackReducer = (state = initialState, action) => {
       return newState;
     case RECEIVE_PLAYBACK_SONG:
       newState = _.merge({}, state);
-      newState.songQueue.splice(songIdx, 0, action.songId.toString());
+      newState.songQueue.splice(state.songIdx + 1, 0, action.songId.toString());
       newState.unshuffled = newState.songQueue.slice(0);
       newState.position = 0;
       newState.lastAction = action.type;
       newState.playing = true;
+      newState.songIdx += 1;
+      return newState;
+    case RECEIVE_PLAYBACK_SONG_FROM_QUEUE:
+      newState = _.merge({}, state);
+      newState.songIdx = action.songIdx;
+      newState.lastAction = action.type;
+      newState.position = 0;
+      newState.playing = true;
+      return newState;
+    case CLEAR_QUEUE:
+      newState = _.merge({}, state);
+      newState.songQueue = [state.songQueue[state.songIdx]];
+      newState.unshuffled = newState.songQueue.slice(0);
+      newState.songIdx = 0;
+      newState.lastAction = action.type;
       return newState;
     default:
       return state;
