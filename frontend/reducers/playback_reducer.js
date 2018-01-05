@@ -10,6 +10,7 @@ import {
   TOGGLE_SHUFFLE,
   TOGGLE_LOOP,
   SEEK,
+  TOGGLE_MUTE,
   RECEIVE_VOLUME,
   RECEIVE_PLAYBACK_SONGS,
   RECEIVE_PLAYBACK_SONG
@@ -28,6 +29,7 @@ const initialState = {
   position: 0,
   playing: false,
   volume: 50,
+  mute: false,
   lastAction: null,
 };
 
@@ -110,6 +112,10 @@ const playbackReducer = (state = initialState, action) => {
       newState = _.merge({}, state);
       newState.position = action.position;
       newState.lastAction = action.type;
+      return newState;
+    case TOGGLE_MUTE:
+      newState = _.merge({}, state);
+      newState.mute = !newState.mute;
       return newState;
     case RECEIVE_VOLUME:
       newState = _.merge({}, state);

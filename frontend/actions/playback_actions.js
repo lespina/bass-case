@@ -11,6 +11,7 @@ export const TOGGLE_SHUFFLE = "TOGGLE_SHUFFLE";
 export const TOGGLE_LOOP = "TOGGLE_LOOP";
 
 export const SEEK = "SEEK";
+export const TOGGLE_MUTE = "TOGGLE_MUTE";
 export const RECEIVE_VOLUME = "RECEIVE_VOLUME";
 export const RECEIVE_PLAYBACK_SONGS = "RECEIVE_PLAYBACK_SONGS";
 export const RECEIVE_PLAYBACK_SONG = "RECEIVE_PLAYBACK_SONG";
@@ -50,6 +51,10 @@ export const seekTo = (position) => ({
   position,
 });
 
+export const toggleMute = () => ({
+  type: TOGGLE_MUTE,
+});
+
 export const receiveVolume = (volume) => ({
   type: RECEIVE_VOLUME,
   volume,
@@ -71,10 +76,3 @@ export const fetchPlaybackSongs = (songIds) => (dispatch) => {
     return songs;
   });
 };
-
-// export const fetchPlaybackSong = (songId) => (dispatch) => {
-//   return PlaybackApiUtil.fetchPlaybackSong(songId).then(song => {
-//     dispatch(receivePlaybackSong(song));
-//     return song;
-//   });
-// };

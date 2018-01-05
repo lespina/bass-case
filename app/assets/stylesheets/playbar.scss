@@ -127,7 +127,7 @@
   margin-right: 13px;
 }
 
-.playbar-volume {
+.playbar-volume-wrapper {
   background-image: image-url('volume-button.svg');
   background-repeat: no-repeat;
   background-position: left center;
@@ -139,6 +139,117 @@
   margin-right: 11px;
   cursor: pointer;
 }
+
+.volume-mute-div {
+  position: absolute;
+  right: 2px;
+  height: 46px;
+  width: 24px;
+  color: transparent;
+}
+
+.mute-toggle {
+  background-image: image-url('volume-muted-button.svg');
+}
+
+.playbar-volume-wrapper-slider:before, .playbar-volume-wrapper-slider:after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  box-sizing: border-box;
+  -webkit-transform-origin: 0 0;
+  transform-origin: 0 0;
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  pointer-events: none;
+}
+
+.playbar-volume-wrapper-slider:before {
+  z-index: 0;
+  bottom: -10px;
+  border: 5px solid #000;
+  left: 8px;
+  border-color: transparent transparent #ccc #ccc;
+  box-shadow: -3px 3px 4px rgba(0,0,0,.1);
+}
+
+.playbar-volume-wrapper-slider {
+  position: absolute;
+  left: -5px;
+  bottom: 40px;
+  z-index: 1;
+  width: 30px;
+  height: 0;
+  transition: height 100ms;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  overflow: hidden;
+  background-color: #f2f2f2;
+  border: 1px solid transparent;
+  outline: 0;
+  cursor: pointer;
+}
+
+.playbar-volume-wrapper:hover .playbar-volume-wrapper-slider {
+  height: 118px;
+  border-color: #ccc;
+  box-shadow: 0 2px 4px rgba(0,0,0,.1);
+  overflow: initial;
+}
+
+.volume-slider-bg, .volume-slider-progress, .volume-slider-handle {
+  opacity: 0;
+  transition: opacity 100ms linear;
+  transition-delay: 100ms;
+}
+
+.playbar-volume-wrapper:hover .volume-slider-bg, .playbar-volume-wrapper:hover .volume-slider-progress, .playbar-volume-wrapper:hover .volume-slider-handle {
+  opacity: 1;
+}
+
+.volume-slider-bg {
+  position: absolute;
+  display: block;
+  background-color: #ccc;
+  bottom: 13px;
+  left: 0;
+  height: 92px;
+  width: 2px;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  outline: 0;
+  margin-left: 14px;
+}
+
+.volume-slider-progress {
+  background: #f50;
+  bottom: 13px;
+  position: absolute;
+  width: 2px;
+  margin-left: 14px;
+  height: 60px;
+}
+
+// .volume-slider-handle-wrapper {
+//   display: block;
+//   height: 92px;
+//   width: 5px;
+// }
+
+.volume-slider-handle {
+  position: absolute;
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 100%;
+  background-color: #f50;
+  margin-left: 11px;
+  margin-bottom: 10px;
+  bottom: 60px;
+}
+
 
 /* ---------------- */
 

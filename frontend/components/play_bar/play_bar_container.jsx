@@ -9,6 +9,7 @@ import {
   toggleShuffle,
   toggleLoop,
   seekTo,
+  toggleMute,
   receiveVolume,
   fetchPlaybackSongs,
   fetchPlaybackSong
@@ -29,6 +30,7 @@ const mapDispatchToProps = (dispatch) => {
     toggleShuffle: () => dispatch(toggleShuffle()),
     toggleLoop: () => dispatch(toggleLoop()),
     seekTo: (position) => dispatch(seekTo(position)),
+    toggleMute: () => dispatch(toggleMute()),
     receiveVolume: (volume) => dispatch(receiveVolume(volume)),
   };
 };

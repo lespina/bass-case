@@ -32,6 +32,8 @@ input[type="email"],
 input[type="text"],
 input[type="submit"],
 input[type="file"],
+input[type="range"],
+/* input[type="range"]::-webkit-slider-thumb, */
 textarea,
 button {
   /*

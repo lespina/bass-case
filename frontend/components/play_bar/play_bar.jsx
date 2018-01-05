@@ -12,6 +12,7 @@ class PlayBar extends React.Component {
     };
     this.increment = this.increment.bind(this);
     this.toggleTimer = this.toggleTimer.bind(this);
+    // this.handleDrag = this.handleDrag.bind(this);
   }
 
   componentDidMount() {
@@ -89,6 +90,28 @@ class PlayBar extends React.Component {
     };
   }
 
+  toVolRange(pos) {
+    if (pos === 0) { return null; }
+    if (pos <= 86) { return 100; }
+    if (pos >= 176) { return 0; }
+    return Math.floor((100 / 90) * (176 - pos) / 10);
+  }
+
+  // handleDrag(e) {
+  //   e.persist();
+  //   if (!this.clear && !this.wait) {
+  //     this.clear = window.setTimeout(() => {
+  //       const newVol = this.toVolRange(e.clientY);
+  //       if (newVol) { this.props.receiveVolume(newVol); }
+  //       this.wait = 'wait';
+  //     }, 400).bind(this);
+  //   } else if (this.clear && this.wait) {
+  //     return;
+  //   } else if (this.wait) {
+  //     this.wait = null;
+  //   }
+  // }
+
   parseSec(ms) {
     return Math.floor(ms/1000);
   }
@@ -96,7 +119,7 @@ class PlayBar extends React.Component {
   render() {
     const { start, time } = this.state;
     const { songs, playback } = this.props;
-    const { playing, duration, position, shuffle, loop } = playback;
+    const { mute, playing, duration, position, shuffle, loop } = playback;
     const song = songs[playback.songQueue[playback.songIdx]];
 
     if (!song) {
@@ -105,6 +128,7 @@ class PlayBar extends React.Component {
 
     const buttonStatus = ((playing) ? "playbar-pause" : "");
     const shuffleStatus = ((shuffle) ? "shuffle-toggle" : "");
+    const muteStatus = ((mute) ? "mute-toggle" : "");
     let loopStatus;
     switch (loop) {
       case null:
@@ -152,9 +176,12 @@ class PlayBar extends React.Component {
             <div className="playbar-timeline-time-left">
               -{this.format(this.parseSec(duration - time.getTime()))}
             </div>
-            <div className="playbar-volume">
-              <div className="playbar-volume-slider">
-
+            <div className={`playbar-volume-wrapper ${muteStatus}`}>
+              <div onClick={this.handleSimpleAction('toggleMute')} className="volume-mute-div">Content</div>
+              <div className="playbar-volume-wrapper-slider">
+                <div className="volume-slider-bg"></div>
+                <div className="volume-slider-progress"></div>
+                <div className="volume-slider-handle"></div>
               </div>
             </div>
             <section className="playbar-song-info">
