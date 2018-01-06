@@ -15,7 +15,8 @@ import {
   RECEIVE_PLAYBACK_SONGS,
   RECEIVE_PLAYBACK_SONG,
   RECEIVE_PLAYBACK_SONG_FROM_QUEUE,
-  CLEAR_QUEUE
+  CLEAR_QUEUE,
+  UPDATE_QUEUE
 } from '../actions/playback_actions';
 
 export const LOOP_ONE = "LOOP_ONE";
@@ -155,6 +156,13 @@ const playbackReducer = (state = initialState, action) => {
       newState.songQueue = [state.songQueue[state.songIdx]];
       newState.unshuffled = newState.songQueue.slice(0);
       newState.songIdx = 0;
+      newState.lastAction = action.type;
+      return newState;
+    case UPDATE_QUEUE:
+      newState = _.merge({}, state);
+      newState.songQueue = action.songQueue;
+      newState.songIdx = action.songIdx;
+      newState.unshuffled = newState.songQueue.slice(0);
       newState.lastAction = action.type;
       return newState;
     default:

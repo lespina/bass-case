@@ -4,7 +4,8 @@ import {
   RECEIVE_DURATION,
   TOGGLE_SHUFFLE,
   TOGGLE_LOOP,
-  RECEIVE_VOLUME
+  RECEIVE_VOLUME,
+  UPDATE_QUEUE
 } from '../../actions/playback_actions';
 
 import React from 'react';
@@ -27,6 +28,7 @@ class Playback extends React.Component {
       case RECEIVE_DURATION:
       case TOGGLE_SHUFFLE:
       case TOGGLE_LOOP:
+      case UPDATE_QUEUE:
         return false;
       default:
         return true;

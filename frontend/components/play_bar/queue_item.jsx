@@ -1,4 +1,11 @@
 import React from 'react';
+import { SortableElement, SortableHandle } from 'react-sortable-hoc';
+
+const QueueItemHandle = SortableHandle(() => {
+  return (
+    <div className="queue-item-drag-handle"></div>
+  );
+});
 
 const QueueItem = ({ currentSongId, paused, song, dimmed, handleTogglePlayback }) => {
   let ourPausedClass = paused;
@@ -8,7 +15,7 @@ const QueueItem = ({ currentSongId, paused, song, dimmed, handleTogglePlayback }
   return (
     <div className={`queue-item ${dimmed}`}>
 
-      <div className="queue-item-drag-handle"></div>
+      <QueueItemHandle/>
       <div className="queue-item-artwork">
         <div className="queue-item-artwork-image" style={{"backgroundImage": `url(${imageUrl})`}}></div>
         <div onClick={handleTogglePlayback} className={`bc-btn queue-item-artwork-play-btn ${ourPausedClass}`}></div>
@@ -22,4 +29,4 @@ const QueueItem = ({ currentSongId, paused, song, dimmed, handleTogglePlayback }
   );
 };
 
-export default QueueItem;
+export default SortableElement(QueueItem);

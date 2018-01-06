@@ -1,4 +1,5 @@
 import React from 'react';
+import { SortableContainer } from 'react-sortable-hoc';
 import QueueItem from './queue_item';
 
 class PlayBarQueue extends React.Component {
@@ -7,11 +8,11 @@ class PlayBarQueue extends React.Component {
     this.handleTogglePlayback = this.handleTogglePlayback.bind(this);
   }
 
-  handleTogglePlayback(songId) {
+  handleTogglePlayback(songIdx) {
     return (e) => {
       e.preventDefault();
-      if (this.props.currentSongId != songId) {
-        this.props.receivePlaybackSong(songId);
+      if (this.props.songIdx != songIdx) {
+        this.props.receivePlaybackSong(songIdx);
       } else {
         this.props.togglePlayback();
       }
@@ -51,6 +52,7 @@ class PlayBarQueue extends React.Component {
                       const dimmed = ((idx === this.props.songIdx) ? "" : "dimmed");
                       return <QueueItem
                         key={idx}
+                        index={idx}
                         song={song}
                         dimmed={dimmed}
                         handleTogglePlayback={this.handleTogglePlayback(idx)}
@@ -69,4 +71,4 @@ class PlayBarQueue extends React.Component {
   }
 }
 
-export default PlayBarQueue;
+export default SortableContainer(PlayBarQueue);

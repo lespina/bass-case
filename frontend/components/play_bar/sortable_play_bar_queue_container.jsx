@@ -1,7 +1,7 @@
 import _ from 'lodash';
-import PlayBarQueue from './play_bar_queue';
+import SortablePlayBarQueue from './sortable_play_bar_queue';
 import { connect } from 'react-redux';
-import { receivePlaybackSongFromQueue, togglePlayback, clearQueue } from '../../actions/playback_actions';
+import { receivePlaybackSongFromQueue, togglePlayback, clearQueue, updateQueue } from '../../actions/playback_actions';
 
 const mapStateToProps = (state) => {
   const { songQueue, songIdx, playing } = state.ui.playback;
@@ -21,10 +21,11 @@ const mapDispatchToProps = (dispatch) => {
     togglePlayback: () => dispatch(togglePlayback()),
     receivePlaybackSong: (songIdx) => dispatch(receivePlaybackSongFromQueue(songIdx)),
     clearQueue: () => dispatch(clearQueue()),
+    updateQueue: (songQueue, songIdx) => dispatch(updateQueue(songQueue, songIdx)),
   };
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PlayBarQueue);
+)(SortablePlayBarQueue);

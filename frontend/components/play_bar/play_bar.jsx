@@ -7,7 +7,7 @@ import {
   PREVIOUS, NEXT, RECEIVE_POSITION,
   TOGGLE_PLAYBACK, SEEK
 } from '../../actions/playback_actions';
-import PlayBarQueueContainer from './play_bar_queue_container';
+import PlayBarQueueContainer from './sortable_play_bar_queue_container';
 
 class PlayBar extends React.Component {
 
@@ -247,7 +247,9 @@ class PlayBar extends React.Component {
                 </svg>
               </div>
 
-              <PlayBarQueueContainer hideQueue={this.hideQueue}/>
+              <PlayBarQueueContainer
+                hideQueue={this.hideQueue}                
+              />
 
             </section>
           </section>

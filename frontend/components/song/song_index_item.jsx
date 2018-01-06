@@ -4,7 +4,6 @@ class SongIndexItem extends React.Component {
 
   render() {
     const { paused, handleTogglePlayback, song } = this.props;
-    console.log("LOOK AT ME", paused);
     const { title, artist, imageUrl, audioUrl } = song;
 
     return (
