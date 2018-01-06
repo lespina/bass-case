@@ -1,7 +1,12 @@
 import React from 'react';
 import Draggable from 'react-draggable';
 import { LOOP_ALL, LOOP_ONE } from '../../reducers/playback_reducer';
-import { PREVIOUS, NEXT, RECEIVE_POSITION, TOGGLE_PLAYBACK } from '../../actions/playback_actions';
+import {
+  RECEIVE_PLAYBACK_SONG,
+  RECEIVE_PLAYBACK_SONG_FROM_QUEUE,
+  PREVIOUS, NEXT, RECEIVE_POSITION,
+  TOGGLE_PLAYBACK, SEEK
+} from '../../actions/playback_actions';
 import PlayBarQueueContainer from './play_bar_queue_container';
 
 class PlayBar extends React.Component {
@@ -12,16 +17,33 @@ class PlayBar extends React.Component {
       start: new Date(0),
       time: new Date(0),
       queueVisible: "",
+      position: {},
+      key: 0,
     };
     this.increment = this.increment.bind(this);
     this.toggleTimer = this.toggleTimer.bind(this);
     this.toggleQueue = this.toggleQueue.bind(this);
     this.hideQueue = this.hideQueue.bind(this);
     this.handleDragEnd = this.handleDragEnd.bind(this);
+    this.offset = 0;
   }
 
   componentDidMount() {
     this.toggleTimer();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.playback.lastAction === SEEK) {
+      this.offset = this.getOffset(nextProps);
+      this.resetTime();
+    }
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    const { time, start } = nextState;
+    if (this.offset + time.getTime() - start.getTime() > this.props.playback.duration) {
+      this.props.next();
+    }
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -34,13 +56,22 @@ class PlayBar extends React.Component {
         return true;
       case PREVIOUS:
       case NEXT:
+      case RECEIVE_PLAYBACK_SONG:
+      case RECEIVE_PLAYBACK_SONG_FROM_QUEUE:
         if (this.state.start === nextState.start) {
+          this.offset = 0;
           this.resetTime();
+          this.setState({ key: this.state.key + 1 });
         }
         return true;
       default:
         return true;
     }
+  }
+
+  getOffset({ playback }) {
+    const { position } = playback;
+    return position;
   }
 
   format(numSeconds) {
@@ -108,28 +139,32 @@ class PlayBar extends React.Component {
   }
 
   parseSec(ms) {
+    if (ms < 0) { return 0; }
     return Math.floor(ms/1000);
   }
 
-  getSeekPos(normalizedPos) {
-    return Math.floor(normalizedPos / 100 * (this.props.playback.duration));
+  getProgressPos() {
+    return 100 * (this.state.time.getTime() + this.offset) / this.props.playback.duration;
   }
 
-  getProgressPos() {
-    return 100 * this.state.time.getTime() / this.props.playback.duration;
+  getHandlePos() {
+    return 100 * (this.state.time.getTime()) / this.props.playback.duration;
   }
 
   handleDragEnd(e, data) {
-    const { x, deltaX, lastX } = data;
-    debugger
+    const timelineRect = e.target.parentElement.getClientRects()[0];
+    const width = timelineRect.width;
+    const handleRect = e.target.getClientRects()[0];
+    const normalizedSeekPos = (handleRect.x - timelineRect.x) / width;
+    const seekPos = Math.floor(normalizedSeekPos * this.props.playback.duration);
+    this.props.seekTo(seekPos);
   }
 
   render() {
-    const { start, time } = this.state;
+    const { key, start, time } = this.state;
     const { songs, playback } = this.props;
     const { mute, playing, duration, position, shuffle, loop } = playback;
     const song = songs[playback.songQueue[playback.songIdx]];
-    console.log(this.state.time.getTime());
     if (!song) {
       return <div></div>;
     }
@@ -154,7 +189,7 @@ class PlayBar extends React.Component {
     }
 
     const progressWidth = { width: `${this.getProgressPos()}%` };
-    const handleLeftDist = { left: `${this.getProgressPos()}%` };
+    const handleLeftDist = { left: `${this.getHandlePos()}%` };
 
     return (
       <div>
@@ -169,12 +204,13 @@ class PlayBar extends React.Component {
               <div onClick={this.handleSimpleAction('toggleLoop')} className={`playbar-loop controls ${loopStatus}`}></div>
             </section>
             <span className="playbar-timeline-time-passed">
-             {this.format(this.parseSec(time.getTime()))}
+             {this.format(this.parseSec(this.offset + time.getTime()))}
             </span>
             <section className="playbar-timeline">
               <div className="progress-background"></div>
               <div className="progress-bar" style={progressWidth}></div>
               <Draggable
+                key={key}
                 axis="x"
                 bounds="parent"
                 onStop={this.handleDragEnd}
@@ -183,7 +219,7 @@ class PlayBar extends React.Component {
               </Draggable>
             </section>
             <div className="playbar-timeline-time-left">
-              -{this.format(this.parseSec(duration - time.getTime()))}
+              -{this.format(this.parseSec(duration - this.offset - time.getTime()))}
             </div>
             <div className={`playbar-volume ${muteStatus}`}>
               <div onClick={this.handleSimpleAction('toggleMute')} className="volume-mute-div">Content</div>
