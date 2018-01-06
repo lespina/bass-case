@@ -43,7 +43,6 @@ class SortablePlayBarQueue extends React.Component {
       axis={"y"}
       lockAxis
       useDragHandle={true}
-      hideSortableGhost={false}
     />;
   }
 }
