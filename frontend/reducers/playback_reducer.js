@@ -71,7 +71,6 @@ const playbackReducer = (state = initialState, action) => {
           break;
       }
       newState.position = 0;
-      newState.unshuffled = newState.songQueue;
       newState.lastAction = action.type;
       newState.playing = true;
       return newState;
@@ -83,14 +82,16 @@ const playbackReducer = (state = initialState, action) => {
     case TOGGLE_SHUFFLE:
       newState = _.merge({}, state);
       newState.shuffle = !newState.shuffle;
-      const { songQueue, songIdx } = newState;
+      const { songQueue, songIdx, unshuffled } = newState;
       if (newState.shuffle) {
         const currentSong = songQueue[songIdx];
         songQueue.splice(songIdx, 1);
         newState.songQueue = [currentSong].concat(shuffle(songQueue));
         newState.songIdx = 0;
       } else {
-        newState.songQueue = newState.unshuffled;
+        const songId = songQueue[songIdx];
+        newState.songIdx = unshuffled.indexOf(songId);
+        newState.songQueue = newState.unshuffled.slice(0);
       }
       newState.lastAction = action.type;
       return newState;
