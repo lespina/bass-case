@@ -1,4 +1,5 @@
 import React from 'react';
+import Draggable from 'react-draggable';
 import { LOOP_ALL, LOOP_ONE } from '../../reducers/playback_reducer';
 import { PREVIOUS, NEXT, RECEIVE_POSITION, TOGGLE_PLAYBACK } from '../../actions/playback_actions';
 import PlayBarQueueContainer from './play_bar_queue_container';
@@ -16,6 +17,7 @@ class PlayBar extends React.Component {
     this.toggleTimer = this.toggleTimer.bind(this);
     this.toggleQueue = this.toggleQueue.bind(this);
     this.hideQueue = this.hideQueue.bind(this);
+    this.handleDragEnd = this.handleDragEnd.bind(this);
   }
 
   componentDidMount() {
@@ -109,12 +111,25 @@ class PlayBar extends React.Component {
     return Math.floor(ms/1000);
   }
 
+  getSeekPos(normalizedPos) {
+    return Math.floor(normalizedPos / 100 * (this.props.playback.duration));
+  }
+
+  getProgressPos() {
+    return 100 * this.state.time.getTime() / this.props.playback.duration;
+  }
+
+  handleDragEnd(e, data) {
+    const { x, deltaX, lastX } = data;
+    debugger
+  }
+
   render() {
     const { start, time } = this.state;
     const { songs, playback } = this.props;
     const { mute, playing, duration, position, shuffle, loop } = playback;
     const song = songs[playback.songQueue[playback.songIdx]];
-
+    console.log(this.state.time.getTime());
     if (!song) {
       return <div></div>;
     }
@@ -138,34 +153,34 @@ class PlayBar extends React.Component {
         loopStatus = "brown";
     }
 
+    const progressWidth = { width: `${this.getProgressPos()}%` };
+    const handleLeftDist = { left: `${this.getProgressPos()}%` };
+
     return (
       <div>
         <div className="playbar-bg">Playbar Background</div>
         <div className="full-width-container">
           <section className={`playbar ${this.state.queueVisible}`}>
             <section className="playbar-control-buttons">
-              <div onClick={this.handleSimpleAction('previous')} className="playbar-prev controls">
-
-              </div>
-              <div onClick={this.handleSimpleAction('togglePlayback')} className={`playbar-play controls ${buttonStatus}`}>
-
-              </div>
-              <div onClick={this.handleSimpleAction('next')} className="playbar-next controls">
-
-              </div>
-              <div onClick={this.handleSimpleAction('toggleShuffle')} className={`playbar-shuffle controls ${shuffleStatus}`}>
-
-              </div>
-              <div onClick={this.handleSimpleAction('toggleLoop')} className={`playbar-loop controls ${loopStatus}`}>
-
-              </div>
+              <div onClick={this.handleSimpleAction('previous')} className="playbar-prev controls"></div>
+              <div onClick={this.handleSimpleAction('togglePlayback')} className={`playbar-play controls ${buttonStatus}`}></div>
+              <div onClick={this.handleSimpleAction('next')} className="playbar-next controls"></div>
+              <div onClick={this.handleSimpleAction('toggleShuffle')} className={`playbar-shuffle controls ${shuffleStatus}`}></div>
+              <div onClick={this.handleSimpleAction('toggleLoop')} className={`playbar-loop controls ${loopStatus}`}></div>
             </section>
             <span className="playbar-timeline-time-passed">
              {this.format(this.parseSec(time.getTime()))}
             </span>
             <section className="playbar-timeline">
               <div className="progress-background"></div>
-              <div className="progress-bar"></div>
+              <div className="progress-bar" style={progressWidth}></div>
+              <Draggable
+                axis="x"
+                bounds="parent"
+                onStop={this.handleDragEnd}
+                >
+                  <div className="progress-handle" style={handleLeftDist}></div>
+              </Draggable>
             </section>
             <div className="playbar-timeline-time-left">
               -{this.format(this.parseSec(duration - time.getTime()))}
