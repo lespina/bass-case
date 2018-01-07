@@ -63,6 +63,9 @@ class PlayBar extends React.Component {
           this.resetTime();
           this.setState({ key: this.state.key + 1 });
         }
+        if (this.props.playback.playing !== nextProps.playback.playing) {
+          this.toggleTimer(nextProps);
+        }
         return true;
       default:
         return true;
@@ -103,6 +106,7 @@ class PlayBar extends React.Component {
     } else {
       playing = nextProps.playback.playing;
     }
+
     if (playing) {
       this.timer = window.setInterval(this.increment, 1000);
     } else {
@@ -248,7 +252,7 @@ class PlayBar extends React.Component {
               </div>
 
               <PlayBarQueueContainer
-                hideQueue={this.hideQueue}                
+                hideQueue={this.hideQueue}
               />
 
             </section>
