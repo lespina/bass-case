@@ -31,7 +31,7 @@ class PlayBarQueue extends React.Component {
   }
 
   render() {
-    const { clearQueue, hideQueue, handleTogglePlayback, songs, playing, songIdx } = this.props;
+    const { clearQueue, hideQueue, handleTogglePlayback, songs, playing, songIdx, receiveNewPlaybackSongs } = this.props;
     const paused = ((playing) ? "paused" : "");
 
     return (
@@ -39,6 +39,7 @@ class PlayBarQueue extends React.Component {
         <div className="queue">
           <section className="queue-panel">
             <div className="queue-title">Next up</div>
+            <button onClick={receiveNewPlaybackSongs} type="button" className="bc-btn queue-clear">Refresh</button>
             <button onClick={clearQueue} type="button" className="bc-btn queue-clear">Clear</button>
             <button onClick={hideQueue} type="button" className="bc-btn queue-hide">Hide queue</button>
           </section>

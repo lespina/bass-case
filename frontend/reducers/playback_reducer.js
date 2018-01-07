@@ -13,6 +13,7 @@ import {
   TOGGLE_MUTE,
   RECEIVE_VOLUME,
   RECEIVE_PLAYBACK_SONGS,
+  RECEIVE_NEW_PLAYBACK_SONGS,
   RECEIVE_PLAYBACK_SONG,
   RECEIVE_PLAYBACK_SONG_FROM_QUEUE,
   CLEAR_QUEUE,
@@ -135,10 +136,22 @@ const playbackReducer = (state = initialState, action) => {
       newState.position = 0;
       newState.lastAction = action.type;
       return newState;
+    case RECEIVE_NEW_PLAYBACK_SONGS:
+      newState = _.merge({}, state);
+      const oldSongIdx = state.songIdx;
+      newState.songQueue =
+        state.songQueue.slice(oldSongIdx, oldSongIdx + 1)
+        .concat(shuffle(Object.keys(action.songs)));
+      newState.unshuffled = newState.songQueue.slice(0);
+      newState.shuffle = false;
+      newState.songIdx = 0;
+      newState.position = 0;
+      newState.lastAction = action.type;
+      return newState;
     case RECEIVE_PLAYBACK_SONG:
       newState = _.merge({}, state);
       newState.songQueue.splice(state.songIdx + 1, 0, action.songId.toString());
-      newState.unshuffled = newState.songQueue.slice(0);
+      newState.unshuffled.push(action.songId.toString());
       newState.position = 0;
       newState.lastAction = action.type;
       newState.playing = true;
@@ -155,6 +168,7 @@ const playbackReducer = (state = initialState, action) => {
       newState = _.merge({}, state);
       newState.songQueue = [state.songQueue[state.songIdx]];
       newState.unshuffled = newState.songQueue.slice(0);
+      newState.shuffle = false;
       newState.songIdx = 0;
       newState.lastAction = action.type;
       return newState;

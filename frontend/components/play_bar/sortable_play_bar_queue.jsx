@@ -24,6 +24,7 @@ class SortablePlayBarQueue extends React.Component {
       songIdx,
       togglePlayback,
       receivePlaybackSong,
+      receiveNewPlaybackSongs,
       clearQueue,
       hideQueue
     } = this.props;
@@ -37,11 +38,11 @@ class SortablePlayBarQueue extends React.Component {
       songIdx={songIdx}
       togglePlayback={togglePlayback}
       receivePlaybackSong={receivePlaybackSong}
+      receiveNewPlaybackSongs={receiveNewPlaybackSongs.bind(this, songs)}
       clearQueue={clearQueue}
       hideQueue={hideQueue}
       onSortEnd={this.onSortEnd.bind(this)}
-      axis={"y"}
-      lockAxis
+      axis="y"
       useDragHandle={true}
     />;
   }

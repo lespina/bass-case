@@ -16,6 +16,7 @@ export const RECEIVE_VOLUME = "RECEIVE_VOLUME";
 export const RECEIVE_PLAYBACK_SONGS = "RECEIVE_PLAYBACK_SONGS";
 export const RECEIVE_PLAYBACK_SONG = "RECEIVE_PLAYBACK_SONG";
 export const RECEIVE_PLAYBACK_SONG_FROM_QUEUE = "RECEIVE_PLAYBACK_SONG_FROM_QUEUE";
+export const RECEIVE_NEW_PLAYBACK_SONGS = "RECEIVE_NEW_PLAYBACK_SONGS";
 
 export const CLEAR_QUEUE = "CLEAR_QUEUE";
 export const UPDATE_QUEUE = "UPDATE_QUEUE";
@@ -66,6 +67,11 @@ export const receiveVolume = (volume) => ({
 
 export const receivePlaybackSongs = (songs) => ({
   type: RECEIVE_PLAYBACK_SONGS,
+  songs
+});
+
+export const receiveNewPlaybackSongs = (songs) => ({
+  type: RECEIVE_NEW_PLAYBACK_SONGS,
   songs
 });
 
