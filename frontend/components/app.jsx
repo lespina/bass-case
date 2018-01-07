@@ -25,24 +25,26 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className={"full-width" + ((this.state.modalOpen) ? " modal-open" : "")}>
+      <div>
         <Route path="/" component={NavBar} />
-        {/* <GreetingContainer /> */}
+        <div className={"full-width" + ((this.state.modalOpen) ? " modal-open" : "")}>
+          {/* <GreetingContainer /> */}
 
 
-        <AuthRoute path="/" component={Landing} />
-        <AuthRoute path="/login" component={SessionFormContainer} toggleModalOpen={this.toggleModalOpen}/>
-        <AuthRoute path="/signup" component={SessionFormContainer} toggleModalOpen={this.toggleModalOpen} />
+          <AuthRoute path="/" component={Landing} />
+          <AuthRoute path="/login" component={SessionFormContainer} toggleModalOpen={this.toggleModalOpen}/>
+          <AuthRoute path="/signup" component={SessionFormContainer} toggleModalOpen={this.toggleModalOpen} />
 
-        <ProtectedRoute path="/upload" component={Upload}/>
+          <ProtectedRoute path="/upload" component={Upload}/>
 
-        <PlayBarContainer/>
-        <PlaybackContainer/>
+          <PlayBarContainer/>
+          <PlaybackContainer/>
 
-        {/* TODO: Delete this later.  It is solely for filling the page to be able to scroll at the moment. */}
-        {/* <div className="full-width-container">
-          <div className="allow-scroll"></div>
-        </div> */}
+          {/* TODO: Delete this later.  It is solely for filling the page to be able to scroll at the moment. */}
+          {/* <div className="full-width-container">
+            <div className="allow-scroll"></div>
+          </div> */}
+        </div>
       </div>
     );
   }
