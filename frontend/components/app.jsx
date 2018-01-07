@@ -1,4 +1,5 @@
 import React from 'react';
+import { Route } from 'react-router-dom';
 import { AuthRoute, ProtectedRoute } from '../util/route_util';
 import GreetingContainer from './greeting/greeting_container';
 import SessionFormContainer from './session_form/session_form_container';
@@ -6,7 +7,7 @@ import Landing from './landing_page/landing';
 import Upload from './upload/upload';
 import PlayBarContainer from './play_bar/play_bar_container';
 import PlaybackContainer from './play_bar/playback_container';
-// import SongIndexContainer from './song/song_index_container';
+import NavBar from './nav_bar/nav_bar';
 
 class App extends React.Component {
   constructor(props) {
@@ -25,7 +26,9 @@ class App extends React.Component {
   render() {
     return (
       <div className={"full-width" + ((this.state.modalOpen) ? " modal-open" : "")}>
-        <GreetingContainer />
+        <Route path="/" component={NavBar} />
+        {/* <GreetingContainer /> */}
+
 
         <AuthRoute path="/" component={Landing} />
         <AuthRoute path="/login" component={SessionFormContainer} toggleModalOpen={this.toggleModalOpen}/>
