@@ -5,8 +5,12 @@ import PlayBarQueue from './play_bar_queue';
 class SortablePlayBarQueue extends React.Component {
   onSortEnd({oldIndex, newIndex}) {
     let songIdx = this.props.songIdx;
-    if (this.props.songIdx === oldIndex) {
+    if (songIdx === oldIndex) {
       songIdx = newIndex;
+    } else if (songIdx === newIndex && oldIndex < songIdx) {
+      songIdx -= 1;
+    } else if (songIdx === newIndex && oldIndex > songIdx) {
+      songIdx += 1;
     }
 
     this.props.updateQueue(
