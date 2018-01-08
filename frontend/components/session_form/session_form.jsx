@@ -6,6 +6,7 @@ const USERNAME = "USERNAME";
 const PASSWORD = "PASSWORD";
 
 class SessionForm extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -24,7 +25,7 @@ class SessionForm extends React.Component {
   }
 
   componentDidMount() {
-    this.props.toggleModalOpen();
+    document.body.classList.toggle('modal-open');
 
     let { classList: origClassList } = _.merge({}, this.state);
 
@@ -37,8 +38,8 @@ class SessionForm extends React.Component {
     }, 585);
   }
 
-  componentWillUnMount() {
-    this.props.updateAppClass("");
+  componentWillUnmount() {
+    document.body.classList.toggle('modal-open');
   }
 
   handleSubmit(e) {
@@ -69,7 +70,6 @@ class SessionForm extends React.Component {
   handleCancel() {
     let { classList: origClassList } = _.merge({}, this.state);
 
-    this.props.toggleModalOpen();
     const classList = origClassList.concat(["session-form-exit"]);
     const show = false;
     this.setState({ classList, show });

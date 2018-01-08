@@ -13,21 +13,9 @@ import NavBar from './nav_bar/nav_bar';
 import UserShow from './user_show_page/user_show';
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      modalOpen: false,
-    };
-
-    this.toggleModalOpen = this.toggleModalOpen.bind(this);
-  }
 
   componentDidMount() {
     this.props.fetchUsers();
-  }
-
-  toggleModalOpen() {
-    this.setState({ modalOpen: !this.state.modalOpen });
   }
 
   render() {
@@ -38,11 +26,11 @@ class App extends React.Component {
     return (
       <div>
         <Route path="/" component={NavBar} />
-        <div className={"full-width" + ((this.state.modalOpen) ? " modal-open" : "")}>
+        <div className="full-width">
 
-          <AuthRoute path="/" component={Landing} toggleModalOpen={this.toggleModalOpen}/>
-          <AuthRoute path="/login" component={SessionFormContainer} toggleModalOpen={this.toggleModalOpen}/>
-          <AuthRoute path="/signup" component={SessionFormContainer} toggleModalOpen={this.toggleModalOpen}/>
+          <AuthRoute path="/" component={Landing}/>
+          <AuthRoute path="/login" component={SessionFormContainer}/>
+          <AuthRoute path="/signup" component={SessionFormContainer}/>
 
           <Switch>
             <ProtectedRoute path="/users/:id" component={UserShow} onRootPage={this.props.onRootPage} />

@@ -5,6 +5,7 @@ import {
   TOGGLE_SHUFFLE,
   TOGGLE_LOOP,
   RECEIVE_VOLUME,
+  RECEIVE_NEW_PLAYBACK_SONGS,
   UPDATE_QUEUE,
   CLEAR_QUEUE
 } from '../../actions/playback_actions';
@@ -28,6 +29,7 @@ class Playback extends React.Component {
     switch (lastAction) {
       case RECEIVE_POSITION:
       case RECEIVE_DURATION:
+      case RECEIVE_NEW_PLAYBACK_SONGS:
       case TOGGLE_SHUFFLE:
       case TOGGLE_LOOP:
       case UPDATE_QUEUE:
