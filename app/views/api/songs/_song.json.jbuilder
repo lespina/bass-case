@@ -4,3 +4,8 @@ json.title song.title
 json.imageUrl song.image.url
 json.audioUrl song.audio.url
 json.createdAt song.created_at
+json.numLikes song.likers.length
+
+if associations
+  json.likerIds song.liker_ids
+end

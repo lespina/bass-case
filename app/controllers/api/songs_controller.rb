@@ -4,9 +4,11 @@ require "mp3info"
 class Api::SongsController < ApplicationController
   def index
     if (params[:songIds])
-      @songs = Song.includes(:user).where(id: params[:songIds])
+      @songs = Song.includes(:user, :likers).where(id: params[:songIds])
+      @associations = true
     else
-      @songs = Song.includes(:user).all.order(created_at: :desc)
+      @songs = Song.includes(:user, :likers).all.order(created_at: :desc)
+      @associations = false
     end
   end
 

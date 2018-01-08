@@ -5,5 +5,3 @@ export const fetchPlaybackSongs = (songIds) => {
     data: { songIds }
   });
 };
-
-export const fetchPlaybackSong = fetchSong;

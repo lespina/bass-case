@@ -1,6 +1,6 @@
 class Api::UsersController < ApplicationController
   def index
-    @users = User.all
+    @users = User.includes(:songs, :liked_songs).all
   end
 
   def show
