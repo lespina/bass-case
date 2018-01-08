@@ -31,7 +31,7 @@ class PlayBarQueue extends React.Component {
   }
 
   render() {
-    const { clearQueue, hideQueue, handleTogglePlayback, songs, playing, songIdx, receiveNewPlaybackSongs } = this.props;
+    const { clearQueue, hideQueue, handleTogglePlayback, songs, playing, songIdx, receiveNewPlaybackSongs, users } = this.props;
     const paused = ((playing) ? "paused" : "");
 
     return (
@@ -51,9 +51,11 @@ class PlayBarQueue extends React.Component {
                   {
                     this.orderedSongs().map((song, idx) => {
                       const dimmed = ((idx === this.props.songIdx) ? "" : "dimmed");
+                      const artist = users[song.artistId];
                       return <QueueItem
                         key={idx}
                         index={idx}
+                        artist={artist}
                         song={song}
                         dimmed={dimmed}
                         handleTogglePlayback={this.handleTogglePlayback(idx)}

@@ -37,7 +37,8 @@ class SongIndex extends React.Component {
         <ul className="song-index">
           {
             this.props.songs.slice(0, 12).map((song, idx) => {
-              const { currentSongId, playing } = this.props;
+              const { currentSongId, playing, users } = this.props;
+              const artist = users[song.artistId];
 
               let paused;
               if (song.id !== parseInt(currentSongId) || !playing) {
@@ -53,6 +54,7 @@ class SongIndex extends React.Component {
                 handleTogglePlayback={this.handleTogglePlayback(song.id)}
                 paused={paused}
                 playing={playing}
+                artist={artist}
               />;
             }, this)
           }

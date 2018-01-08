@@ -1,5 +1,6 @@
 import React from 'react';
 import Draggable from 'react-draggable';
+import { Link } from 'react-router-dom';
 import { LOOP_ALL, LOOP_ONE } from '../../reducers/playback_reducer';
 import {
   RECEIVE_PLAYBACK_SONG,
@@ -166,12 +167,15 @@ class PlayBar extends React.Component {
 
   render() {
     const { key, start, time } = this.state;
-    const { songs, playback } = this.props;
+    const { songs, playback, users } = this.props;
     const { mute, playing, duration, position, shuffle, loop } = playback;
     const song = songs[playback.songQueue[playback.songIdx]];
+
     if (!song) {
       return <div></div>;
     }
+
+    const artist = users[song.artistId];
 
     const buttonStatus = ((playing) ? "playbar-pause" : "");
     const shuffleStatus = ((shuffle) ? "shuffle-toggle" : "");
@@ -237,7 +241,7 @@ class PlayBar extends React.Component {
                 <a className="playbar-image" href="#" style={{ backgroundImage: `url(${song.imageUrl})` }}>Artwork</a>
               </div>
               <section className="playbar-song-text-container">
-                <a className="playbar-artist truncate" href="#">{song.artist.username}</a>
+                <Link className="playbar-artist truncate" to={`/users/${artist.id}`}>{artist.username}</Link>
                 <a className="playbar-title truncate" href="#">{song.title}</a>
               </section>
               {/* <div className="playbar-like"></div> */}

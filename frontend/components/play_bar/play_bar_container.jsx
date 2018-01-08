@@ -17,6 +17,7 @@ import {
 
 const mapStateToProps = (state) => {
   return {
+    users: state.entities.users,
     songs: state.entities.songs,
     playback: state.ui.playback,
   };

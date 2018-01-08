@@ -1,5 +1,5 @@
 json.id song.id
-json.artist song.user
+json.artistId song.user_id
 json.title song.title
 json.imageUrl song.image.url
 json.audioUrl song.audio.url

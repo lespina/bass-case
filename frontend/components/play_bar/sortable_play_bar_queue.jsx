@@ -21,6 +21,7 @@ class SortablePlayBarQueue extends React.Component {
 
   render() {
     const {
+      users,
       songs,
       songQueue,
       currentSongId,
@@ -35,6 +36,7 @@ class SortablePlayBarQueue extends React.Component {
 
     return <PlayBarQueue
       handle=".queue-item-drag-handle"
+      users={users}
       songs={songs}
       songQueue={this.props.songQueue}
       currentSongId={currentSongId}
