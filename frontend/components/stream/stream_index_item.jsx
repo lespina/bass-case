@@ -5,7 +5,7 @@ import * as TimeFormatUtil from '../../util/time_format_util';
 class StreamIndexItem extends React.Component {
 
   render() {
-    const { song, artist, handleTogglePlayback, playing, currentSongId } = this.props;
+    const { song, artist, handleTogglePlayback, playing, currentSongId, addToNextUp } = this.props;
     const paused = ((playing && parseInt(currentSongId) === song.id) ? 'stream-paused' : '');
     const coverImage = { backgroundImage: `url(${song.imageUrl})` };
 
@@ -49,7 +49,7 @@ class StreamIndexItem extends React.Component {
               <div className="sound-actions">
                 <button type="button" className="bc-btn sound-actions-btn action-like active">433</button>
                 <button type="button" className="bc-btn sound-actions-btn action-repost ">65</button>
-                <button type="button" className="bc-btn sound-actions-btn action-next-up">Add to Next up</button>
+                <button onClick={addToNextUp.bind(null, song.id)} type="button" className="bc-btn sound-actions-btn action-next-up">Add to Next up</button>
               </div>
               <div className="sound-stats">
                 <div className="sound-stats-plays">15.4K</div>

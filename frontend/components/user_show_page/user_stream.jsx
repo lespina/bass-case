@@ -2,7 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import StreamIndex from '../stream/stream_index';
-import { togglePlayback, receivePlaybackSong } from '../../actions/playback_actions';
+import { togglePlayback, receivePlaybackSong, addToNextUp } from '../../actions/playback_actions';
 
 class UserStream extends React.Component {
   render() {
@@ -14,6 +14,7 @@ class UserStream extends React.Component {
             users={this.props.users}
             togglePlayback={this.props.togglePlayback}
             receivePlaybackSong={this.props.receivePlaybackSong}
+            addToNextUp={this.props.addToNextUp}
             currentSongId={this.props.currentSongId}
             playing={this.props.playing}
           />
@@ -50,6 +51,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => ({
   togglePlayback: () => dispatch(togglePlayback()),
   receivePlaybackSong: (songId) => dispatch(receivePlaybackSong(songId)),
+  addToNextUp: (songId) => dispatch(addToNextUp(songId)),
 });
 
 export default connect(

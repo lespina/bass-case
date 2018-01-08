@@ -13,6 +13,7 @@ import {
   receiveVolume,
   fetchPlaybackSongs
 } from '../../actions/playback_actions';
+import { fetchSongs } from '../../actions/song_actions';
 
 const mapStateToProps = (state) => {
   return {
@@ -27,6 +28,7 @@ const mapDispatchToProps = (dispatch) => {
     seekTo: (position) => dispatch(seekTo(position)),
     receivePosition: (duration) => dispatch(receivePosition(duration)),
     receiveDuration: (duration) => dispatch(receiveDuration(duration)),
+    fetchSongs: () => dispatch(fetchSongs()),
     fetchPlaybackSongs: (songIds) => dispatch(fetchPlaybackSongs(songIds)),
     fetchPlaybackSong: (songId) => dispatch(fetchPlaybackSong(songId)),
   };

@@ -15,6 +15,7 @@ import {
   RECEIVE_PLAYBACK_SONGS,
   RECEIVE_NEW_PLAYBACK_SONGS,
   RECEIVE_PLAYBACK_SONG,
+  ADD_TO_NEXT_UP,
   RECEIVE_PLAYBACK_SONG_FROM_QUEUE,
   CLEAR_QUEUE,
   UPDATE_QUEUE
@@ -156,6 +157,12 @@ const playbackReducer = (state = initialState, action) => {
       newState.lastAction = action.type;
       newState.playing = true;
       newState.songIdx += 1;
+      return newState;
+    case ADD_TO_NEXT_UP:
+      newState = _.merge({}, state);
+      newState.songQueue.splice(state.songIdx + 1, 0, action.songId.toString());
+      newState.unshuffled.push(action.songId.toString());
+      newState.lastAction = action.type;
       return newState;
     case RECEIVE_PLAYBACK_SONG_FROM_QUEUE:
       newState = _.merge({}, state);

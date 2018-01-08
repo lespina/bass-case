@@ -30,6 +30,8 @@ class StreamIndex extends React.Component {
                   handleTogglePlayback={this.handleTogglePlayback.bind(this)(song.id)}
                   currentSongId={this.props.currentSongId}
                   playing={this.props.playing}
+                  receivePlaybackSong={this.props.receivePlaybackSong}
+                  addToNextUp={this.props.addToNextUp}
                 />
               );
             }, this)

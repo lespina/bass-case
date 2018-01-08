@@ -19,6 +19,7 @@ class Playback extends React.Component {
   }
 
   componentDidMount() {
+    this.props.fetchSongs();
     this.props.fetchPlaybackSongs();
   }
 
