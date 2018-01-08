@@ -53,8 +53,10 @@ class UserShow extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   const userId = ownProps.match.params.id;
+  const currentUserId = ((state.session.currentUser) ? state.session.currentUser.id : null);
+
   return {
-    currentUserId: state.session.currentUser.id,
+    currentUserId,
     user: state.entities.users[userId],
   };
 };

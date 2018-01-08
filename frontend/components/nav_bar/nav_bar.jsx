@@ -12,6 +12,12 @@ class NavBar extends React.Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (!this.props.currentUser && Boolean(nextProps.currentUser)) {
+      this.props.fetchUser(nextProps.currentUser.id);
+    }
+  }
+
   render() {
     const { currentUser, logout, avatarUrl } = this.props;
 
@@ -47,14 +53,14 @@ class NavBar extends React.Component {
                 </NavLink>
 
 
-                <div className="nav-user-menu">
-                  <Link to={`/users/${currentUser.id}`} className="nav-user-button">
-                    <div className="nav-user-image">
-                      <span style={avatarImg}>Placeholder</span>
-                    </div>
-                    <div className="nav-user-username truncate">{currentUser.username}</div>
-                  </Link>
-                </div>
+                <Link to={`/users/${currentUser.id}`} className="nav-user-menu">
+                  <div className="nav-user-button">
+                      <div className="nav-user-image">
+                        <span style={avatarImg}>Placeholder</span>
+                      </div>
+                      <div className="nav-user-username truncate">{currentUser.username}</div>
+                  </div>
+                </Link>
 
                 <div onClick={logout} className="nav-sign-out">Sign Out</div>
                 {/* <a href="#" className="nav-notifications">Notifications</a>
