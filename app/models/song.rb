@@ -5,12 +5,17 @@
 #  id                 :integer          not null, primary key
 #  title              :string           not null
 #  user_id            :integer          not null
-#  image              :attachment
-#  audio              :attachment
+#  image_file_name    :string
+#  image_content_type :string
+#  image_file_size    :integer
+#  image_updated_at   :datetime
+#  audio_file_name    :string
+#  audio_content_type :string
+#  audio_file_size    :integer
+#  audio_updated_at   :datetime
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #
-
 
 class Song < ApplicationRecord
   DEFAULT_IMAGE_URL = "https://s3.amazonaws.com/basscase-dev/default-track-image.png"
@@ -18,6 +23,7 @@ class Song < ApplicationRecord
   validates :title, presence: true
 
   belongs_to :user
+  has_many :likes
 
   has_attached_file :image, styles: { medium: "500x500>" }, default_url: DEFAULT_IMAGE_URL
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\z/
