@@ -6,18 +6,6 @@ class UserHeroImage extends React.Component {
     super(props);
   }
 
-  updateImage(type) {
-    return (e) => {
-      e.preventDefault();
-      const file = e.currentTarget.files[0];
-      const formData = new FormData();
-      formData.append(`user[${type}_image]`);
-      if (file) {
-        this.props.updateUser(formData);
-      }
-    };
-  }
-
   location() {
     const { user } = this.props;
     if (user.location) {
@@ -35,7 +23,7 @@ class UserHeroImage extends React.Component {
         <div className="image-button">
           <div className="image-chooser">
             <label className="image-chooser-btn bc-btn" htmlFor="image-chooser-input-2">Update image</label>
-            <input id="image-chooser-input-2" onChange={this.updateImage("profile")} type="file"></input>
+            <input id="image-chooser-input-2" onChange={this.props.updateImage("profile")} type="file"></input>
           </div>
         </div>
       );
@@ -52,7 +40,7 @@ class UserHeroImage extends React.Component {
       return (
         <div className="image-chooser banner-image-chooser">
           <label className="image-chooser-btn bc-btn" htmlFor="image-chooser-input-1">Update image</label>
-          <input id="image-chooser-input-1" onChange={this.updateImage("banner")} type="file"></input>
+          <input id="image-chooser-input-1" onChange={this.props.updateImage("banner")} type="file"></input>
         </div>
       );
     } else {

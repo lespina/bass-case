@@ -16,6 +16,25 @@ class UserShow extends React.Component {
     this.fetched = true;
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.match.params.id !== this.props.match.params.id) {
+      this.props.fetchUser(nextProps.match.params.id);
+    }
+  }
+
+
+  updateImage(type) {
+    return (e) => {
+      e.preventDefault();
+      const file = e.currentTarget.files[0];
+      const formData = new FormData();
+      formData.append(`user[${type}_image]`, file);
+      if (file) {
+        this.props.updateUser(formData);
+      }
+    };
+  }
+
   render() {
     const { user, currentUserId } = this.props;
 
@@ -25,7 +44,7 @@ class UserShow extends React.Component {
 
     return (
       <div>
-        <UserHeroImage user={user} currentUserId={currentUserId}/>
+        <UserHeroImage user={user} currentUserId={currentUserId} updateUser={this.props.updateUser} updateImage={this.updateImage.bind(this)}/>
         <UserInfoBar user={user} currentUserId={currentUserId}/>
       </div>
     );

@@ -16,6 +16,8 @@ export const updateUser = (userId, formData) => {
   return $.ajax({
     url: `api/users/${userId}`,
     method: 'patch',
+    contentType: false,
+    processData: false,
     data: formData,
   });
 };

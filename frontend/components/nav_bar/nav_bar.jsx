@@ -2,13 +2,22 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink, Link, withRouter } from 'react-router-dom';
 import * as SessionActions from '../../actions/session_actions';
+import { fetchUser } from '../../actions/user_actions';
 
 class NavBar extends React.Component {
 
+  componentDidMount() {
+    if (this.props.currentUser) {
+      this.props.fetchUser(this.props.currentUser.id);
+    }
+  }
+
   render() {
-    const { currentUser, logout } = this.props;
+    const { currentUser, logout, avatarUrl } = this.props;
 
     if (currentUser === null) { return <div></div>; }
+
+    const avatarImg = ((avatarUrl) ? { backgroundImage: `url(${avatarUrl})` } : {});
 
     return (
       <div>
@@ -41,7 +50,7 @@ class NavBar extends React.Component {
                 <div className="nav-user-menu">
                   <Link to={`/users/${currentUser.id}`} className="nav-user-button">
                     <div className="nav-user-image">
-                      <span>Placeholder</span>
+                      <span style={avatarImg}>Placeholder</span>
                     </div>
                     <div className="nav-user-username truncate">{currentUser.username}</div>
                   </Link>
@@ -60,14 +69,19 @@ class NavBar extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
+  const currentUser = state.session.currentUser;
+  const avatarUrl = ((currentUser) ? state.entities.users[currentUser.id].avatarUrl : null);
+
   return {
-    currentUser: state.session.currentUser,
+    currentUser,
+    avatarUrl
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     logout: () => dispatch(SessionActions.logout()),
+    fetchUser: (userId) => dispatch(fetchUser(userId)),
   };
 };
 
