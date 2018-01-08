@@ -1,89 +1,135 @@
-.user-edit-form {
-  position: absolute;
-  justify-content: center;
-  padding: 25px;
-  background: #fff;
-  z-index: 2;
-  left: 0;
-  right: 0;
-  top: 100px;
-  margin: auto;
-  width: 850px;
-  height: auto;
-}
-
 .user-edit-form-enter {
-  top: -800px;
+  top: -2400px;
   animation-name: user-edit-drop;
-  animation-delay: 400ms;
-  animation-duration: 200ms;
+  animation-duration: 600ms;
 }
 
 .user-edit-form-exit {
   animation-name: user-edit-rise;
-  animation-duration: 400ms;
+  animation-duration: 500ms;
   top: -800px;
 }
 
 @keyframes user-edit-drop {
-  0% {top: -800px;}
-  100% {top: 0;}
+  0% {top: -2400px;}
+  50% {top: -1150px;}
+  100% {top: 100px;}
 }
 
 @keyframes user-edit-rise {
   0% {top: 100px;}
   33% {top: 150px;}
   66% {top: -275;}
-  100% {top: -700px;}
+  100% {top: -1000px;}
 }
+
+// -------------------- //
 
 .user-edit-form {
-  display: flex;
-  flex-direction: row;
+  display: block;
+  box-sizing: border-box;
+  padding: 25px;
+  background: #fff;
+  width: 850px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  top: 100px;
+  // height: auto;
 }
 
-.user-edit-form-label {
-  display: inline-block;
-  margin-bottom: 6px;
-  font-weight: 300;
-  font-size: 12px;
-  font-family: "Lucida Grande";
-}
-
-[class^="user-edit-input"] {
-  font-size: 18px;
-  line-height: 24px;
-  padding: 7px 8px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  transition: border-color .1s;
-  background-color: #fff;
-  color: #333;
-  width: 100%;
-  font-weight: 300;
-  margin: 5px 0;
-
-  width: 100%;
+.user-edit-form-content {
   position: relative;
-  z-index: 1;
-}
-
-[class^="user-edit-input"]:focus {
-  outline: 0;
-  border-color: #999;
-}
-
-.user-edit-input-username {
-  flex-grow: 1;
+  height: 335px;
+  font-weight: 300;
 }
 
 .user-edit-image {
   margin-right: 18px;
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  background-color: black;
+  float: left;
 }
 
-.user-edit-input-bio {
+.user-edit-form-base-inputs {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  overflow: hidden;
+}
+
+.user-edit-form-username {
+  width: 100%;
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.user-edit-form-username-label, .user-edit-form-location-label, .user-edit-form-bio-label {
+  display: inline-block;
+  margin-bottom: 6px;
+  font-size: 12px;
+  font-family: "Lucida Grande"
+}
+
+.user-edit-form-username-input {
+  display: inline-block;
+  border: 1px solid #ccc;
+  transition: border-color .1s;
+
+  box-sizing: border-box;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  font-size: 18px;
+  line-height: 24px;
+  padding: 7px 8px;
+  border-radius: 5px;
+}
+
+.user-edit-form-username-label:after {
+  content: '*';
+  color: #f50;
+  display: inline-block;
+  margin-left: 2px;
+}
+
+.user-edit-form-location {
+  width: 50%;
+}
+
+.user-edit-form-location-input {
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  font-size: 14px;
+  line-height: 20px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  transition: border-color .1s;
+  margin-bottom: 15px;
+}
+
+.user-edit-form-bio {
+  width: 100%;
+}
+
+.user-edit-form-bio-input {
+  margin: 0;
   resize: vertical;
   height: 66px;
+  width: 100%;
+  position: relative;
+  z-index: 1;
   display: inline-block;
   font-size: 14px;
   line-height: 20px;
@@ -93,8 +139,47 @@
   transition: border-color .1s;
 }
 
+.user-edit-form-title {
+  font-size: 22px;
+  line-height: 1;
+  padding-bottom: 9px;
+  border-bottom: 1px solid #f2f2f2;
+  margin-bottom: 24px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.user-edit-form-partition {
+  border-bottom: 1px solid #f2f2f2;
+  padding-bottom: 6px;
+}
+
 .user-edit-form-buttons {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
+  padding: 20px 25px 0;
+  margin: 0 -25px;
+  position: relative;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+}
+
+.user-edit-form-cancel-btn {
+  float: left;
+  margin-right: 5px;
+  border: 0;
+  background: 0 0;
+  transition: none;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
+.user-edit-form-save-btn {
+  margin-right: 0;
+  float: left;
+  background-color: #f50;
+  border-color: #f50;
+  color: #fff;
 }

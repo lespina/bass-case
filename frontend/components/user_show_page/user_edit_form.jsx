@@ -23,6 +23,7 @@ class UserEditForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
     this.handleEscCancel = this.handleEscCancel.bind(this);
+    this.updateImage = this.updateImage.bind(this);
   }
 
   componentDidMount() {
@@ -114,30 +115,30 @@ class UserEditForm extends React.Component {
     return (
       <div className="image-button">
         <div className="image-chooser">
-          <label className="image-chooser-btn bc-btn" htmlFor="image-chooser-input-1">Update image</label>
-          <input id="image-chooser-input-1" onChange={this.updateImage} type="file"></input>
+          <label className="image-chooser-btn bc-btn" htmlFor="image-chooser-input-3">Update image</label>
+          <input id="image-chooser-input-3" onChange={this.updateImage} type="file"></input>
         </div>
       </div>
     );
   }
 
-  input() {
+  inputs() {
     const { username, bio, location, isSaving } = this.state;
     const disabled = ((isSaving) ? { disabled: "disabled" } : {});
 
     return (
-      <div className="user-edit-form-inputs">
-        <div className="user-edit-username">
-          <label className="user-edit-form-label" htmlFor={`user-edit-form-username`}>Username</label>
-          <input onKeyUp={this.handelEscCancel} onChange={this.handleChange('username')} id={`user-edit-form-username`} className="user-edit-input-username" type="text" value={username} {...disabled}></input>
+      <div className="user-edit-form-base-inputs">
+        <div className="user-edit-form-username">
+          <label htmlFor="user-edit-username" className="user-edit-form-username-label">Username</label>
+          <input onKeyUp={this.handelEscCancel} onChange={this.handleChange('username')} value={username} {...disabled} className="user-edit-form-username-input" type="text" id="user-edit-username"></input>
         </div>
-        <div className="user-edit-location">
-          <label className="user-edit-form-label" htmlFor={`user-edit-form-location`}>Location</label>
-          <input onKeyUp={this.handelEscCancel} onChange={this.handleChange('location')} id={`user-edit-form-location`} className="user-edit-input-location" type="text" value={location} {...disabled}></input>
+        <div className="user-edit-form-location">
+          <label htmlFor="user-edit-location" className="user-edit-form-location-label">Location</label>
+          <input onKeyUp={this.handelEscCancel} onChange={this.handleChange('location')} value={location} {...disabled} className="user-edit-form-location-input" type="text" id="user-edit-location"></input>
         </div>
-        <div className="user-edit-bio">
-          <label className="user-edit-form-label" htmlFor={`user-edit-form-bio`}>Bio</label>
-          <textarea onKeyUp={this.handelEscCancel} onChange={this.handleChange('bio')} id={`user-edit-form-bio`} className="user-edit-input-bio" type="text" value={bio} {...disabled}></textarea>
+        <div className="user-edit-form-bio">
+          <label htmlFor="user-edit-bio" className="user-edit-form-bio-label">Bio</label>
+          <textarea onKeyUp={this.handelEscCancel} onChange={this.handleChange('bio')} value={bio} {...disabled} className="user-edit-form-bio-input" type="text" id="user-edit-bio"></textarea>
         </div>
       </div>
     );
@@ -157,17 +158,24 @@ class UserEditForm extends React.Component {
           <button className="modal-close-button"></button>
         </div>
 
-        <form className={`user-edit-form ${classList.join(' ')}`} onSubmit={this.handleSubmit}>
-          <div className="user-header-details-avatar-image user-edit-image" style={avatarImg}>
-            {this.avatarChooser()}
+        <form className={`session-form user-edit-form ${classList.join(' ')}`} onSubmit={this.handleSubmit}>
+          <div className="user-edit-form-content">
+            <h2 className="user-edit-form-title truncate">Edit your Profile</h2>
+            <div className="user-edit-form-settings">
+              <div className="user-header-details-avatar-image user-edit-image" style={avatarImg}>
+                {this.avatarChooser()}
+              </div>
+              {this.inputs()}
+            </div>
           </div>
-          {this.input()}
-          {this.errors()}
+          <div className="user-edit-form-partition"></div>
           <div className="user-edit-form-buttons">
-            <button className="bc-btn user-edit-cancel" onClick={this.handleCancel} type="button">Cancel</button>
-            <button className="bc-btn" type="submit">Save</button>
+            <button className="bc-btn user-edit-form-cancel-btn" onClick={this.handleCancel} type="button" name="button">Cancel</button>
+            <button className="bc-btn user-edit-form-save-btn" type="submit">Save</button>
           </div>
         </form>
+
+
       </section>
     );
   }
