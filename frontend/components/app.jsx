@@ -44,8 +44,10 @@ class App extends React.Component {
           <AuthRoute path="/login" component={SessionFormContainer} toggleModalOpen={this.toggleModalOpen}/>
           <AuthRoute path="/signup" component={SessionFormContainer} toggleModalOpen={this.toggleModalOpen}/>
 
-          <Route path="/users/:id" component={UserShow} />
-          <ProtectedRoute path="/upload" component={Upload}/>
+          <Switch>
+            <ProtectedRoute path="/users/:id" component={UserShow} onRootPage={this.props.onRootPage} />
+            <ProtectedRoute path="/upload" component={Upload}/>
+          </Switch>
 
           <PlayBarContainer/>
           <PlaybackContainer/>
@@ -57,7 +59,8 @@ class App extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  users: state.entities.users
+  users: state.entities.users,
+  onRootPage: state.session.onRootPage
 });
 
 const mapDispatchToProps = (dispatch) => ({

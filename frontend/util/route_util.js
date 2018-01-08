@@ -30,7 +30,9 @@ const Auth = (origProps) => {
 };
 
 const Protected = (origProps) => {
-  const { component: Component, path, loggedIn } = origProps;
+  const { component: Component, path, loggedIn, onRootPage } = origProps;
+
+  const newPath = (onRootPage ? '/login' : '/');
 
   const ownProps = Object.assign({}, origProps);
   delete ownProps.component;
@@ -43,7 +45,7 @@ const Protected = (origProps) => {
         loggedIn ? (
           <Component {...props} {...ownProps} />
         ) : (
-          <Redirect to="/" />
+          <Redirect to={newPath} />
         )
       );
     }}/>
