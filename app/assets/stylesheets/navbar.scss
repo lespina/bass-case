@@ -51,6 +51,10 @@
   box-sizing: border-box;
 }
 
+.nav-home:hover, .nav-upload:hover {
+  color: white;
+}
+
 .nav-selected {
   color: white !important;
   background-color: #111 !important;
