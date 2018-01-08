@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 class StreamIndexItem extends React.Component {
 
   render() {
-    const { song, artist } = this.props;
+    const { song, artist, handleTogglePlayback, playing, currentSongId } = this.props;
+    const paused = ((playing && parseInt(currentSongId) === song.id) ? 'stream-paused' : '');
     const coverImage = { backgroundImage: `url(${song.imageUrl})` };
 
     return (
@@ -20,7 +21,7 @@ class StreamIndexItem extends React.Component {
           <div className="stream-index-item-content">
             <div className="stream-index-item-header">
               <div className="sound-title-container">
-                <div className="bc-btn sound-title-play-btn"></div>
+                <div onClick={handleTogglePlayback} className={`bc-btn sound-title-play-btn ${paused}`}></div>
                 <div className="sound-title-info-container">
                   <div className="sound-title-info-first">
                     <Link to={`/users/${artist.id}`} className="sound-title-username1">{artist.username}</Link>

@@ -6,6 +6,7 @@ class SongIndexItem extends React.Component {
   render() {
     const { paused, handleTogglePlayback, song, artist } = this.props;
     const { title, imageUrl, audioUrl } = song;
+    const timestamp = song.createdAt;
 
     return (
       <li className="song-index-item">

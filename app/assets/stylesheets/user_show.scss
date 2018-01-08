@@ -332,7 +332,7 @@
   transition: opacity .5s;
 }
 
-.sound-title-play-btn.paused:before {
+.sound-title-play-btn.stream-paused:before {
   background-image: image-url('pause.svg');
   background-position: 45% 50%;
 }

@@ -7,6 +7,7 @@
   bottom: 0;
   height: 48px;
   width: 100vw;
+  z-index: 2;
 }
 
 .playbar {
@@ -20,6 +21,7 @@
   margin: 0 auto;
   width: 1240px;
   flex-shrink: 0;
+  z-index: 3;
 }
 
 .playbar-control-buttons {
