@@ -1,0 +1,100 @@
+.user-edit-form {
+  position: absolute;
+  justify-content: center;
+  padding: 25px;
+  background: #fff;
+  z-index: 2;
+  left: 0;
+  right: 0;
+  top: 100px;
+  margin: auto;
+  width: 850px;
+  height: auto;
+}
+
+.user-edit-form-enter {
+  top: -800px;
+  animation-name: user-edit-drop;
+  animation-delay: 400ms;
+  animation-duration: 200ms;
+}
+
+.user-edit-form-exit {
+  animation-name: user-edit-rise;
+  animation-duration: 400ms;
+  top: -800px;
+}
+
+@keyframes user-edit-drop {
+  0% {top: -800px;}
+  100% {top: 0;}
+}
+
+@keyframes user-edit-rise {
+  0% {top: 100px;}
+  33% {top: 150px;}
+  66% {top: -275;}
+  100% {top: -700px;}
+}
+
+.user-edit-form {
+  display: flex;
+  flex-direction: row;
+}
+
+.user-edit-form-label {
+  display: inline-block;
+  margin-bottom: 6px;
+  font-weight: 300;
+  font-size: 12px;
+  font-family: "Lucida Grande";
+}
+
+[class^="user-edit-input"] {
+  font-size: 18px;
+  line-height: 24px;
+  padding: 7px 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  transition: border-color .1s;
+  background-color: #fff;
+  color: #333;
+  width: 100%;
+  font-weight: 300;
+  margin: 5px 0;
+
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+[class^="user-edit-input"]:focus {
+  outline: 0;
+  border-color: #999;
+}
+
+.user-edit-input-username {
+  flex-grow: 1;
+}
+
+.user-edit-image {
+  margin-right: 18px;
+}
+
+.user-edit-input-bio {
+  resize: vertical;
+  height: 66px;
+  display: inline-block;
+  font-size: 14px;
+  line-height: 20px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  transition: border-color .1s;
+}
+
+.user-edit-form-buttons {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}

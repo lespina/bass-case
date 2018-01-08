@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 
 class UserInfoBar extends React.Component {
   constructor(props) {
@@ -25,7 +25,7 @@ class UserInfoBar extends React.Component {
 
     if (isCurrentUser) {
       return (
-        <button type="button" className="bc-btn user-info-edit-btn">Edit</button>
+        <Link to={`/users/${user.id}/edit`} className="bc-btn user-info-edit-btn">Edit</Link>
       );
     } else {
       return <div></div>;

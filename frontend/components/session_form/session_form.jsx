@@ -174,21 +174,19 @@ class SessionForm extends React.Component {
   render() {
     const { classList, show, inputType } = this.state;
     return (
-      <div>
-        <section className={`modal ${(show) ? "show" : ""}`}>
-          <div onClick={this.handleCancel} className="modal show cancel-background">
-            <button className="modal-close-button"></button>
-          </div>
+      <section className={`modal ${(show) ? "show" : ""}`}>
+        <div onClick={this.handleCancel} className="modal show cancel-background">
+          <button className="modal-close-button"></button>
+        </div>
 
-          <form className={`session-form ${classList.join(' ')}`} onSubmit={this.handleSubmit}>
-            {this.input()}
-            {this.errors()}
-            <button type="submit">Continue</button>
-            {(inputType === USERNAME) ? this.formText() : ""}
-            {this.demoSignIn()}
-          </form>
-        </section>
-      </div>
+        <form className={`session-form ${classList.join(' ')}`} onSubmit={this.handleSubmit}>
+          {this.input()}
+          {this.errors()}
+          <button type="submit">Continue</button>
+          {(inputType === USERNAME) ? this.formText() : ""}
+          {this.demoSignIn()}
+        </form>
+      </section>
     );
   }
 }

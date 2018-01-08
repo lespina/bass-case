@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { Route, withRouter } from 'react-router-dom';
 import { fetchUser, updateUser } from '../../actions/user_actions';
 import UserHeroImage from './user_hero_image';
 import UserInfoBar from './user_info_bar';
 import UserMainContent from './user_main_content';
+import UserEditForm from './user_edit_form';
 
 class UserShow extends React.Component {
   constructor(props) {
@@ -47,6 +48,7 @@ class UserShow extends React.Component {
       <div>
         <UserHeroImage user={user} currentUserId={currentUserId} updateUser={this.props.updateUser} updateImage={this.updateImage.bind(this)}/>
         <UserInfoBar user={user} currentUserId={currentUserId}/>
+        <Route path={`/users/${user.id}/edit`} component={UserEditForm}/>
         <UserMainContent user={user} currentUserId={currentUserId}/>
       </div>
     );
