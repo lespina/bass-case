@@ -197,6 +197,7 @@ class PlayBar extends React.Component {
 
     return (
       <div>
+        <div className="bottom-filler"/>
         <div className="playbar-bg">Playbar Background</div>
         <div className="full-width-container">
           <section className={`playbar ${this.state.queueVisible}`}>

@@ -17,11 +17,12 @@
 class User < ApplicationRecord
   DEFAULT_PROFILE_IMAGE_URL = "https://s3.amazonaws.com/basscase-dev/default-track-image.png"
 
-  # has_attached_file :profile_image, styles: { medium: "500x500>" }, default_url: DEFAULT_PROFILE_IMAGE_URL
-  # validates_attachment_content_type :image, content_type: /\Aimage\/.*\z/
-  #
-  # has_attached_file :banner_image, styles: { large: "#1240x260" }, default_url: DEFAULT_BANNER_IMAGE_URL
-  # validates_attachment_content_type :image, content_type: /\Aimage\/.*\z/
+
+  has_attached_file :profile_image, styles: { medium: "500x500>" }, default_url: DEFAULT_PROFILE_IMAGE_URL
+  validates_attachment_content_type :profile_image, content_type: /\Aimage\/.*\z/
+
+  has_attached_file :banner_image, styles: { large: "#1240x260" }, defrault_url: ""
+  validates_attachment_content_type :profile_image, content_type: /\Aimage\/.*\z/
 
   validates :bio, length: { maximum: 140, allow_nil: true }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const HeroImage = (props) => {
+const LandingHeroImage = (props) => {
   return (
     <header className="hero">
 
@@ -28,4 +28,4 @@ const HeroImage = (props) => {
   );
 };
 
-export default HeroImage;
+export default LandingHeroImage;

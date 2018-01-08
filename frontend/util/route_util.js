@@ -38,13 +38,15 @@ const Protected = (origProps) => {
   delete ownProps.loggedIn;
 
   return (
-    <Route path={path} render={(props) => (
-      loggedIn ? (
-        <Component {...props} {...ownProps} />
-      ) : (
-        <Redirect to="/" />
-      )
-    )}/>
+    <Route path={path} render={(props) => {
+      return (
+        loggedIn ? (
+          <Component {...props} {...ownProps} />
+        ) : (
+          <Redirect to="/" />
+        )
+      );
+    }}/>
   );
 };
 

@@ -19,6 +19,7 @@
  *= require 'navbar'
  *= require 'upload'
  *= require 'playbar'
+ *= require 'user_show'
  *= require_tree .
  *= require_self
  */
