@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import * as TimeFormatUtil from '../../util/time_format_util';
 
 class StreamIndexItem extends React.Component {
 
@@ -29,7 +30,7 @@ class StreamIndexItem extends React.Component {
                   </div>
                   <a href="#" className="sound-title-info-second">{song.title}</a>
                   <div className="sound-title-info-third">
-                    <div className="sound-title-info-upload-time">1 month</div>
+                    <div className="sound-title-info-upload-time">{TimeFormatUtil.timeSince(song.createdAt)}</div>
                     <a className="tag-container tag-small">
                       <span className="truncate sound-title-info-tag">Electronic</span>
                     </a>
