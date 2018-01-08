@@ -34,6 +34,10 @@ class Landing extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  onRootPage: state.session.onRootPage,
+});
+
 const mapDispatchToProps = (dispatch) => ({
   toggleOnRootPage: () => dispatch(toggleOnRootPage()),
 });

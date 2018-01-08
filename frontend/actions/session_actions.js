@@ -42,6 +42,7 @@ export const logout = () => (dispatch) => {
   return SessionApiUtil.logout().then(response => {
     dispatch(toggleOnRootPage());
     dispatch(receiveCurrentUser(null));
+    dispatch(toggleOnRootPage());
     return response;
   }, errors => {
     dispatch(receiveSessionErrors(errors.responseJSON));
