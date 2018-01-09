@@ -449,6 +449,7 @@
   position: absolute;
   top: 4px;
   left: 5px;
+  z-index: 3;
 }
 
 .paused {
@@ -481,6 +482,8 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  max-width: 340px;
+  z-index: 2;
 }
 
 .queue-item-details-artist {
@@ -551,6 +554,7 @@
   -ms-flex-pack: end;
   justify-content: flex-end;
   min-width: 52px;
+  z-index: 2;
 }
 
 .queue-like-btn {
