@@ -2,6 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 class SongIndexItem extends React.Component {
+  redirectToLogin() {
+    this.props.history.push('/login');
+    return;
+  }
 
   render() {
     const { paused, handleTogglePlayback, song, artist } = this.props;
@@ -15,6 +19,10 @@ class SongIndexItem extends React.Component {
             <div className="playable-tile-artwork" style={{"backgroundImage": `url(${imageUrl})`}}>
               <div className="play-button">
                 <a className={`play-button-link ${paused}`} onClick={handleTogglePlayback} href="#">Play</a>
+              </div>
+              <div className="playable-tile-actions">
+                <button onClick={this.redirectToLogin.bind(this)} className="bc-btn playable-like-btn">Like</button>
+                <button className="bc-btn playable-more-btn">More</button>
               </div>
             </div>
 

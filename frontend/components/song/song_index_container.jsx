@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import SongIndex from './song_index';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { fetchSongs } from '../../actions/song_actions';
 import { receivePlaybackSong, togglePlayback } from '../../actions/playback_actions';
 
@@ -24,7 +25,9 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SongIndex);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(SongIndex)
+);
