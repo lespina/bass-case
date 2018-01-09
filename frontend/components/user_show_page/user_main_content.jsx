@@ -1,11 +1,11 @@
 import React from 'react';
-import UserStream from './user_stream';
+import UserStreamContainer from './user_stream_container';
 import UserSidebar from './user_sidebar';
 
 const UserMainContent = ({ user }) => {
   return (
     <section className="relative">
-      <UserStream user={user}/>
+      <UserStreamContainer user={user}/>
       <UserSidebar user={user}/>
     </section>
   );

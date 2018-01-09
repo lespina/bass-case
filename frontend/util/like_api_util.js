@@ -1,8 +1,12 @@
-export const createLike = (like) => {
+export const createLike = (userId, songId) => {
   return $.ajax({
-    url: `api/likes`,
+    url: `api/users/${userId}/likes/`,
     method: 'post',
-    data: { like }
+    data: {
+      like: {
+        song_id: songId
+      }
+    }
   });
 };
 

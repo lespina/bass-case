@@ -1,6 +1,11 @@
 class Api::LikesController < ApplicationController
   def create
-    @like = Like.new(user_params)
+    if params[:user_id] != current_user.id.to_s
+      render json: ['You are not authorized to create this like'], status: 401
+      return
+    end
+    @like = current_user.likes.new(like_params)
+
     if @like.save
       render :show
     else
@@ -10,6 +15,7 @@ class Api::LikesController < ApplicationController
 
   def destroy
     @like = current_user.likes.find_by(id: params[:id])
+
     if @like
       @like.destroy
       render :show
@@ -20,6 +26,6 @@ class Api::LikesController < ApplicationController
 
   private
   def like_params
-    params.require(:like).permit(:user_id, :song_id)
+    params.require(:like).permit(:song_id)
   end
 end

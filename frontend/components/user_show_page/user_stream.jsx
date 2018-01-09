@@ -1,8 +1,5 @@
 import React from 'react';
-import _ from 'lodash';
-import { connect } from 'react-redux';
 import StreamIndex from '../stream/stream_index';
-import { togglePlayback, receivePlaybackSong, addToNextUp } from '../../actions/playback_actions';
 
 class UserStream extends React.Component {
   render() {
@@ -17,6 +14,10 @@ class UserStream extends React.Component {
             addToNextUp={this.props.addToNextUp}
             currentSongId={this.props.currentSongId}
             playing={this.props.playing}
+            currentUser={this.props.currentUser}
+            createLike={this.props.createLike}
+            deleteLike={this.props.deleteLike}
+            fetchCurrentUser={this.props.fetchCurrentUser}
           />
           <div className="user-main-stream-loading"></div>
         </div>
@@ -25,36 +26,4 @@ class UserStream extends React.Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const allSongs = state.entities.songs;
-  const songIds = ownProps.user.songIds;
-  let songs;
-  if (songIds) {
-    songs = _.values(allSongs).filter(song => {
-      return songIds.includes(song.id);
-    });
-  } else {
-    songs = [];
-  }
-
-  const { songQueue, songIdx, playing } = state.ui.playback;
-  const currentSongId = songQueue[songIdx];
-
-  return {
-    songs,
-    users: state.entities.users,
-    currentSongId,
-    playing: state.ui.playback.playing
-  };
-};
-
-const mapDispatchToProps = (dispatch) => ({
-  togglePlayback: () => dispatch(togglePlayback()),
-  receivePlaybackSong: (songId) => dispatch(receivePlaybackSong(songId)),
-  addToNextUp: (songId) => dispatch(addToNextUp(songId)),
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(UserStream);
+export default UserStream;

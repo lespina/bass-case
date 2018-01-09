@@ -1,5 +1,5 @@
-if @all_info
+# if @all_info
   json.partial! 'api/users/user', user: @user
-else
-  json.extract! @user, :id, :username
-end
+# else
+#   json.extract! @user, :id, :username
+# end

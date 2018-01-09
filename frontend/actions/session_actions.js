@@ -49,3 +49,10 @@ export const logout = () => (dispatch) => {
     return errors;
   });
 };
+
+export const fetchCurrentUser = (currentUserId) => (dispatch) => {
+  return SessionApiUtil.fetchCurrentUser(currentUserId).then(user => {
+    dispatch(receiveCurrentUser(user));
+    return(user);
+  });
+};
