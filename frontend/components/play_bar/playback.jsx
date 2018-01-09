@@ -6,9 +6,11 @@ import {
   TOGGLE_LOOP,
   RECEIVE_VOLUME,
   RECEIVE_NEW_PLAYBACK_SONGS,
+  RECEIVE_PLAYBACK_SONG,
   UPDATE_QUEUE,
   CLEAR_QUEUE,
-  ADD_TO_NEXT_UP
+  ADD_TO_NEXT_UP,
+  NEXT
 } from '../../actions/playback_actions';
 
 import React from 'react';

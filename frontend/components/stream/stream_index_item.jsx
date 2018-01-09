@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import * as TimeFormatUtil from '../../util/time_format_util';
+import * as FormatUtil from '../../util/format_util';
 
 class StreamIndexItem extends React.Component {
   constructor(props) {
@@ -55,7 +55,7 @@ class StreamIndexItem extends React.Component {
                   </div>
                   <a href="#" className="sound-title-info-second">{song.title}</a>
                   <div className="sound-title-info-third">
-                    <div className="sound-title-info-upload-time">{TimeFormatUtil.timeSince(song.createdAt)}</div>
+                    <div className="sound-title-info-upload-time">{FormatUtil.timeSince(song.createdAt)}</div>
                     <a className="tag-container tag-small">
                       <span className="truncate sound-title-info-tag">Electronic</span>
                     </a>
@@ -77,7 +77,7 @@ class StreamIndexItem extends React.Component {
                 <button onClick={addToNextUp.bind(null, song.id)} type="button" className="bc-btn sound-actions-btn action-next-up">Add to Next up</button>
               </div>
               <div className="sound-stats">
-                <div className="sound-stats-plays">15.4K</div>
+                <div className="sound-stats-plays">{FormatUtil.formatPlays(song.plays)}</div>
                 <div className="sound-stats-comments">1</div>
               </div>
             </div>

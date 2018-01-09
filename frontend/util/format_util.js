@@ -33,3 +33,10 @@ export const timeSince = (oldTime) => {
     return ((yearsSince === 1) ? `1 year ago` : `${yearsSince} years ago`);
   }
 };
+
+export const formatPlays = (plays) => {
+  if (plays < 1000) { return plays; }
+  if (plays < 1000000) { return `${Math.floor(plays / 100) / 10}K`; }
+  if (plays < 1000000000) { return `${Math.floor(plays / 100000) / 10}M`; }
+  return plays;
+};
