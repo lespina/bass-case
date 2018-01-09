@@ -3,7 +3,8 @@ import SongIndex from './song_index';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { fetchSongs } from '../../actions/song_actions';
-import { receivePlaybackSong, togglePlayback } from '../../actions/playback_actions';
+import { receivePlaybackSong, togglePlayback, addToNextUp } from '../../actions/playback_actions';
+import { receiveMoreActionsIndex } from '../../actions/menu_actions';
 
 const mapStateToProps = (state) => {
   const { songQueue, songIdx, playing } = state.ui.playback;
@@ -13,6 +14,7 @@ const mapStateToProps = (state) => {
     users: state.entities.users,
     songs: _.values(state.entities.songs),
     currentSongId,
+    moreActionsIdx: state.ui.menus.moreActionsIdx,
     playing,
   };
 };
@@ -22,6 +24,8 @@ const mapDispatchToProps = (dispatch) => {
     fetchSongs: () => dispatch(fetchSongs()),
     receivePlaybackSong: (songId) => dispatch(receivePlaybackSong(songId)),
     togglePlayback: () => dispatch(togglePlayback()),
+    receiveMoreActionsIndex: (moreActionsIdx) => dispatch(receiveMoreActionsIndex(moreActionsIdx)),
+    addToNextUp: (songId) => dispatch(addToNextUp(songId))
   };
 };
 

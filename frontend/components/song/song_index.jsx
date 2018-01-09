@@ -30,6 +30,17 @@ class SongIndex extends React.Component {
     };
   }
 
+  updateMoreActions(idx) {
+    return (e) => {
+      e.preventDefault();
+      if (parseInt(this.props.moreActionsIdx) === idx) {
+        this.props.receiveMoreActionsIndex(null);
+      } else {
+        this.props.receiveMoreActionsIndex(idx);
+      }
+    };
+  }
+
   render() {
 
     return (
@@ -37,7 +48,7 @@ class SongIndex extends React.Component {
         <ul className="song-index">
           {
             this.props.songs.slice(0, 12).map((song, idx) => {
-              const { currentSongId, playing, users, history } = this.props;
+              const { currentSongId, playing, users, history, addToNextUp } = this.props;
               const artist = users[song.artistId];
 
               let paused;
@@ -45,6 +56,13 @@ class SongIndex extends React.Component {
                 paused = "";
               } else if (song.id === parseInt(currentSongId) && playing) {
                 paused ="play-button-paused";
+              }
+
+              let open;
+              if (parseInt(this.props.moreActionsIdx) !== idx) {
+                open = "";
+              } else {
+                open = "open";
               }
 
               return <SongIndexItem
@@ -56,6 +74,9 @@ class SongIndex extends React.Component {
                 playing={playing}
                 artist={artist}
                 history={history}
+                open={open}
+                updateMoreActions={this.updateMoreActions(idx)}
+                addToNextUp={addToNextUp.bind(null, song.id)}
               />;
             }, this)
           }
@@ -64,5 +85,6 @@ class SongIndex extends React.Component {
     );
   }
 }
+
 
 export default SongIndex;
