@@ -14,20 +14,7 @@ class StreamIndex extends React.Component {
       this.forceUpdate();
     };
   }
-
-  // handleToggleLike(songId) {
-  //   const { createLike, deleteLike, currentUser } = this.props;
-  //   const likes = currentUser.likes;
-  //   return (e) => {
-  //     e.preventDefault();
-  //     if (songId in likes) {
-  //       return deleteLike(likes[songId]);
-  //     } else {
-  //       return createLike(currentUser.id, songId);
-  //     }
-  //   };
-  // }
-
+  
   render() {
     if (this.props.songs.length > 0) {
       return (
