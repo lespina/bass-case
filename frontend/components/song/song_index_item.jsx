@@ -19,7 +19,7 @@ class SongIndexItem extends React.Component {
       updateMoreActions,
       moreActionsIdx
     } = this.props;
-    
+
     const { title, imageUrl, audioUrl } = song;
     const timestamp = song.createdAt;
 
@@ -66,7 +66,7 @@ class SongIndexItem extends React.Component {
 
 
 const mapStateToProps = (state) => ({
-  moreActionsIdx: state.ui.menus.moreActionsIdx,
+  moreActionsIdx: state.ui.menus.playableTileIdx,
 });
 
 export default connect(mapStateToProps, null)(SongIndexItem);

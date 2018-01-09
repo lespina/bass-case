@@ -216,7 +216,7 @@ class PlayBar extends React.Component {
     const progressWidth = { width: `${this.getProgressPos()}%` };
     const handleLeftDist = { left: `${this.getHandlePos()}%` };
 
-    const active = ((currentUser && song.id in users[currentUser.id].likes) ? 'active' : '' );
+    const active = ((currentUser && users[currentUser.id].likes && song.id in users[currentUser.id].likes) ? 'active' : '' );
 
     return (
       <div>

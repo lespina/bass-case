@@ -21,12 +21,18 @@ class SortablePlayBarQueue extends React.Component {
 
   render() {
     const {
+      currentUser,
       users,
       songs,
       songQueue,
       currentSongId,
       playing,
       songIdx,
+      addToNextUp,
+      createLike,
+      deleteLike,
+      receiveMoreActionsIndex,
+      moreActionsIdx,
       togglePlayback,
       receivePlaybackSong,
       receiveNewPlaybackSongs,
@@ -36,10 +42,17 @@ class SortablePlayBarQueue extends React.Component {
 
     return <PlayBarQueue
       handle=".queue-item-drag-handle"
+      currentUser={currentUser}
+      addToNextUp={addToNextUp}
+      receiveMoreActionsIndex={receiveMoreActionsIndex}
+      moreActionsIdx={moreActionsIdx}
+      createLike={createLike}
+      deleteLike={deleteLike}
       users={users}
       songs={songs}
       songQueue={this.props.songQueue}
       currentSongId={currentSongId}
+      currentUser={currentUser}
       playing={playing}
       songIdx={songIdx}
       togglePlayback={togglePlayback}

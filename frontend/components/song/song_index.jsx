@@ -57,7 +57,6 @@ class SongIndex extends React.Component {
               } else if (song.id === parseInt(currentSongId) && playing) {
                 paused ="play-button-paused";
               }
-
               let open;
               if (parseInt(this.props.moreActionsIdx) !== idx) {
                 open = "";

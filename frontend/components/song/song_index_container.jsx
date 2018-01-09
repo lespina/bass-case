@@ -14,7 +14,7 @@ const mapStateToProps = (state) => {
     users: state.entities.users,
     songs: _.values(state.entities.songs),
     currentSongId,
-    moreActionsIdx: state.ui.menus.moreActionsIdx,
+    moreActionsIdx: state.ui.menus.playableTileIdx,
     playing,
   };
 };
@@ -24,7 +24,7 @@ const mapDispatchToProps = (dispatch) => {
     fetchSongs: () => dispatch(fetchSongs()),
     receivePlaybackSong: (songId) => dispatch(receivePlaybackSong(songId)),
     togglePlayback: () => dispatch(togglePlayback()),
-    receiveMoreActionsIndex: (moreActionsIdx) => dispatch(receiveMoreActionsIndex(moreActionsIdx)),
+    receiveMoreActionsIndex: (moreActionsIdx) => dispatch(receiveMoreActionsIndex('playableTileIdx', moreActionsIdx)),
     addToNextUp: (songId) => dispatch(addToNextUp(songId))
   };
 };

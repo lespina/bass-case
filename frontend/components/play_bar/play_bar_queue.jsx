@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import { SortableContainer } from 'react-sortable-hoc';
 import QueueItem from './queue_item';
 
@@ -6,6 +7,8 @@ class PlayBarQueue extends React.Component {
   constructor(props) {
     super(props);
     this.handleTogglePlayback = this.handleTogglePlayback.bind(this);
+    this.handleToggleLike = this.handleToggleLike.bind(this);
+    this.updateMoreActions = this.updateMoreActions.bind(this);
   }
 
   handleTogglePlayback(songIdx) {
@@ -15,6 +18,35 @@ class PlayBarQueue extends React.Component {
         this.props.receivePlaybackSong(songIdx);
       } else {
         this.props.togglePlayback();
+      }
+    };
+  }
+
+  handleToggleLike(song) {
+    return (e) => {
+      e.preventDefault();
+
+      const { currentUser, deleteLike, createLike, users } = this.props;
+      if (!currentUser) {
+        this.props.history.push('/login');
+        return;
+      }
+      const likingUser = users[currentUser.id];
+      if (song.id in likingUser.likes) {
+        deleteLike(likingUser.likes[song.id]);
+      } else {
+        createLike(likingUser.id, song.id);
+      }
+    };
+  }
+
+  updateMoreActions(idx) {
+    return (e) => {
+      e.preventDefault();
+      if (parseInt(this.props.moreActionsIdx) === idx) {
+        this.props.receiveMoreActionsIndex(null);
+      } else {
+        this.props.receiveMoreActionsIndex(idx);
       }
     };
   }
@@ -31,7 +63,27 @@ class PlayBarQueue extends React.Component {
   }
 
   render() {
-    const { clearQueue, hideQueue, handleTogglePlayback, songs, playing, songIdx, receiveNewPlaybackSongs, users } = this.props;
+    const {
+      clearQueue,
+      hideQueue,
+      handleTogglePlayback,
+      receiveNewPlaybackSongs,
+      addToNextUp,
+      moreActionsIdx,
+      songs,
+      playing,
+      songIdx,
+      users,
+      currentUser
+    } = this.props;
+
+    let currentUserWithLikes;
+    if (currentUser) {
+      currentUserWithLikes = users[currentUser.id];
+    } else {
+      currentUserWithLikes = null;
+    }
+
     const paused = ((playing) ? "paused" : "");
 
     return (
@@ -52,6 +104,14 @@ class PlayBarQueue extends React.Component {
                     this.orderedSongs().map((song, idx) => {
                       const dimmed = ((idx === this.props.songIdx) ? "" : "dimmed");
                       const artist = users[song.artistId];
+
+                      let open;
+                      if (parseInt(moreActionsIdx) !== idx) {
+                        open = "";
+                      } else {
+                        open = "open";
+                      }
+
                       return <QueueItem
                         key={idx}
                         index={idx}
@@ -59,8 +119,13 @@ class PlayBarQueue extends React.Component {
                         song={song}
                         dimmed={dimmed}
                         handleTogglePlayback={this.handleTogglePlayback(idx)}
+                        updateMoreActions={this.updateMoreActions(idx)}
+                        open={open}
                         paused={paused}
                         currentSongId={this.currentSongId()}
+                        handleToggleLike={this.handleToggleLike(song)}
+                        addToNextUp={addToNextUp}
+                        currentUser={currentUserWithLikes}
                       />;
                     }, this)
                   }
@@ -74,4 +139,4 @@ class PlayBarQueue extends React.Component {
   }
 }
 
-export default SortableContainer(PlayBarQueue);
+export default SortableContainer(withRouter(PlayBarQueue));

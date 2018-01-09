@@ -2,7 +2,8 @@ import _ from 'lodash';
 import { RECEIVE_MORE_ACTIONS_INDEX } from '../actions/menu_actions';
 
 const initialState = {
-  moreActionsIdx: null,
+  queueIdx: null,
+  playableTileIdx: null
 };
 
 const menuReducer = (state = initialState, action) => {
@@ -12,7 +13,7 @@ const menuReducer = (state = initialState, action) => {
   switch (action.type) {
     case RECEIVE_MORE_ACTIONS_INDEX:
       newState = _.merge({}, state);
-      newState.moreActionsIdx = action.moreActionsIdx;
+      newState[action.menuType] = action.moreActionsIdx;
       return newState;
     default:
       return state;
