@@ -394,6 +394,7 @@
   background-position: center center;
   background-size: 24px 24px;
   width: 24px;
+  z-index: 3;
   height: 48px;
   margin-left: -24px;
   cursor: move;
@@ -485,11 +486,13 @@
 .queue-item-details-artist {
   color: #999;
   display: block;
+  width: auto;
 }
 
 .queue-item-details-title {
   color: #333;
   display: block;
+  width: auto;
 }
 
 .queue-item-details-artist:hover {
@@ -543,9 +546,7 @@
   opacity: 1;
 }
 .queue-item-actions {
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
+  display: none;
   -webkit-justify-content: flex-end;
   -ms-flex-pack: end;
   justify-content: flex-end;
@@ -560,6 +561,9 @@
 }
 
 .queue-item:hover .queue-item-actions {
+  display: flex;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   transition: opacity .1s,visibility .1s;
   position: absolute;
   left: 11px;
@@ -578,6 +582,8 @@
 
 .queue-like-btn:before, .queue-more-btn:before {
   background-color: black;
+  height: 20px;
+  width: 20px;
 }
 
 .queue-like-btn.active:before {

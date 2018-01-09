@@ -15,7 +15,16 @@ const QueueItem = ({ currentUser, currentSongId, paused, song, dimmed, handleTog
   const active = ((currentUser && currentUser.likes && song.id in currentUser.likes) ? 'active' : '' );
   return (
     <div className={`queue-item ${dimmed}`}>
-
+      <div className="queue-item-actions">
+        <button onClick={handleToggleLike} className={`bc-btn playable-like-btn queue-like-btn ${active}`}>Like</button>
+        <div onClick={updateMoreActions} className="bc-btn playable-more-btn queue-more-btn">
+          <div className={`more-actions queue-actions-menu ${open}`}>
+            <button onClick={handleToggleLike} className={`more-actions-btn more-like-btn ${active}`}>Like</button>
+            <button onClick={addToNextUp.bind(null, song.id)} className="more-actions-btn more-add-next-up-btn">Add to Next up</button>
+            <button onClick={() => console.log("implement me!")} className="more-actions-btn more-repost-btn">Repost</button>
+          </div>
+        </div>
+      </div>
       <QueueItemHandle/>
       <div className="queue-item-artwork">
         <div className="queue-item-artwork-image" style={{"backgroundImage": `url(${imageUrl})`}}></div>
@@ -26,17 +35,6 @@ const QueueItem = ({ currentUser, currentSongId, paused, song, dimmed, handleTog
         <a className="queue-item-details-title truncate">{title}</a>
       </div>
       {/* <div className="queue-item-details-duration">1:44</div> */}
-      <div className="queue-item-actions">
-        <button onClick={handleToggleLike} className={`bc-btn playable-like-btn queue-like-btn ${active}`}>Like</button>
-        <div onClick={updateMoreActions} className="bc-btn playable-more-btn queue-more-btn">
-          <div className={`more-actions queue-actions-menu ${open}`}>
-            <button onClick={handleToggleLike} className={`more-actions-btn more-like-btn ${active}`}>Like</button>
-            <button onClick={addToNextUp.bind(null, song.id)} className="more-actions-btn more-add-next-up-btn">Add to Next up</button>
-            <button onClick={() => console.log("implement me!")} className="more-actions-btn more-repost-btn">Repost</button>
-          </div>
-        </div>
-
-      </div>
     </div>
   );
 };
