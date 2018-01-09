@@ -7,7 +7,8 @@ import {
   RECEIVE_VOLUME,
   RECEIVE_NEW_PLAYBACK_SONGS,
   UPDATE_QUEUE,
-  CLEAR_QUEUE
+  CLEAR_QUEUE,
+  ADD_TO_NEXT_UP
 } from '../../actions/playback_actions';
 
 import React from 'react';
@@ -34,6 +35,7 @@ class Playback extends React.Component {
       case TOGGLE_LOOP:
       case UPDATE_QUEUE:
       case CLEAR_QUEUE:
+      case ADD_TO_NEXT_UP:
         return false;
       default:
         return true;

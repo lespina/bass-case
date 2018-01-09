@@ -26,6 +26,7 @@ class PlayBar extends React.Component {
     this.toggleQueue = this.toggleQueue.bind(this);
     this.hideQueue = this.hideQueue.bind(this);
     this.handleDragEnd = this.handleDragEnd.bind(this);
+    this.handleToggleLike = this.handleToggleLike.bind(this);
     this.offset = 0;
   }
 
@@ -70,6 +71,17 @@ class PlayBar extends React.Component {
         return true;
       default:
         return true;
+    }
+  }
+
+  handleToggleLike(e) {
+    e.preventDefault();
+    const { currentUser, playback, songs, deleteLike, createLike } = this.props;
+    const song = songs[playback.songQueue[playback.songIdx]];
+    if (song.id in currentUser.likes) {
+      deleteLike(currentUser.likes[song.id]);
+    } else {
+      createLike(currentUser.id, song.id);
     }
   }
 
@@ -167,7 +179,7 @@ class PlayBar extends React.Component {
 
   render() {
     const { key, start, time } = this.state;
-    const { songs, playback, users } = this.props;
+    const { songs, playback, users, currentUser } = this.props;
     const { mute, playing, duration, position, shuffle, loop } = playback;
     const song = songs[playback.songQueue[playback.songIdx]];
 
@@ -198,6 +210,8 @@ class PlayBar extends React.Component {
 
     const progressWidth = { width: `${this.getProgressPos()}%` };
     const handleLeftDist = { left: `${this.getHandlePos()}%` };
+
+    const active = ((song.id in currentUser.likes) ? 'active' : '' );
 
     return (
       <div>
@@ -244,7 +258,7 @@ class PlayBar extends React.Component {
                 <Link className="playbar-artist truncate" to={`/users/${artist.id}`}>{artist.username}</Link>
                 <a className="playbar-title truncate" href="#">{song.title}</a>
               </section>
-              {/* <div className="playbar-like"></div> */}
+              <div onClick={this.handleToggleLike} className={`playbar-like ${active}`}></div>
 
               <div onClick={this.toggleQueue} className="playback-queue">
                 <svg width="24" height="24" viewBox="0 0 24 24">
