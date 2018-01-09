@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 class SongIndexItem extends React.Component {
   redirectToLogin() {
@@ -8,9 +9,26 @@ class SongIndexItem extends React.Component {
   }
 
   render() {
-    const { paused, handleTogglePlayback, song, artist } = this.props;
+    const {
+      paused,
+      handleTogglePlayback,
+      addToNextUp,
+      song,
+      artist,
+      idx,
+      updateMoreActions,
+      moreActionsIdx
+    } = this.props;
+    
     const { title, imageUrl, audioUrl } = song;
     const timestamp = song.createdAt;
+
+    let open;
+    if (parseInt(moreActionsIdx) !== idx) {
+      open = "";
+    } else {
+      open = "open";
+    }
 
     return (
       <li className="song-index-item">
@@ -22,7 +40,12 @@ class SongIndexItem extends React.Component {
               </div>
               <div className="playable-tile-actions">
                 <button onClick={this.redirectToLogin.bind(this)} className="bc-btn playable-like-btn">Like</button>
-                <button className="bc-btn playable-more-btn">More</button>
+                <div onClick={updateMoreActions} className="bc-btn playable-more-btn">
+                  <div className={`more-actions ${open}`}>
+                    <button onClick={addToNextUp} className="more-actions-btn more-add-next-up-btn">Add to Next up</button>
+                    <button onClick={this.redirectToLogin.bind(this)} className="more-actions-btn more-repost-btn">Repost</button>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -41,4 +64,9 @@ class SongIndexItem extends React.Component {
   }
 }
 
-export default SongIndexItem;
+
+const mapStateToProps = (state) => ({
+  moreActionsIdx: state.ui.menus.moreActionsIdx,
+});
+
+export default connect(mapStateToProps, null)(SongIndexItem);
