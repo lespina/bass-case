@@ -76,12 +76,17 @@ class PlayBar extends React.Component {
 
   handleToggleLike(e) {
     e.preventDefault();
-    const { currentUser, playback, songs, deleteLike, createLike } = this.props;
+    const { currentUser, playback, songs, deleteLike, createLike, users } = this.props;
+    if (!currentUser) {
+      this.props.history.push('/login');
+      return;
+    }
     const song = songs[playback.songQueue[playback.songIdx]];
-    if (song.id in currentUser.likes) {
-      deleteLike(currentUser.likes[song.id]);
+    const likingUser = users[currentUser.id];
+    if (song.id in likingUser.likes) {
+      deleteLike(likingUser.likes[song.id]);
     } else {
-      createLike(currentUser.id, song.id);
+      createLike(likingUser.id, song.id);
     }
   }
 
@@ -211,7 +216,7 @@ class PlayBar extends React.Component {
     const progressWidth = { width: `${this.getProgressPos()}%` };
     const handleLeftDist = { left: `${this.getHandlePos()}%` };
 
-    const active = ((song.id in currentUser.likes) ? 'active' : '' );
+    const active = ((currentUser && song.id in users[currentUser.id].likes) ? 'active' : '' );
 
     return (
       <div>

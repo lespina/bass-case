@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import PlayBar from './play_bar';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import {
   receiveDuration,
   previous,
@@ -20,7 +21,7 @@ const mapStateToProps = (state) => {
   return {
     users: state.entities.users,
     songs: state.entities.songs,
-    currentUser: state.entities.users[state.session.currentUser.id],
+    currentUser: state.session.currentUser,
     playback: state.ui.playback,
   };
 };
@@ -40,7 +41,9 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PlayBar);
+export default withRouter(
+    connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(PlayBar)
+);
