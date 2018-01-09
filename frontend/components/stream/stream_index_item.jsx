@@ -5,23 +5,9 @@ import * as TimeFormatUtil from '../../util/time_format_util';
 class StreamIndexItem extends React.Component {
   constructor(props) {
     super(props);
-    const { createLike, deleteLike, currentUser, song } = this.props;
-    const likes = currentUser.likes;
-    this.state = {
-      liked: (song.id in currentUser.likes),
-      change: 0,
-    };
-
     this.handleToggleLike = this.handleToggleLike.bind(this);
   }
 
-  modifyChange(wasLiked) {
-    if (wasLiked) {
-      return -1;
-    } else {
-      return 1;
-    }
-  }
 
   handleToggleLike(e) {
     e.preventDefault();
@@ -31,12 +17,6 @@ class StreamIndexItem extends React.Component {
     } else {
       createLike(currentUser.id, song.id);
     }
-
-    this.setState({
-      liked: !this.state.liked,
-      change: this.state.change + this.modifyChange(this.state.liked),
-    });
-
   }
 
   render() {
@@ -92,7 +72,7 @@ class StreamIndexItem extends React.Component {
 
             <div className="sound-footer">
               <div className="sound-actions">
-                <button onClick={this.handleToggleLike} type="button" className={`bc-btn sound-actions-btn action-like ${active}`}>{song.numLikes + this.state.change}</button>
+                <button onClick={this.handleToggleLike} type="button" className={`bc-btn sound-actions-btn action-like ${active}`}>{song.numLikes}</button>
                 <button type="button" className="bc-btn sound-actions-btn action-repost ">65</button>
                 <button onClick={addToNextUp.bind(null, song.id)} type="button" className="bc-btn sound-actions-btn action-next-up">Add to Next up</button>
               </div>
