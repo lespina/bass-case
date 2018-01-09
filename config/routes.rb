@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     resources :likes, only: [:destroy]
-    resources :songs, only: [:index, :create, :show]
+    resources :songs, only: [:index, :create, :show, :update]
     resources :users, only: [:index, :create, :show, :update] do
       resources :likes, only: [:create]
     end
