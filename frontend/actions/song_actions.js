@@ -42,3 +42,13 @@ export const createSong = (song) => (dispatch) => {
     return errors;
   });
 };
+
+export const updateSong = (song) => (dispatch) => {
+  return SongApiUtil.updateSong(song).then(song => {
+    dispatch(receiveSong(song));
+    return song;
+  }, errors => {
+    dispatch(receiveSongErrors(errors.responseJSON));
+    return errors;
+  });
+};

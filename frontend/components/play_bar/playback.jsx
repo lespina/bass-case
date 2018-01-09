@@ -42,6 +42,26 @@ class Playback extends React.Component {
     }
   }
 
+  incrementPlays(songId) {
+    const song = this.props.songs[songId];
+    const newSong = Object.assign({}, song);
+    newSong.plays += 1;
+    this.props.updateSong(newSong);
+  }
+
+  componentDidUpdate(prevProps) {
+    const prevSongQueue = prevProps.playback.songQueue;
+    const prevSongIdx = prevProps.playback.songIdx;
+    const prevSongId = prevSongQueue[prevSongIdx];
+
+    const { songIdx, songQueue, lastAction } = this.props.playback;
+    const currentSongId = songQueue[songIdx];
+
+    if (lastAction === NEXT || lastAction === RECEIVE_PLAYBACK_SONG || prevSongId !== currentSongId) {
+      this.incrementPlays(currentSongId);
+    }
+  }
+
   onLoading({ duration }) {
     this.props.receiveDuration(duration);
   }

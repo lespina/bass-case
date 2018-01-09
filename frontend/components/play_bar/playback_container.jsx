@@ -13,7 +13,7 @@ import {
   receiveVolume,
   fetchPlaybackSongs
 } from '../../actions/playback_actions';
-import { fetchSongs } from '../../actions/song_actions';
+import { fetchSongs, updateSong } from '../../actions/song_actions';
 
 const mapStateToProps = (state) => {
   return {
@@ -31,6 +31,7 @@ const mapDispatchToProps = (dispatch) => {
     fetchSongs: () => dispatch(fetchSongs()),
     fetchPlaybackSongs: (songIds) => dispatch(fetchPlaybackSongs(songIds)),
     fetchPlaybackSong: (songId) => dispatch(fetchPlaybackSong(songId)),
+    updateSong: (song) => dispatch(updateSong(song))
   };
 };
 

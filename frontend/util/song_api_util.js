@@ -22,3 +22,11 @@ export const createSong = (formData) => {
     data: formData,
   });
 };
+
+export const updateSong = (song) => {
+  return $.ajax({
+    url: `api/songs/${song.id}`,
+    method: 'patch',
+    data: { song }
+  });
+};
