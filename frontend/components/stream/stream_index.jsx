@@ -46,10 +46,8 @@ class StreamIndex extends React.Component {
                   receivePlaybackSong={this.props.receivePlaybackSong}
                   addToNextUp={this.props.addToNextUp}
                   currentUser={this.props.currentUser}
-                  // handleToggleLike={this.handleToggleLike(song.id).bind(this)}
                   createLike={this.props.createLike}
                   deleteLike={this.props.deleteLike}
-                  fetchCurrentUser={this.props.fetchCurrentUser}
                 />
               );
             }, this)

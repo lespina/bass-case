@@ -2,7 +2,6 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import { togglePlayback, receivePlaybackSong, addToNextUp } from '../../actions/playback_actions';
 import { createLike, deleteLike } from '../../actions/like_actions';
-import { fetchCurrentUser } from '../../actions/session_actions';
 import UserStream from './user_stream';
 
 const mapStateToProps = (state, ownProps) => {
@@ -20,7 +19,7 @@ const mapStateToProps = (state, ownProps) => {
   const { songQueue, songIdx, playing } = state.ui.playback;
   const currentSongId = songQueue[songIdx];
   return {
-    currentUser: state.session.currentUser,
+    currentUser: state.entities.users[state.session.currentUser.id],
     songs,
     users: state.entities.users,
     currentSongId,
@@ -34,7 +33,6 @@ const mapDispatchToProps = (dispatch) => ({
   addToNextUp: (songId) => dispatch(addToNextUp(songId)),
   createLike: (userId, songId) => dispatch(createLike(userId, songId)),
   deleteLike: (likeId) => dispatch(deleteLike(likeId)),
-  fetchCurrentUser: (currentUserId) => dispatch(fetchCurrentUser(currentUserId))
 });
 
 export default connect(

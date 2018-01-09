@@ -17,7 +17,6 @@ class UserStream extends React.Component {
             currentUser={this.props.currentUser}
             createLike={this.props.createLike}
             deleteLike={this.props.deleteLike}
-            fetchCurrentUser={this.props.fetchCurrentUser}
           />
           <div className="user-main-stream-loading"></div>
         </div>

@@ -8,7 +8,7 @@ class StreamIndexItem extends React.Component {
     const { createLike, deleteLike, currentUser, song } = this.props;
     const likes = currentUser.likes;
     this.state = {
-      liked: (currentUser.likes && song.id in currentUser.likes),
+      liked: (song.id in currentUser.likes),
       change: 0,
     };
 
@@ -26,7 +26,7 @@ class StreamIndexItem extends React.Component {
   handleToggleLike(e) {
     e.preventDefault();
     const { currentUser, song, deleteLike, createLike } = this.props;
-    if (this.state.liked) {
+    if (song.id in currentUser.likes) {
       deleteLike(currentUser.likes[song.id]);
     } else {
       createLike(currentUser.id, song.id);
@@ -37,18 +37,7 @@ class StreamIndexItem extends React.Component {
       change: this.state.change + this.modifyChange(this.state.liked),
     });
 
-    this.props.fetchCurrentUser(currentUser.id);
   }
-
-  // handleToggleLike() {
-  //   return (e) => {
-  //     this.setState({
-  //       liked: !this.state.liked,
-  //       change: this.state.change + this.modifyChange(this.state.liked),
-  //     });
-  //     return this.props.handleToggleLike(e);
-  //   };
-  // }
 
   render() {
     const {
@@ -61,7 +50,7 @@ class StreamIndexItem extends React.Component {
       currentUser,
     } = this.props;
 
-    const active = (this.state.liked ? 'active' : '' );
+    const active = ((song.id in currentUser.likes) ? 'active' : '' );
     const paused = ((playing && parseInt(currentSongId) === song.id) ? 'stream-paused' : '');
     const coverImage = { backgroundImage: `url(${song.imageUrl})` };
 

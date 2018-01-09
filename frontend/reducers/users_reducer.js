@@ -13,16 +13,16 @@ const usersReducer = (state = initialState, action) => {
       newState = _.merge({}, state);
       newState[action.user.id] = action.user;
       return newState;
-    // case RECEIVE_LIKE:
-    //   newState = _.merge({}, state);
-    //   const userReceiveLikes = newState[action.like.userId].likes;
-    //   userReceiveLikes[action.songId] = action.like;
-    //   return newState;
-    // case REMOVE_LIKE:
-    //   newState = _.merge({}, state);
-    //   const userRemoveLikes = newState[action.like.userId].likes;
-    //   delete userRemoveLikes[action.like.songId];
-    //   return newState;
+    case RECEIVE_LIKE:
+      newState = _.merge({}, state);
+      const userReceiveLikes = newState[action.like.userId].likes;
+      userReceiveLikes[action.like.songId] = action.like.id;
+      return newState;
+    case REMOVE_LIKE:
+      newState = _.merge({}, state);
+      const userRemoveLikes = newState[action.like.userId].likes;
+      delete userRemoveLikes[action.like.songId];
+      return newState;
     default:
       return state;
   }
