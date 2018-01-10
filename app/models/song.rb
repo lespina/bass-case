@@ -15,6 +15,7 @@
 #  audio_updated_at   :datetime
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
+#  plays              :integer          default(0)
 #
 
 class Song < ApplicationRecord

@@ -14,7 +14,7 @@ class StreamIndex extends React.Component {
       this.forceUpdate();
     };
   }
-  
+
   render() {
     if (this.props.songs.length > 0) {
       return (

@@ -23,7 +23,6 @@
 class User < ApplicationRecord
   DEFAULT_PROFILE_IMAGE_URL = "https://s3.amazonaws.com/basscase-dev/default-track-image.png"
 
-
   has_attached_file :profile_image, styles: { medium: "500x500>" }, default_url: DEFAULT_PROFILE_IMAGE_URL
   validates_attachment_content_type :profile_image, content_type: /\Aimage\/.*\z/
 
@@ -44,6 +43,22 @@ class User < ApplicationRecord
   has_many :liked_songs,
     through: :likes,
     source: :song
+
+  has_many :follows,
+    class_name: :Follow,
+    foreign_key: :follower_id
+
+  has_many :been_followeds,
+    class_name: :Follow,
+    foreign_key: :followee_id
+    
+  # has_many :followers,
+  #   class_name: :User,
+  #   foreign_key: :follower_id
+
+  has_many :followees,
+    through: :follows,
+    source: :followee_id
 
   attr_reader :password
 

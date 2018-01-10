@@ -1,18 +1,38 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { NavLink, Link } from 'react-router-dom';
+import { createFollow, deleteFollow } from '../../actions/follow_actions';
 
 class UserInfoBar extends React.Component {
   constructor(props) {
     super(props);
+    this.handleToggleFollow = this.handleToggleFollow.bind(this);
+  }
+
+  handleToggleFollow(e) {
+    e.preventDefault();
+    const { users, currentUserId, user, deleteFollow, createFollow } = this.props;
+    const currentUser = users[currentUserId];
+
+    if (currentUserId in user.follows) {
+      this.props.unfollow(user.follows[currentUser.id]);
+    } else {
+      this.props.follow(currentUserId, user.id);
+    }
   }
 
   followButton() {
     const { user, currentUserId } = this.props;
     const isCurrentUser = (user.id === parseInt(currentUserId));
+    const followStatus = (user.follows && currentUserId in user.follows);
 
     if (!isCurrentUser) {
       return (
-        <button type="button" className="bc-btn user-info-follow-btn">Follow</button>
+        <button onClick={this.handleToggleFollow} type="button" className="bc-btn user-info-follow-btn">
+          {
+            (followStatus) ? "Unfollow" : "Follow"
+          }
+        </button>
       );
     } else {
       return <div></div>;
@@ -63,4 +83,16 @@ class UserInfoBar extends React.Component {
   }
 }
 
-export default UserInfoBar;
+const mapStateToProps = (state) => ({
+  users: state.entities.users
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  follow: (followerId, followeeId) => dispatch(createFollow(followerId, followeeId)),
+  unfollow: (followId) => dispatch(deleteFollow(followId)),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UserInfoBar);

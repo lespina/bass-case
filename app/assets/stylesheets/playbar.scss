@@ -564,7 +564,7 @@
   text-indent: -100000px;
 }
 
-.queue-item:hover .queue-item-actions {
+.queue-item:hover .queue-item-actions, .queue-item-actions.open {
   display: flex;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -580,7 +580,15 @@
   left: -140px;
 }
 
-.queue-item:hover .queue-like-btn, .queue-item:hover .queue-more-btn {
+.queue-more-btn.open {
+  visibility: visible;
+}
+
+.playable-tile:not(:hover) .more-actions.open {
+  visibility: hidden;
+}
+
+.queue-item:hover .queue-like-btn, .queue-item:hover .queue-more-btn, .queue-more-btn.open {
   visibility: visible;
 }
 
