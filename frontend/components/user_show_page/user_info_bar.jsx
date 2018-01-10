@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, withRouter } from 'react-router-dom';
 import { createFollow, deleteFollow } from '../../actions/follow_actions';
 
 class UserInfoBar extends React.Component {
@@ -11,27 +11,28 @@ class UserInfoBar extends React.Component {
 
   handleToggleFollow(e) {
     e.preventDefault();
-    const { users, currentUserId, user, deleteFollow, createFollow } = this.props;
-    const currentUser = users[currentUserId];
+    const { users, currentUser, user, deleteFollow, createFollow } = this.props;
+    const follows = users[currentUser].follows;
 
-    if (user.id in currentUser.follows) {
-      this.props.unfollow(currentUser.follows[user.id]);
+    if (user.id in follows) {
+      this.props.unfollow(follows[user.id]);
     } else {
-      this.props.follow(currentUserId, user.id);
+      this.props.follow(currentUser.id, user.id);
     }
   }
 
   followButton() {
-    const { user, currentUserId, users } = this.props;
-    const isCurrentUser = (user.id === parseInt(currentUserId));
-    const currentUser = users[currentUserId];
-    const followStatus = (currentUser.follows && user.id in currentUser.follows);
+    const { user, currentUser, users } = this.props;
+    const isCurrentUser = (currentUser && user.id === parseInt(currentUser.id));
+    const follows = users[currentUser.id].follows;
+    const followStatus = (follows && user.id in follows);
+    const followClassname = ((followStatus) ? "following" : "");
 
     if (!isCurrentUser) {
       return (
-        <button onClick={this.handleToggleFollow} type="button" className="bc-btn user-info-follow-btn">
+        <button onClick={this.handleToggleFollow} type="button" className={`bc-btn user-info-follow-btn ${followClassname}`}>
           {
-            (followStatus) ? "Unfollow" : "Follow"
+            (followStatus) ? "Following" : "Follow"
           }
         </button>
       );
@@ -41,8 +42,8 @@ class UserInfoBar extends React.Component {
   }
 
   editButton() {
-    const { user, currentUserId } = this.props;
-    const isCurrentUser = (user.id === parseInt(currentUserId));
+    const { user, currentUser } = this.props;
+    const isCurrentUser = (currentUser && user.id === parseInt(currentUser.id));
 
     if (isCurrentUser) {
       return (
@@ -59,21 +60,11 @@ class UserInfoBar extends React.Component {
     return (
       <section className="user-info-bar">
         <ul className="user-info-tabs">
-          <li className="user-info-tabs-item">
-            <NavLink exact to={`/users/${userId}`} className="user-info-tabs-link">All</NavLink>
-          </li>
-          <li className="user-info-tabs-item">
-            <NavLink to={`/users/${userId}/tracks`} className="user-info-tabs-link">Tracks</NavLink>
-          </li>
-          <li className="user-info-tabs-item">
-            <NavLink to={`/users/${userId}/albums`} className="user-info-tabs-link">Albums</NavLink>
-          </li>
-          <li className="user-info-tabs-item">
-            <NavLink to={`/users/${userId}/playlists`} className="user-info-tabs-link">Playlists</NavLink>
-          </li>
-          <li className="user-info-tabs-item">
-            <NavLink to={`/users/${userId}/reposts`} className="user-info-tabs-link">Reposts</NavLink>
-          </li>
+          {
+            this.props.tabs.map((tab, idx) => {
+              return <UserInfoTabsItem key={idx} userId={userId} text={tab.text} pathname={tab.pathname}/>;
+            })
+          }
         </ul>
         <div className="user-info-buttons">
           {this.followButton()}
@@ -84,8 +75,19 @@ class UserInfoBar extends React.Component {
   }
 }
 
+const UserInfoTabsItem = ({ pathname, text, userId, idx }) => {
+  const exact = ((pathname === '') ? { exact: true } : {});
+
+  return (
+    <li className="user-info-tabs-item">
+      <NavLink {...exact} to={`/users/${userId}/${pathname}`} className="user-info-tabs-link">{text}</NavLink>
+    </li>
+  );
+};
+
 const mapStateToProps = (state) => ({
-  users: state.entities.users
+  users: state.entities.users,
+  currentUser: state.session.currentUser
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -93,7 +95,9 @@ const mapDispatchToProps = (dispatch) => ({
   unfollow: (followId) => dispatch(deleteFollow(followId)),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(UserInfoBar);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(UserInfoBar)
+);

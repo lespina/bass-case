@@ -39,6 +39,14 @@ class UserShow extends React.Component {
 
   render() {
     const { user, currentUserId } = this.props;
+    
+    const tabs = [
+      {text: 'All', pathname: ''},
+      {text: 'Tracks', pathname: 'tracks'},
+      {text: 'Albums', pathname: 'albums'},
+      {text: 'Playlists', pathname: 'playlists'},
+      {text: 'Reposts', pathname: 'reposts'},
+    ];
 
     if (!this.fetched) {
       return null;
@@ -47,7 +55,10 @@ class UserShow extends React.Component {
     return (
       <div>
         <UserHeroImage user={user} currentUserId={currentUserId} updateUser={this.props.updateUser} updateImage={this.updateImage.bind(this)}/>
-        <UserInfoBar user={user} currentUserId={currentUserId}/>
+        <Route render={() => {
+          return <UserInfoBar tabs={tabs} user={user}/>;
+        }}/>
+        {/* <UserInfoBar user={user} currentUserId={currentUserId}/> */}
         <Route path={`/users/${user.id}/edit`} component={UserEditForm}/>
         <UserMainContent user={user} currentUserId={currentUserId}/>
       </div>
