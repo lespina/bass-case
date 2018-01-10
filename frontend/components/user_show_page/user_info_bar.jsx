@@ -62,7 +62,7 @@ class UserInfoBar extends React.Component {
         <ul className="user-info-tabs">
           {
             this.props.tabs.map((tab, idx) => {
-              return <UserInfoTabsItem key={idx} userId={userId} text={tab.text} pathname={tab.pathname}/>;
+              return <UserInfoTabsItem key={idx} userId={userId} userShow={tab.userShow} text={tab.text} pathname={tab.pathname}/>;
             })
           }
         </ul>
@@ -75,12 +75,13 @@ class UserInfoBar extends React.Component {
   }
 }
 
-const UserInfoTabsItem = ({ pathname, text, userId, idx }) => {
+const UserInfoTabsItem = ({ userShow, pathname, text, userId, idx }) => {
   const exact = ((pathname === '') ? { exact: true } : {});
+  const prefix = ((userShow) ? `/users/${userId}` : ``);
 
   return (
     <li className="user-info-tabs-item">
-      <NavLink {...exact} to={`/users/${userId}/${pathname}`} className="user-info-tabs-link">{text}</NavLink>
+      <NavLink {...exact} to={`${prefix}/${pathname}`} className="user-info-tabs-link">{text}</NavLink>
     </li>
   );
 };
