@@ -12,8 +12,10 @@ class UserStream extends React.Component {
     this.songActions = { [user.id]: [] };
     if (songIds) {
       _.values(songs).forEach((song) => {
-        if (song.artistId === user.id || song.reposterIds.includes(user.id)) {
-          this.songActions[user.id].push(song);
+        if (song.artistId === user.id) {
+          this.songActions[user.id].push([song, song.createdAt]);
+        } else if (user.id in song.reposts) {
+          this.songActions[user.id].push([song, song.reposts[user.id]]);
         }
       }, this);
     } else {
@@ -23,7 +25,7 @@ class UserStream extends React.Component {
 
   render() {
     this.filterSongs();
-    debugger
+    
     return (
       <main className="user-main border-right-light">
         <div className="user-main-stream">
