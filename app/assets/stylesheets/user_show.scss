@@ -553,9 +553,10 @@
 
 .sound-actions-btn.action-repost:before {
   -webkit-mask-image: image-url('repost-icon.svg');
+  -webkit-mask-position: 50% 50%;
   mask-repeat: no-repeat;
   background-color: black;
-  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
   height: 16px;
   width: 16px;
 }
@@ -643,4 +644,13 @@
 
 .stream-main {
   padding-right: 30px;
+}
+
+.stream-text {
+  display: block;
+  margin: 30px 0;
+  color: #999;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 1.3;
 }

@@ -102,7 +102,7 @@ class StreamIndexItem extends React.Component {
             <div className="sound-footer">
               <div className="sound-actions">
                 <button onClick={this.handleToggleLike} type="button" className={`bc-btn sound-actions-btn action-like ${likeActive}`}>{song.numLikes}</button>
-                <button onClick={this.handleToggleRepost} type="button" className={`bc-btn sound-actions-btn action-repost ${repostActive}`}>{song.numReposts}</button>
+                <button onClick={this.handleToggleRepost} type="button" className={`bc-btn sound-actions-btn action-repost ${repostActive}`}>{Object.keys(song.reposts).length}</button>
                 <button onClick={addToNextUp.bind(null, song.id)} type="button" className="bc-btn sound-actions-btn action-next-up">Add to Next up</button>
               </div>
               <div className="sound-stats">
