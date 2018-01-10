@@ -13,15 +13,9 @@ class UserStream extends React.Component {
           this.songActions[user.id].push(song);
         }
       }, this);
+    } else {
+      this.songActions = {};
     }
-
-    // if (songIds) {
-    //   this.songs = _.values(songs).filter(song => {
-    //     return (song.artistId === user.id);
-    //   });
-    // } else {
-    //   this.songs = [];
-    // }
   }
 
   render() {

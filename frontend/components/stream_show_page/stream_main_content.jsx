@@ -21,7 +21,7 @@ const StreamMainContent = ({ currentUser }) => {
       <Route render={() => {
         return <InfoBar tabs={tabs} style={{ style }}/>;
       }}/>
-      {/* <StreamContainer/> */}
+      <StreamContainer/>
       {/* <StreamSidebar currentUser={currentUser}/> */}
     </section>
   );

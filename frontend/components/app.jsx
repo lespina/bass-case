@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter, Route, Switch } from 'react-router-dom';
 import { AuthRoute, ProtectedRoute } from '../util/route_util';
 import { fetchUsers } from '../actions/user_actions';
+import { fetchSongs } from '../actions/song_actions';
 import GreetingContainer from './greeting/greeting_container';
 import SessionFormContainer from './session_form/session_form_container';
 import Landing from './landing_page/landing';
@@ -17,6 +18,7 @@ class App extends React.Component {
 
   componentDidMount() {
     this.props.fetchUsers();
+    this.props.fetchSongs();
   }
 
   render() {
@@ -55,6 +57,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   fetchUsers: () => dispatch(fetchUsers()),
+  fetchSongs: () => dispatch(fetchSongs()),
 });
 
 export default withRouter(
