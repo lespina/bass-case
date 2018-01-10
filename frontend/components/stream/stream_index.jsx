@@ -37,6 +37,8 @@ class StreamIndex extends React.Component {
                     currentUser={this.props.currentUser}
                     createLike={this.props.createLike}
                     deleteLike={this.props.deleteLike}
+                    createRepost={this.props.createRepost}
+                    deleteRepost={this.props.deleteRepost}
                   />
                 );
               }, this);

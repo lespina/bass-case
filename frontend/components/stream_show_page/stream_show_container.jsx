@@ -4,10 +4,12 @@ import StreamShow from './stream_show';
 import { fetchUser } from '../../actions/user_actions';
 
 
-const mapStateToProps = (state) => ({
-  currentUser: state.session.currentUser,
-  users: state.entities.users
-});
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.session.currentUser,
+    users: state.entities.users
+  };
+};
 
 const mapDispatchToProps = (dispatch) => ({
   fetchUser: (userId) => dispatch(fetchUser(userId)),

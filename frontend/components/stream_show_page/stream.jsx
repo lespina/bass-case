@@ -2,6 +2,9 @@ import React from 'react';
 import StreamIndex from '../stream/stream_index';
 
 class Stream extends React.Component {
+  componentDidMount() {
+    this.props.fetchUser(this.props.currentUser.id);
+  }
 
   filterSongs() {
     const { songs, users, currentUser } =  this.props;
@@ -31,7 +34,7 @@ class Stream extends React.Component {
   }
 
   render() {
-    if (!this.props.currentUser.follows) {return null;}
+    if (!this.props.currentUser.follows) { return null; }
 
     this.filterSongs();
 
@@ -50,6 +53,8 @@ class Stream extends React.Component {
             currentUser={this.props.currentUser}
             createLike={this.props.createLike}
             deleteLike={this.props.deleteLike}
+            createRepost={this.props.createRepost}
+            deleteRepost={this.props.deleteRepost}
           />
           <div className="user-main-stream-loading"></div>
         </div>

@@ -1,9 +1,10 @@
 import _ from 'lodash';
 import { RECEIVE_USERS, RECEIVE_USER } from '../actions/user_actions';
 import { RECEIVE_LIKE, REMOVE_LIKE } from '../actions/like_actions';
+import { RECEIVE_REPOST, REMOVE_REPOST } from '../actions/repost_actions';
 import { RECEIVE_FOLLOW, REMOVE_FOLLOW } from '../actions/follow_actions';
 
-const initialState = null;
+const initialState = {};
 
 const usersReducer = (state = initialState, action) => {
   let newState;
@@ -23,6 +24,16 @@ const usersReducer = (state = initialState, action) => {
       newState = _.merge({}, state);
       const userRemoveLikes = newState[action.like.userId].likes;
       delete userRemoveLikes[action.like.songId];
+      return newState;
+    case RECEIVE_REPOST:
+      newState = _.merge({}, state);
+      const userReceiveReposts = newState[action.repost.userId].reposts;
+      userReceiveReposts[action.repost.songId] = action.repost.id;
+      return newState;
+    case REMOVE_REPOST:
+      newState = _.merge({}, state);
+      const userRemoveReposts = newState[action.repost.userId].reposts;
+      delete userRemoveReposts[action.repost.songId];
       return newState;
     case RECEIVE_FOLLOW:
       newState = _.merge({}, state);

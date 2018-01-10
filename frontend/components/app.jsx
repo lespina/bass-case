@@ -22,7 +22,7 @@ class App extends React.Component {
   }
 
   render() {
-    if (this.props.users === null) {
+    if (Object.keys(this.props.users).length === 0 || Object.keys(this.props.songs).length === 0) {
       return null;
     }
 
@@ -52,6 +52,7 @@ class App extends React.Component {
 
 const mapStateToProps = (state) => ({
   users: state.entities.users,
+  songs: state.entities.songs,
   onRootPage: state.session.onRootPage
 });
 

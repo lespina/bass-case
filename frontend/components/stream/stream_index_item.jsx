@@ -6,6 +6,7 @@ class StreamIndexItem extends React.Component {
   constructor(props) {
     super(props);
     this.handleToggleLike = this.handleToggleLike.bind(this);
+    this.handleToggleRepost = this.handleToggleRepost.bind(this);
   }
 
 
@@ -19,6 +20,16 @@ class StreamIndexItem extends React.Component {
     }
   }
 
+  handleToggleRepost(e) {
+    e.preventDefault();
+    const { currentUser, song, deleteRepost, createRepost } = this.props;
+    if (song.id in currentUser.reposts) {
+      deleteRepost(currentUser.reposts[song.id]);
+    } else {
+      createRepost(currentUser.id, song.id);
+    }
+  }
+
   usernames() {
     const { user, artist } = this.props;
 
@@ -27,7 +38,6 @@ class StreamIndexItem extends React.Component {
         <div>
           <Link to={`/users/${user.id}`} className="sound-title-username1">{user.username}</Link>
           <Link to={`/users/${artist.id}`} className="sound-title-username2">&nbsp;&nbsp;{artist.username}</Link>
-          {/* <a href="#" className="sound-title-username2">&nbsp;&nbsp;Statik</a> */}
         </div>
       );
     } else {
@@ -48,7 +58,8 @@ class StreamIndexItem extends React.Component {
       currentUser,
     } = this.props;
 
-    const active = ((song.id in currentUser.likes) ? 'active' : '' );
+    const likeActive = ((song.id in currentUser.likes) ? 'active' : '' );
+    const repostActive = ((song.id in currentUser.reposts) ? 'active' : '' );
     const paused = ((playing && parseInt(currentSongId) === song.id) ? 'stream-paused' : '');
     const coverImage = { backgroundImage: `url(${song.imageUrl})` };
 
@@ -89,8 +100,8 @@ class StreamIndexItem extends React.Component {
 
             <div className="sound-footer">
               <div className="sound-actions">
-                <button onClick={this.handleToggleLike} type="button" className={`bc-btn sound-actions-btn action-like ${active}`}>{song.numLikes}</button>
-                <button type="button" className="bc-btn sound-actions-btn action-repost ">65</button>
+                <button onClick={this.handleToggleLike} type="button" className={`bc-btn sound-actions-btn action-like ${likeActive}`}>{song.numLikes}</button>
+                <button onClick={this.handleToggleRepost} type="button" className={`bc-btn sound-actions-btn action-repost ${repostActive}`}>{song.numReposts}</button>
                 <button onClick={addToNextUp.bind(null, song.id)} type="button" className="bc-btn sound-actions-btn action-next-up">Add to Next up</button>
               </div>
               <div className="sound-stats">

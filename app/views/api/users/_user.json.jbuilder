@@ -13,15 +13,15 @@ else
   json.likes({})
 end
 
-# if user.been_followeds.length > 0
-#   json.follows do
-#     user.been_followeds.each do |follow|
-#       json.set! follow.follower_id, follow.id
-#     end
-#   end
-# else
-#   json.follows({})
-# end
+if user.reposts.length > 0
+  json.reposts do
+    user.reposts.each do |repost|
+      json.set! repost.song_id, repost.id
+    end
+  end
+else
+  json.reposts({})
+end
 
 if user.follows.length > 0
   json.follows do
