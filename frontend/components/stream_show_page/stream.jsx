@@ -26,8 +26,10 @@ class Stream extends React.Component {
       const songIds = followedUser.songIds;
 
       _.values(songs).forEach((song) => {
-        if (song.artistId === followedUser.id || song.reposterIds.includes(followedUser.id)) {
-          this.songActions[followedUser.id].push(song);
+        if (song.artistId === followedUser.id) {
+          this.songActions[followedUser.id].push([song, song.createdAt]);
+        } else if (followedUser.id in song.reposts) {
+          this.songActions[followedUser.id].push([song, song.reposts[followedUser.id]]);
         }
       }, this);
     }, this);

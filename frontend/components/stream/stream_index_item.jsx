@@ -36,7 +36,7 @@ class StreamIndexItem extends React.Component {
     if (artist.id !== user.id) {
       return (
         <div>
-          <Link to={`/users/${user.id}`} className="sound-title-username1">{user.username}</Link>
+          <Link to={`/users/${user.id}`} className="sound-title-username1">{user.username}&nbsp;</Link>
           <Link to={`/users/${artist.id}`} className="sound-title-username2">&nbsp;&nbsp;{artist.username}</Link>
         </div>
       );
@@ -51,6 +51,7 @@ class StreamIndexItem extends React.Component {
     const {
       song,
       artist,
+      createdAt,
       handleTogglePlayback,
       playing,
       currentSongId,
@@ -83,7 +84,7 @@ class StreamIndexItem extends React.Component {
                   </div>
                   <a href="#" className="sound-title-info-second">{song.title}</a>
                   <div className="sound-title-info-third">
-                    <div className="sound-title-info-upload-time">{FormatUtil.timeSince(song.createdAt)}</div>
+                    <div className="sound-title-info-upload-time">{FormatUtil.timeSince(createdAt)}</div>
                     {/* <a className="tag-container tag-small">
                       <span className="truncate sound-title-info-tag">Electronic</span>
                     </a> */}

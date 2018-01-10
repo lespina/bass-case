@@ -19,17 +19,19 @@ class StreamIndex extends React.Component {
     const sortedActions = [];
 
     Object.keys(this.props.songActions).forEach((userId) => {
-      this.props.songActions[userId].forEach((song) => {
-        sortedActions.push([userId, song]);
+      this.props.songActions[userId].forEach((innerSongAction) => {
+        sortedActions.push([userId, ...innerSongAction]);
       }, this);
     }, this);
 
     return sortedActions.sort((action1, action2) => {
-      const song1 = action1[1];
-      const song2 = action2[1];
-
-      const time1 = new Date(song1.createdAt).getTime();
-      const time2 = new Date(song2.createdAt).getTime();
+      // const song1 = action1[1];
+      // const song2 = action2[1];
+      //
+      // const time1 = new Date(song1.createdAt).getTime();
+      // const time2 = new Date(song2.createdAt).getTime();
+      const time1 = new Date(action1[2]).getTime();
+      const time2 = new Date(action2[2]).getTime();
 
       return time2 - time1;
     });
@@ -43,11 +45,13 @@ class StreamIndex extends React.Component {
             this.timeSortedActions().map((songAction, idx) => {
               const userId = songAction[0];
               const song = songAction[1];
+              const createdAt = songAction[2];
               const artist = this.props.users[song.artistId];
               return (
                 <StreamIndexItem
                   key={`${idx}`}
                   user={this.props.users[userId]}
+                  createdAt={createdAt}
                   song={song}
                   artist={artist}
                   handleTogglePlayback={this.handleTogglePlayback.bind(this)(song.id)}
