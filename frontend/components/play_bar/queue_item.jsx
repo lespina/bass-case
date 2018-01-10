@@ -8,7 +8,20 @@ const QueueItemHandle = SortableHandle(() => {
   );
 });
 
-const QueueItem = ({ currentUser, currentSongId, paused, song, dimmed, handleTogglePlayback, handleToggleLike, addToNextUp, open, updateMoreActions, artist }) => {
+const QueueItem = ({
+  currentUser,
+  currentSongId,
+  paused,
+  song,
+  dimmed,
+  handleTogglePlayback,
+  handleToggleLike,
+  addToNextUp,
+  open,
+  updateMoreActions,
+  artist,
+  handleToggleRepost
+}) => {
   let ourPausedClass = paused;
   if (song.id !== parseInt(currentSongId)) { ourPausedClass = ""; }
   const { title, imageUrl } = song;
@@ -21,7 +34,7 @@ const QueueItem = ({ currentUser, currentSongId, paused, song, dimmed, handleTog
           <div className={`more-actions queue-actions-menu ${open}`}>
             <button onClick={handleToggleLike} className={`more-actions-btn more-like-btn ${active}`}>Like</button>
             <button onClick={addToNextUp.bind(null, song.id)} className="more-actions-btn more-add-next-up-btn">Add to Next up</button>
-            <button onClick={() => console.log("implement me!")} className="more-actions-btn more-repost-btn">Repost</button>
+            <button onClick={handleToggleRepost} className={`more-actions-btn more-repost-btn ${active}`}>Repost</button>
           </div>
         </div>
       </div>

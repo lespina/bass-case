@@ -11,6 +11,7 @@ import {
 } from '../../actions/playback_actions';
 import { receiveMoreActionsIndex } from '../../actions/menu_actions';
 import { createLike, deleteLike } from '../../actions/like_actions';
+import { createRepost, deleteRepost } from '../../actions/repost_actions';
 
 const mapStateToProps = (state) => {
   const { songQueue, songIdx, playing } = state.ui.playback;
@@ -39,6 +40,8 @@ const mapDispatchToProps = (dispatch) => {
     addToNextUp: (songId) => dispatch(addToNextUp(songId)),
     createLike: (userId, songId) => dispatch(createLike(userId, songId)),
     deleteLike: (likeId) => dispatch(deleteLike(likeId)),
+    createRepost: (userId, songId) => dispatch(createRepost(userId, songId)),
+    deleteRepost: (repostId) => dispatch(deleteRepost(repostId)),
   };
 };
 

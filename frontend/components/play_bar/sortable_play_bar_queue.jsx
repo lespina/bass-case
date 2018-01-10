@@ -37,7 +37,9 @@ class SortablePlayBarQueue extends React.Component {
       receivePlaybackSong,
       receiveNewPlaybackSongs,
       clearQueue,
-      hideQueue
+      hideQueue,
+      createRepost,
+      deleteRepost
     } = this.props;
 
     return <PlayBarQueue
@@ -48,11 +50,12 @@ class SortablePlayBarQueue extends React.Component {
       moreActionsIdx={moreActionsIdx}
       createLike={createLike}
       deleteLike={deleteLike}
+      createRepost={createRepost}
+      deleteRepost={deleteRepost}
       users={users}
       songs={songs}
       songQueue={this.props.songQueue}
       currentSongId={currentSongId}
-      currentUser={currentUser}
       playing={playing}
       songIdx={songIdx}
       togglePlayback={togglePlayback}
