@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 import StreamIndex from '../stream/stream_index';
 
 class UserStream extends React.Component {
@@ -6,10 +7,12 @@ class UserStream extends React.Component {
     const { songs, user } =  this.props;
     const songIds = user.songIds;
 
+
+
     this.songActions = { [user.id]: [] };
     if (songIds) {
       _.values(songs).forEach((song) => {
-        if (song.artistId === user.id) {
+        if (song.artistId === user.id || song.reposterIds.includes(user.id)) {
           this.songActions[user.id].push(song);
         }
       }, this);
@@ -20,7 +23,7 @@ class UserStream extends React.Component {
 
   render() {
     this.filterSongs();
-
+    debugger
     return (
       <main className="user-main border-right-light">
         <div className="user-main-stream">

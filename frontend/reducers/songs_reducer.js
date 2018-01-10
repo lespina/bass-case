@@ -31,7 +31,7 @@ const songsReducer = (state = initialState, action) => {
       unlikedSong.numLikes -= 1;
       if (unlikedSong.likerIds) {
         const unlikerIdx = unlikedSong.likerIds.indexOf(action.like.userId);
-        unlikedSong.likerIds.splice(unlikeIdx, 1);
+        unlikedSong.likerIds.splice(unlikerIdx, 1);
       }
       return newState;
     case RECEIVE_REPOST:
@@ -47,8 +47,8 @@ const songsReducer = (state = initialState, action) => {
       const unrepostedSong = newState[action.repost.songId];
       unrepostedSong.numReposts -= 1;
       if (unrepostedSong.reposterIds) {
-        const unreposterIdx = unrepostedSong.repostrIds.indexOf(action.repost.userId);
-        unrepostdSong.reposterIds.splice(unrepostIdx, 1);
+        const unreposterIdx = unrepostedSong.reposterIds.indexOf(action.repost.userId);
+        unrepostedSong.reposterIds.splice(unreposterIdx, 1);
       }
       return newState;
     default:
