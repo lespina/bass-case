@@ -26,17 +26,13 @@ const usersReducer = (state = initialState, action) => {
       return newState;
     case RECEIVE_FOLLOW:
       newState = _.merge({}, state);
-      const userGiveFollows = newState[action.follow.followerId].follows;
-      userGiveFollows[action.follow.followeeId] = action.follow.id;
-      const userReceiveFollows = newState[action.follow.followeeId].follows;
-      userReceiveFollows[action.follow.followerId] = action.follow.id;
+      const userReceiveFollows = newState[action.follow.followerId].follows;
+      userReceiveFollows[action.follow.followeeId] = action.follow.id;
       return newState;
     case REMOVE_FOLLOW:
       newState = _.merge({}, state);
-      const userDeleteFollows = newState[action.follow.followerId].follows;
-      delete userDeleteFollows[action.follow.followeeId];
-      const userRemoveFollows = newState[action.follow.followeeId].follows;
-      delete userRemoveFollows[action.follow.followerId];
+      const userRemoveFollows = newState[action.follow.followerId].follows;
+      delete userRemoveFollows[action.follow.followeeId];
       return newState;
     default:
       return state;

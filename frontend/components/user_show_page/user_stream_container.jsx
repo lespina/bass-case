@@ -7,6 +7,9 @@ import UserStream from './user_stream';
 const mapStateToProps = (state, ownProps) => {
   const allSongs = state.entities.songs;
   const songIds = ownProps.user.songIds;
+
+  // debugger
+
   let songs;
   if (songIds) {
     songs = _.values(allSongs).filter(song => {
@@ -15,6 +18,9 @@ const mapStateToProps = (state, ownProps) => {
   } else {
     songs = [];
   }
+
+  // let myFolloweeSongs;
+  // if ()
 
   const { songQueue, songIdx, playing } = state.ui.playback;
   const currentSongId = songQueue[songIdx];

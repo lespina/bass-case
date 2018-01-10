@@ -14,17 +14,18 @@ class UserInfoBar extends React.Component {
     const { users, currentUserId, user, deleteFollow, createFollow } = this.props;
     const currentUser = users[currentUserId];
 
-    if (currentUserId in user.follows) {
-      this.props.unfollow(user.follows[currentUser.id]);
+    if (user.id in currentUser.follows) {
+      this.props.unfollow(currentUser.follows[user.id]);
     } else {
       this.props.follow(currentUserId, user.id);
     }
   }
 
   followButton() {
-    const { user, currentUserId } = this.props;
+    const { user, currentUserId, users } = this.props;
     const isCurrentUser = (user.id === parseInt(currentUserId));
-    const followStatus = (user.follows && currentUserId in user.follows);
+    const currentUser = users[currentUserId];
+    const followStatus = (currentUser.follows && user.id in currentUser.follows);
 
     if (!isCurrentUser) {
       return (
