@@ -11,7 +11,7 @@ import PlayBarContainer from './play_bar/play_bar_container';
 import PlaybackContainer from './play_bar/playback_container';
 import NavBar from './nav_bar/nav_bar';
 import UserShow from './user_show_page/user_show';
-import StreamContainer from './stream_show_page/stream_container';
+import StreamShowContainer from './stream_show_page/stream_show_container';
 
 class App extends React.Component {
 
@@ -36,7 +36,7 @@ class App extends React.Component {
           <Switch>
             <ProtectedRoute path="/users/:id" component={UserShow} onRootPage={this.props.onRootPage} />
             <ProtectedRoute path="/upload" component={Upload}/>
-            <ProtectedRoute path="/" component={StreamContainer}/>
+            <ProtectedRoute path="/" component={StreamShowContainer}/>
           </Switch>
 
           <PlayBarContainer/>

@@ -12,7 +12,7 @@ class UserInfoBar extends React.Component {
   handleToggleFollow(e) {
     e.preventDefault();
     const { users, currentUser, user, deleteFollow, createFollow } = this.props;
-    const follows = users[currentUser].follows;
+    const follows = users[currentUser.id].follows;
 
     if (user.id in follows) {
       this.props.unfollow(follows[user.id]);
@@ -23,6 +23,9 @@ class UserInfoBar extends React.Component {
 
   followButton() {
     const { user, currentUser, users } = this.props;
+
+    if (!user) { return null; }
+
     const isCurrentUser = (currentUser && user.id === parseInt(currentUser.id));
     const follows = users[currentUser.id].follows;
     const followStatus = (follows && user.id in follows);
@@ -43,7 +46,7 @@ class UserInfoBar extends React.Component {
 
   editButton() {
     const { user, currentUser } = this.props;
-    const isCurrentUser = (currentUser && user.id === parseInt(currentUser.id));
+    const isCurrentUser = (currentUser && user && user.id === parseInt(currentUser.id));
 
     if (isCurrentUser) {
       return (
@@ -55,15 +58,15 @@ class UserInfoBar extends React.Component {
   }
 
   render() {
-    const userId = this.props.user.id;
+    const userId = ((this.props.user) ? this.props.user.id : null);
 
     return (
       <section className="user-info-bar">
         <ul className="user-info-tabs">
           {
             this.props.tabs.map((tab, idx) => {
-              return <UserInfoTabsItem key={idx} userId={userId} userShow={tab.userShow} text={tab.text} pathname={tab.pathname}/>;
-            })
+              return <UserInfoTabsItem key={idx} userId={userId} userShow={tab.userShow} text={tab.text} pathname={tab.pathname} style={this.props.style}/>;
+            }, this)
           }
         </ul>
         <div className="user-info-buttons">
@@ -75,13 +78,13 @@ class UserInfoBar extends React.Component {
   }
 }
 
-const UserInfoTabsItem = ({ userShow, pathname, text, userId, idx }) => {
+const UserInfoTabsItem = ({ userShow, pathname, text, userId, idx, style}) => {
   const exact = ((pathname === '') ? { exact: true } : {});
   const prefix = ((userShow) ? `/users/${userId}` : ``);
 
   return (
     <li className="user-info-tabs-item">
-      <NavLink {...exact} to={`${prefix}/${pathname}`} className="user-info-tabs-link">{text}</NavLink>
+      <NavLink {...exact} {...style} to={`${prefix}/${pathname}`} className="user-info-tabs-link">{text}</NavLink>
     </li>
   );
 };
