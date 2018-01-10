@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Route, withRouter } from 'react-router-dom';
 import { fetchUser, updateUser } from '../../actions/user_actions';
 import UserHeroImage from './user_hero_image';
-import UserInfoBar from './user_info_bar';
+import InfoBar from '../info_bar/info_bar';
 import UserMainContent from './user_main_content';
 import UserEditForm from './user_edit_form';
 
@@ -56,7 +56,7 @@ class UserShow extends React.Component {
       <div>
         <UserHeroImage user={user} currentUserId={currentUserId} updateUser={this.props.updateUser} updateImage={this.updateImage.bind(this)}/>
         <Route render={() => {
-          return <UserInfoBar tabs={tabs} user={user}/>;
+          return <InfoBar tabs={tabs} user={user}/>;
         }}/>
         {/* <UserInfoBar user={user} currentUserId={currentUserId}/> */}
         <Route path={`/users/${user.id}/edit`} component={UserEditForm}/>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import UserInfoBar from '../user_show_page/user_info_bar';
+import InfoBar from '../info_bar/info_bar';
 // import StreamContainer from './feed_container';
 // import StreamSidebar from './stream_sidebar';
 
@@ -19,7 +19,7 @@ const StreamMainContent = ({ currentUser }) => {
   return (
     <section className="relative user-main">
       <Route render={() => {
-        return <UserInfoBar tabs={tabs} style={{ style }}/>;
+        return <InfoBar tabs={tabs} style={{ style }}/>;
       }}/>
       {/* <StreamContainer/> */}
       {/* <StreamSidebar currentUser={currentUser}/> */}

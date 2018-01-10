@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { NavLink, Link, withRouter } from 'react-router-dom';
 import { createFollow, deleteFollow } from '../../actions/follow_actions';
 
-class UserInfoBar extends React.Component {
+class InfoBar extends React.Component {
   constructor(props) {
     super(props);
     this.handleToggleFollow = this.handleToggleFollow.bind(this);
@@ -65,7 +65,7 @@ class UserInfoBar extends React.Component {
         <ul className="user-info-tabs">
           {
             this.props.tabs.map((tab, idx) => {
-              return <UserInfoTabsItem key={idx} userId={userId} userShow={tab.userShow} text={tab.text} pathname={tab.pathname} style={this.props.style}/>;
+              return <InfoTabsItem key={idx} userId={userId} userShow={tab.userShow} text={tab.text} pathname={tab.pathname} style={this.props.style}/>;
             }, this)
           }
         </ul>
@@ -78,7 +78,7 @@ class UserInfoBar extends React.Component {
   }
 }
 
-const UserInfoTabsItem = ({ userShow, pathname, text, userId, idx, style}) => {
+const InfoTabsItem = ({ userShow, pathname, text, userId, idx, style}) => {
   const exact = ((pathname === '') ? { exact: true } : {});
   const prefix = ((userShow) ? `/users/${userId}` : ``);
 
@@ -103,5 +103,5 @@ export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(UserInfoBar)
+  )(InfoBar)
 );
