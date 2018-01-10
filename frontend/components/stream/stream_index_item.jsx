@@ -84,9 +84,9 @@ class StreamIndexItem extends React.Component {
                   <a href="#" className="sound-title-info-second">{song.title}</a>
                   <div className="sound-title-info-third">
                     <div className="sound-title-info-upload-time">{FormatUtil.timeSince(song.createdAt)}</div>
-                    <a className="tag-container tag-small">
+                    {/* <a className="tag-container tag-small">
                       <span className="truncate sound-title-info-tag">Electronic</span>
-                    </a>
+                    </a> */}
                   </div>
                 </div>
               </div>
@@ -106,7 +106,7 @@ class StreamIndexItem extends React.Component {
               </div>
               <div className="sound-stats">
                 <div className="sound-stats-plays">{FormatUtil.formatPlays(song.plays)}</div>
-                <div className="sound-stats-comments">1</div>
+                {/* <div className="sound-stats-comments">1</div> */}
               </div>
             </div>
           </div>
