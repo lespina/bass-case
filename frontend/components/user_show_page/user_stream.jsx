@@ -4,15 +4,24 @@ import StreamIndex from '../stream/stream_index';
 class UserStream extends React.Component {
   filterSongs() {
     const { songs, user } =  this.props;
-
     const songIds = user.songIds;
+
+    this.songActions = { [user.id]: [] };
     if (songIds) {
-      this.songs = _.values(songs).filter(song => {
-        return (song.artistId === user.id);
-      });
-    } else {
-      this.songs = [];
+      _.values(songs).forEach((song) => {
+        if (song.artistId === user.id) {
+          this.songActions[user.id].push(song);
+        }
+      }, this);
     }
+
+    // if (songIds) {
+    //   this.songs = _.values(songs).filter(song => {
+    //     return (song.artistId === user.id);
+    //   });
+    // } else {
+    //   this.songs = [];
+    // }
   }
 
   render() {
@@ -22,7 +31,7 @@ class UserStream extends React.Component {
       <main className="user-main border-right-light">
         <div className="user-main-stream">
           <StreamIndex
-            songs={this.songs}
+            songActions={this.songActions}
             users={this.props.users}
             togglePlayback={this.props.togglePlayback}
             receivePlaybackSong={this.props.receivePlaybackSong}

@@ -15,28 +15,33 @@ class StreamIndex extends React.Component {
     };
   }
 
+
+
   render() {
-    if (this.props.songs.length > 0) {
+    if (Object.keys(this.props.songActions).length > 0) {
       return (
         <ul className="stream-index">
           {
-            this.props.songs.map((song, idx) => {
-              const artist = this.props.users[song.artistId];
-              return (
-                <StreamIndexItem
-                  key={idx}
-                  song={song}
-                  artist={artist}
-                  handleTogglePlayback={this.handleTogglePlayback.bind(this)(song.id)}
-                  currentSongId={this.props.currentSongId}
-                  playing={this.props.playing}
-                  receivePlaybackSong={this.props.receivePlaybackSong}
-                  addToNextUp={this.props.addToNextUp}
-                  currentUser={this.props.currentUser}
-                  createLike={this.props.createLike}
-                  deleteLike={this.props.deleteLike}
-                />
-              );
+            Object.keys(this.props.songActions).map((userId, idx1) => {
+              return this.props.songActions[userId].map((song, idx2) => {
+                const artist = this.props.users[song.artistId];
+                return (
+                  <StreamIndexItem
+                    key={`${idx1}${idx2}`}
+                    user={this.props.users[userId]}
+                    song={song}
+                    artist={artist}
+                    handleTogglePlayback={this.handleTogglePlayback.bind(this)(song.id)}
+                    currentSongId={this.props.currentSongId}
+                    playing={this.props.playing}
+                    receivePlaybackSong={this.props.receivePlaybackSong}
+                    addToNextUp={this.props.addToNextUp}
+                    currentUser={this.props.currentUser}
+                    createLike={this.props.createLike}
+                    deleteLike={this.props.deleteLike}
+                  />
+                );
+              }, this);
             }, this)
           }
         </ul>

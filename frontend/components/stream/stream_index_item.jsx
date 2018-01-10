@@ -19,6 +19,24 @@ class StreamIndexItem extends React.Component {
     }
   }
 
+  usernames() {
+    const { user, artist } = this.props;
+
+    if (artist.id !== user.id) {
+      return (
+        <div>
+          <Link to={`/users/${user.id}`} className="sound-title-username1">{user.username}</Link>
+          <Link to={`/users/${artist.id}`} className="sound-title-username2">&nbsp;&nbsp;{artist.username}</Link>
+          {/* <a href="#" className="sound-title-username2">&nbsp;&nbsp;Statik</a> */}
+        </div>
+      );
+    } else {
+      return (
+        <Link to={`/users/${artist.id}`} className="sound-title-username1">{artist.username}</Link>
+      );
+    }
+  }
+
   render() {
     const {
       song,
@@ -50,8 +68,7 @@ class StreamIndexItem extends React.Component {
                 <div onClick={handleTogglePlayback} className={`bc-btn sound-title-play-btn ${paused}`}></div>
                 <div className="sound-title-info-container">
                   <div className="sound-title-info-first">
-                    <Link to={`/users/${artist.id}`} className="sound-title-username1">{artist.username}</Link>
-                    {/* <a href="#" className="sound-title-username2">&nbsp;&nbsp;Statik</a> */}
+                    {this.usernames()}
                   </div>
                   <a href="#" className="sound-title-info-second">{song.title}</a>
                   <div className="sound-title-info-third">
