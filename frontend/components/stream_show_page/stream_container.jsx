@@ -10,7 +10,7 @@ const mapStateToProps = (state, ownProps) => {
   const currentSongId = songQueue[songIdx];
   return {
     currentUser: state.entities.users[state.session.currentUser.id],
-    songs,
+    songs: state.entities.songs,
     users: state.entities.users,
     currentSongId,
     playing,

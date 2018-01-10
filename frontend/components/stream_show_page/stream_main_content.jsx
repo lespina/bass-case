@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import InfoBar from '../info_bar/info_bar';
-// import StreamContainer from './feed_container';
+import StreamContainer from './stream_container';
 // import StreamSidebar from './stream_sidebar';
 
 const StreamMainContent = ({ currentUser }) => {

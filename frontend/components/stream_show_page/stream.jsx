@@ -3,7 +3,6 @@ import StreamIndex from '../stream/stream_index';
 
 class Stream extends React.Component {
   componentDidMount() {
-
   }
 
   render() {
@@ -11,7 +10,7 @@ class Stream extends React.Component {
       <main className="user-main border-right-light">
         <div className="user-main-stream">
           <StreamIndex
-            songs={this.songs}
+            songs={this.props.songs}
             users={this.props.users}
             togglePlayback={this.props.togglePlayback}
             receivePlaybackSong={this.props.receivePlaybackSong}
