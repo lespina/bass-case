@@ -10,6 +10,9 @@
 #
 
 class Follow < ApplicationRecord
+  validates :follower_id, uniqueness: { scope: :followee_id,
+    message: "Users may only follow another user once" }
+
   belongs_to :followee,
     class_name: :User,
     foreign_key: :followee_id

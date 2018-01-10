@@ -25,11 +25,15 @@ class Song < ApplicationRecord
 
   belongs_to :user
   has_many :likes
+  has_many :reposts
 
   has_many :likers,
     through: :likes,
     source: :user
 
+  has_many :reposters,
+    through: :reposts,
+    source: :user
 
   has_attached_file :image, styles: { medium: "500x500>" }, default_url: DEFAULT_IMAGE_URL
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\z/

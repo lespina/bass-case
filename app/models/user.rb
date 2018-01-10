@@ -39,9 +39,14 @@ class User < ApplicationRecord
 
   has_many :songs
   has_many :likes
+  has_many :reposts
 
   has_many :liked_songs,
     through: :likes,
+    source: :song
+
+  has_many :reposted_songs,
+    through: :reposts,
     source: :song
 
   has_many :follows,
@@ -51,7 +56,7 @@ class User < ApplicationRecord
   has_many :been_followeds,
     class_name: :Follow,
     foreign_key: :followee_id
-    
+
   # has_many :followers,
   #   class_name: :User,
   #   foreign_key: :follower_id
