@@ -25,16 +25,19 @@ const QueueItem = ({
   let ourPausedClass = paused;
   if (song.id !== parseInt(currentSongId)) { ourPausedClass = ""; }
   const { title, imageUrl } = song;
-  const active = ((currentUser && currentUser.likes && song.id in currentUser.likes) ? 'active' : '' );
+  const activeLikes = ((currentUser && currentUser.likes && song.id in currentUser.likes) ? 'active' : '' );
+  const likeText = ((currentUser && currentUser.likes && song.id in currentUser.likes) ? 'Liked' : 'Like' );
+  const activeReposts = ((currentUser && currentUser.reposts && song.id in currentUser.reposts) ? 'active' : '' );
+  const repostText = ((currentUser && currentUser.likes && song.id in currentUser.likes) ? 'Reposted' : 'Repost' );
   return (
     <div className={`queue-item ${dimmed}`}>
       <div className={`queue-item-actions ${open}`}>
-        <button onClick={handleToggleLike} className={`bc-btn playable-like-btn queue-like-btn ${active}`}>Like</button>
+        <button onClick={handleToggleLike} className={`bc-btn playable-like-btn queue-like-btn ${activeLikes}`}>Like</button>
         <div onClick={updateMoreActions} className={`bc-btn playable-more-btn queue-more-btn ${open}`}>
           <div className={`more-actions queue-actions-menu ${open}`}>
-            <button onClick={handleToggleLike} className={`more-actions-btn more-like-btn ${active}`}>Like</button>
+            <button onClick={handleToggleLike} className={`more-actions-btn more-like-btn ${activeLikes}`}>{likeText}</button>
             <button onClick={addToNextUp.bind(null, song.id)} className="more-actions-btn more-add-next-up-btn">Add to Next up</button>
-            <button onClick={handleToggleRepost} className={`more-actions-btn more-repost-btn ${active}`}>Repost</button>
+            <button onClick={handleToggleRepost} className={`more-actions-btn more-repost-btn ${activeReposts}`}>{repostText}</button>
           </div>
         </div>
       </div>

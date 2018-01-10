@@ -482,7 +482,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  max-width: 340px;
+  max-width: 240px;
   z-index: 2;
 }
 
@@ -609,4 +609,12 @@
 
 .more-like-btn.active:before {
   background-color: #f50;
+}
+
+.more-repost-btn.active:before {
+  background-color: #f50;
+}
+
+.more-actions-btn.active {
+  color: #f50;
 }
