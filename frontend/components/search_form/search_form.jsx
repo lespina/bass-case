@@ -26,7 +26,7 @@ class SearchForm extends React.Component {
     if (this.ready) {
       this.ready = false;
       this.updateSearchResults();
-      window.setTimeout(this.getReady, 200);
+      window.setTimeout(this.getReady, 50);
     }
   }
 
@@ -63,12 +63,27 @@ class SearchForm extends React.Component {
     this.setState({ searchResults });
   }
 
+  searchStringLi() {
+    if (this.state.searchString.length > 0) {
+      return (
+        <li className="search-result-item">
+          <div className="search-result-content">
+            <div className="search-result-text no-margin">Search for "{this.state.searchString}"</div>
+          </div>
+        </li>
+      );
+    } else {
+      return null;
+    }
+  }
+
   render() {
     return (
       <section className="nav-middle">
         <form className="nav-search">
           <input className="nav-search-input" onChange={this.handleChange('searchString')} value={this.state.searchString} type="search" placeholder="Search"></input>
           <ul className="search-results">
+            {this.searchStringLi()}
             {
               this.state.searchResults.map((result, idx) => {
                 let type;
