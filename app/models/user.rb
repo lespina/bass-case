@@ -21,7 +21,7 @@
 #
 
 class User < ApplicationRecord
-  DEFAULT_PROFILE_IMAGE_URL = "https://s3.amazonaws.com/basscase-dev/default-track-image.png"
+  DEFAULT_PROFILE_IMAGE_URL = "track-artwork/default-track-image.png"
 
   has_attached_file :profile_image, styles: { medium: "500x500>" }, default_url: DEFAULT_PROFILE_IMAGE_URL
   validates_attachment_content_type :profile_image, content_type: /\Aimage\/.*\z/

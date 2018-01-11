@@ -19,7 +19,7 @@
 #
 
 class Song < ApplicationRecord
-  DEFAULT_IMAGE_URL = "https://s3.amazonaws.com/basscase-dev/default-track-image.png"
+  DEFAULT_IMAGE_URL = "track-artwork/default-track-image.png"
 
   validates :title, presence: true
 

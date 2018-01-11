@@ -1,6 +1,6 @@
 json.extract! user, :id, :username, :bio, :location
-json.avatarUrl user.profile_image.url(:medium)
-json.bannerUrl user.banner_image.url(:large)
+json.avatarUrl asset_path(user.profile_image.url(:medium))
+json.bannerUrl asset_path(user.banner_image.url(:large))
 json.songIds user.song_ids
 json.followerIds user.follower_ids
 json.followeeIds user.followee_ids

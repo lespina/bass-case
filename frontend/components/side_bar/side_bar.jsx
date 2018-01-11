@@ -231,10 +231,12 @@ const FollowerItem = ({ follower, currentUser, handleToggleFollow }) => {
     active = ((follower.id in follows) ? "active" : "");
   }
 
+  const lower = ((follower.avatarUrl[0] === '/') ? { top: '-205px' } : {});
+
   return (
     <li className="user-avatar-list-item">
       <div className="user-avatar-list-item-body" style={style}>
-        <div className="floating-user-menu">
+        <div className="floating-user-menu" style={lower}>
           <div className="floating-user-content">
             <Link to={`/users/${follower.id}`} className="floating-user-content-avatar" style={style} ></Link>
             <Link to={`/users/${follower.id}`} className="floating-user-content-description">{follower.username}</Link>
@@ -261,10 +263,12 @@ const FollowingItem = ({ followee, currentUser, handleToggleFollow }) => {
     active = ((followee.id in follows) ? "active" : "");
   }
 
+  const lower = ((followee.avatarUrl[0] === '/') ? { top: '-205px' } : {});
+
   return (
     <li className="user-avatar-list-item">
       <div className="user-avatar-list-item-body" style={style}>
-        <div className="floating-user-menu">
+        <div className="floating-user-menu" style={lower}>
           <div className="floating-user-content">
             <Link to={`/users/${followee.id}`} className="floating-user-content-avatar" style={style} ></Link>
             <Link to={`/users/${followee.id}`} className="floating-user-content-description">{followee.username}</Link>

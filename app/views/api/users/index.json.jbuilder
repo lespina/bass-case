@@ -4,6 +4,6 @@
     json.songIds user.song_ids
     json.numFollowers user.followers.length
     json.numFollowing user.followees.length
-    json.avatarUrl user.profile_image.url(:medium)
+    json.avatarUrl asset_path(user.profile_image.url(:medium))
   end
 end
