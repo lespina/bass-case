@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { RECEIVE_CURRENT_USER } from '../actions/session_actions';
 import { RECEIVE_USERS, RECEIVE_USER } from '../actions/user_actions';
 import { RECEIVE_LIKE, REMOVE_LIKE } from '../actions/like_actions';
 import { RECEIVE_REPOST, REMOVE_REPOST } from '../actions/repost_actions';
@@ -44,6 +45,13 @@ const usersReducer = (state = initialState, action) => {
       newState = _.merge({}, state);
       const userRemoveFollows = newState[action.follow.followerId].follows;
       delete userRemoveFollows[action.follow.followeeId];
+      return newState;
+    case RECEIVE_CURRENT_USER:
+      if (!action.user) { return state; }
+      newState = _.merge({}, state);
+      if (!Boolean(newState[action.user.id])) {
+        newState[action.user.id] = action.user;
+      }
       return newState;
     default:
       return state;
