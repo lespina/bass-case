@@ -1,12 +1,12 @@
 import React from 'react';
 import UserStreamContainer from './user_stream_container';
-import UserSidebar from './user_sidebar';
+import Sidebar from '../side_bar/side_bar';
 
 const UserMainContent = ({ user }) => {
   return (
     <section className="relative">
       <UserStreamContainer user={user}/>
-      <UserSidebar user={user}/>
+      <Sidebar user={user} infoStats={true}/>
     </section>
   );
 };

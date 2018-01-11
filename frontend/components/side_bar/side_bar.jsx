@@ -4,7 +4,6 @@ import _ from 'lodash';
 import shuffle from 'shuffle-array';
 import { connect } from 'react-redux';
 import { createFollow, deleteFollow } from '../../actions/follow_actions';
-// import { fetchUser } from '../../actions/user_actions';
 import UserSuggestionModule from './user_suggestion_module';
 
 class SideBar extends React.Component {
@@ -57,8 +56,10 @@ class SideBar extends React.Component {
     };
   }
 
-  render() {
-    const { currentUser } = this.props;
+  userSuggestionModule() {
+    const { userSuggestion, currentUser } = this.props;
+
+    if (!userSuggestion) { return null; }
 
     if (!this.state.users) {
       this.chooseUsers();
@@ -66,16 +67,53 @@ class SideBar extends React.Component {
     }
 
     return (
+      <UserSuggestionModule
+        users={this.state.users}
+        currentUser={this.props.users[currentUser.id]}
+        handleToggleFollow={this.handleToggleFollow.bind(this)}
+        refresh={this.chooseUsers.bind(this)}
+      />
+    );
+  }
+
+  infoStatsModule() {
+    const { infoStats } = this.props;
+    if (!infoStats) { return null; }
+    return <InfoStatsModule user={this.props.user}/>;
+  }
+
+  render() {
+    return (
       <aside className="sidebar-right">
-        <UserSuggestionModule
-          users={this.state.users}
-          currentUser={this.props.users[currentUser.id]}
-          handleToggleFollow={this.handleToggleFollow.bind(this)}
-          refresh={this.chooseUsers.bind(this)}
-        />
+        {this.userSuggestionModule()}
+
+        {this.infoStatsModule()}
       </aside>
     );
   }
+}
+
+const InfoStatsModule = ({ user }) => {
+  return (
+    <table className="user-info-stats-table">
+      <tbody>
+        <tr>
+          <td className="info-stat">
+            <h3 className="info-stat-title">Followers</h3>
+            <div className="info-stat-value">408K</div>
+          </td>
+          <td className="info-stat">
+            <h3 className="info-stat-title">Following</h3>
+            <div className="info-stat-value">365</div>
+          </td>
+          <td className="info-stat">
+            <h3 className="info-stat-title">Tracks</h3>
+            <div className="info-stat-value">66</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  );
 }
 
 const mapStateToProps = (state) => ({

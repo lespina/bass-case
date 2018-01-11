@@ -25,7 +25,7 @@ const StreamMainContent = ({ currentUser }) => {
         <h1 className="stream-text">Hear the latest posts from the people you’re following:</h1>
         <StreamContainer/>
       </div>
-      <Sidebar/>
+      <Sidebar userSuggestion={true}/>
     </section>
   );
 };

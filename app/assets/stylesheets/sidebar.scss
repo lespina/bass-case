@@ -193,3 +193,231 @@
 .user-suggestion-follow-btn.active {
   border-color: #f50;
 }
+
+//
+
+.user-info-stats {
+  margin-bottom: 30px;
+}
+
+.user-info-stats-table {
+  width: 100%;
+  margin: -30px 0 14px 0;
+  font-size: 14px;
+  font-weight: 300;
+  border-collapse: collapse;
+  border-spacing: 0;
+  border-color: grey;
+}
+
+.info-stat {
+  width: 33.33%;
+  text-align: left;
+  text-indent: 10px;
+  color: #999;
+  border-right: 1px solid #f2f2f2;
+}
+
+.info-stat:first-child {
+  text-indent: 0;
+}
+
+.info-stat:last-child {
+  border-right: 0px solid #f2f2f2;
+}
+
+.info-stat-title {
+  margin-top: 0;
+  line-height: .9;
+  padding: 5px 0 3px;
+  font-size: 12px;
+}
+
+.info-stat-value {
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.user-info-stats-description {
+  margin-bottom: 20px;
+}
+
+.truncated-description-wrapper {
+  max-height: 85px;
+  overflow: hidden;
+  position: relative;
+}
+
+.truncated-description {
+  margin: 0 0 10px;
+  font-family: "Lucida Grande";
+  font-size: 12px;
+}
+
+.followers-content {
+  min-height: 60px;
+}
+
+.sidebar-user-avatar-list {
+  margin-top: 0;
+  padding: 10px 0 8px;
+  /* overflow: hidden; */
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+}
+
+.user-avatar-list-item:not(last-child) {
+  margin-right: -8px;
+}
+
+.user-avatar-list-item-body {
+  height: 100%;
+  position: relative;
+  word-wrap: break-word;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  background: 0 0;
+  text-align: center;
+  position: relative;
+  background-image: url(https://i1.sndcdn.com/avatars-000289936051-6xkfwv-t120x120.jpg);
+  border: 2px solid #fff;
+  box-sizing: border-box;
+  background-origin: border-box;
+}
+
+.floating-user-menu {
+  visibility: hidden;
+  opacity: 0;
+  outline: none;
+  width: 150px;
+  box-sizing: border-box;
+  min-height: 199px;
+  position: absolute;
+  top: -235px;
+  left: -57px;
+  border-radius: 4px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  background: #fff;
+  box-shadow: 0 2px 7px -1px rgba(0,0,0,.4);
+  z-index: 4;
+}
+
+.user-avatar-list-item:hover .floating-user-menu {
+  visibility: visible;
+  opacity: 1;
+}
+
+.floating-user-content {
+  box-sizing: border-box;
+  overflow: hidden;
+  margin-bottom: 10px;
+  width: 100%;
+  text-align: center;
+}
+
+.floating-user-menu-arrow {
+  -webkit-transform: rotate(225deg);
+  transform: rotate(225deg);
+  bottom: -5px;
+  top: auto;
+  left: 50%;
+  margin-left: -4px;
+
+  background: #fff;
+  border: 1px solid #ccc;
+  border-width: 1px 0 0 1px;
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  box-shadow: -1px -1px 1px -1px rgba(0,0,0,.5);
+  z-index: -1;
+}
+
+.floating-user-content-avatar {
+  display: block;
+  width: 80px;
+  height: 80px;
+  margin: 5px auto 15px;
+  border-radius: 50%;
+  background: 0 0;
+  background-size: cover;
+  background-position: 50% 50%;
+  transition: opacity .2s linear;
+  text-align: center;
+  position: relative;
+  box-shadow: rgba(0,0,0,.1)0 0 0 1px inset;
+  background-repeat: no-repeat;
+  background-image: url(https://i1.sndcdn.com/avatars-000289936051-6xkfwv-t200x200.jpg);
+}
+
+.floating-user-content-description {
+  font-size: 14px;
+  color: #333;
+  font-weight: 300;
+  line-height: 19.6px;
+}
+
+.floating-user-content-stats {
+  margin-bottom: 4px;
+  font-size: 11px;
+  line-height: 12px;
+  color: #999;
+  font-weight: 300;
+}
+
+.floating-user-content-stats-followers {
+  display: inline-block;
+  margin-right: 0;
+  padding-right: 0;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  color: #999;
+}
+
+.floating-user-content-stats-followers:before {
+  display: inline-block;
+  content: ".";
+  color: transparent;
+  width: 16px;
+  height: 12px;
+  background-size: 20px 20px;
+  background-image: url('../images/followers-icon.png');
+  vertical-align: top;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.floating-user-content-location {
+  font-size: 12px;
+  font-family: "Lucida Grande";
+  color: #999;
+  margin: 0 0 10px;
+  line-height: 1.3;
+}
+
+.floating-user-content-follow-btn {
+  min-width: 25px;
+  font-family: "Lucida Grande";
+  font-size: 11px;
+  padding: 2px 9px 2px 8px;
+  height: 22px;
+  line-height: 16px;
+}
+
+.floating-user-content-follow-btn.active {
+  color: #f50;
+  background-color: white;
+}
+
+.floating-user-content-follow-btn.active:hover {
+  border-color: #f50;
+}
