@@ -17,7 +17,7 @@ const UserSuggestionItem = ({ user, active, handleToggleFollow }) => {
         <div className="user-suggestion-meta">
           <div className="user-suggestion-stats">
             <div className="user-suggestion-followers">
-              &nbsp;&nbsp;{FormatUtil.formatPlays(user.numFollowers)}
+              &nbsp;&nbsp;{FormatUtil.formatPlays(user.followerIds.length)}
             </div>
             <div className="user-suggestion-tracks">
               &nbsp;&nbsp;{FormatUtil.formatPlays(user.songIds.length)}

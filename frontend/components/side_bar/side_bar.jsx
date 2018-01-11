@@ -145,11 +145,11 @@ const InfoStatsModule = ({ user }) => {
         <tr>
           <td className="info-stat">
             <h3 className="info-stat-title">Followers</h3>
-            <div className="info-stat-value">{FormatUtil.formatPlays(user.numFollowers)}</div>
+            <div className="info-stat-value">{FormatUtil.formatPlays(user.followerIds.length)}</div>
           </td>
           <td className="info-stat">
             <h3 className="info-stat-title">Following</h3>
-            <div className="info-stat-value">{FormatUtil.formatPlays(user.numFollowing)}</div>
+            <div className="info-stat-value">{FormatUtil.formatPlays(user.followeeIds.length)}</div>
           </td>
           <td className="info-stat">
             <h3 className="info-stat-title">Tracks</h3>
@@ -179,7 +179,7 @@ const Followers = ({ user, currentUser, followers, handleToggleFollow }) => {
       <a className="sidebar-header" href="#">
         <h3 className="sidebar-header-title">
           <span className="sidebar-header-follower-icon"></span>
-          <span>{FormatUtil.formatPlays(user.numFollowers)} Followers</span>
+          <span>{FormatUtil.formatPlays(user.followerIds.length)} Followers</span>
         </h3>
         <span className="sidebar-header-title">View all</span>
       </a>
@@ -203,7 +203,7 @@ const Following = ({ user, currentUser, followees, handleToggleFollow }) => {
       <a className="sidebar-header" href="#">
         <h3 className="sidebar-header-title">
           <span className="sidebar-header-follower-icon"></span>
-          <span>{FormatUtil.formatPlays(user.numFollowing)} Following</span>
+          <span>{FormatUtil.formatPlays(user.followeeIds.length)} Following</span>
         </h3>
         <span className="sidebar-header-title">View all</span>
       </a>
@@ -241,7 +241,7 @@ const FollowerItem = ({ follower, currentUser, handleToggleFollow }) => {
             <Link to={`/users/${follower.id}`} className="floating-user-content-avatar" style={style} ></Link>
             <Link to={`/users/${follower.id}`} className="floating-user-content-description">{follower.username}</Link>
             <div className="floating-user-content-stats">
-              <a className="floating-user-content-stats-followers" href="#">{FormatUtil.formatPlays(follower.numFollowers)}</a>
+              <a className="floating-user-content-stats-followers" href="#">{FormatUtil.formatPlays(follower.followerIds.length)}</a>
             </div>
             <div className="floating-user-content-location">{follower.location}</div>
             <button onClick={handleToggleFollow(follower.id)} className={`bc-btn floating-user-content-follow-btn ${active}`} type="button">{(active === "active") ? "Following" : "Follow"}</button>
@@ -273,7 +273,7 @@ const FollowingItem = ({ followee, currentUser, handleToggleFollow }) => {
             <Link to={`/users/${followee.id}`} className="floating-user-content-avatar" style={style} ></Link>
             <Link to={`/users/${followee.id}`} className="floating-user-content-description">{followee.username}</Link>
             <div className="floating-user-content-stats">
-              <a className="floating-user-content-stats-followers" href="#">{FormatUtil.formatPlays(followee.numFollowers)}</a>
+              <a className="floating-user-content-stats-followers" href="#">{FormatUtil.formatPlays(followee.followerIds.length)}</a>
             </div>
             <div className="floating-user-content-location">{followee.location}</div>
             <button onClick={handleToggleFollow(followee.id)} className={`bc-btn floating-user-content-follow-btn ${active}`} type="button">{(active === "active") ? "Following" : "Follow"}</button>

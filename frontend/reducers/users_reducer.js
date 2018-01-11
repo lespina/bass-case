@@ -40,11 +40,21 @@ const usersReducer = (state = initialState, action) => {
       newState = _.merge({}, state);
       const userReceiveFollows = newState[action.follow.followerId].follows;
       userReceiveFollows[action.follow.followeeId] = action.follow.id;
+      const userReceiveFolloweeIds = newState[action.follow.followerId].followeeIds;
+      userReceiveFolloweeIds.push(action.follow.followeeId);
+      const userGiveFollowerIds = newState[action.follow.followeeId].followerIds;
+      userGiveFollowerIds.push(action.follow.followerId);
       return newState;
     case REMOVE_FOLLOW:
       newState = _.merge({}, state);
       const userRemoveFollows = newState[action.follow.followerId].follows;
       delete userRemoveFollows[action.follow.followeeId];
+      const userRemoveFolloweeIds = newState[action.follow.followerId].followeeIds;
+        const idxToRemove1 = userRemoveFolloweeIds.indexOf(action.follow.followeeId);
+        userRemoveFolloweeIds.splice(idxToRemove1, 1);
+      const userDeleteFollowerIds = newState[action.follow.followeeId].followerIds;
+        const idxToRemove2 = userDeleteFollowerIds.indexOf(action.follow.followerId);
+        userDeleteFollowerIds.splice(idxToRemove2, 1);
       return newState;
     case RECEIVE_CURRENT_USER:
       if (!action.user) { return state; }

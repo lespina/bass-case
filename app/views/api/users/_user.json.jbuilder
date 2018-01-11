@@ -4,8 +4,8 @@ json.bannerUrl asset_path(user.banner_image.url(:large))
 json.songIds user.song_ids
 json.followerIds user.follower_ids
 json.followeeIds user.followee_ids
-json.numFollowers user.followers.length
-json.numFollowing user.followees.length
+# json.numFollowers user.followers.length
+# json.numFollowing user.followees.length
 
 if user.likes.length > 0
   json.likes do
