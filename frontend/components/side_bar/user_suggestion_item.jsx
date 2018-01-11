@@ -8,7 +8,7 @@ const UserSuggestionItem = ({ user, active, handleToggleFollow }) => {
   if (!user.songIds) { return null; }
   return (
     <li className="user-suggestion-item">
-      <div className="user-suggestion-avatar" style={style}></div>
+      <Link to={`/users/${user.id}`} className="user-suggestion-avatar" style={style}></Link>
       <div className="user-suggestion-content">
         <div className="user-suggestion-title truncate">
           <Link to={`/users/${user.id}`} className="user-suggestion-title-link truncate">{user.username}</Link>
