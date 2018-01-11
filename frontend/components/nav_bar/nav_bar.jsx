@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { NavLink, Link, withRouter } from 'react-router-dom';
 import * as SessionActions from '../../actions/session_actions';
 import { fetchUser } from '../../actions/user_actions';
+import SearchFormContainer from '../search_form/search_form_container';
 
 class NavBar extends React.Component {
 
@@ -40,12 +41,13 @@ class NavBar extends React.Component {
                 </NavLink>
               </section>
 
-              <section className="nav-middle">
+              {/* <section className="nav-middle">
                 <form className="nav-search">
                   <input type="search" placeholder="Search"></input>
                   <button type="submit">Search</button>
                 </form>
-              </section>
+              </section> */}
+              <SearchFormContainer/>
 
               <section className="nav-right">
                 <NavLink className="nav-upload hov-white" activeClassName="nav-selected" exact to="/upload">
