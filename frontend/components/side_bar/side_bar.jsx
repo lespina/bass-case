@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import _ from 'lodash';
 import shuffle from 'shuffle-array';
 import { connect } from 'react-redux';
@@ -106,6 +106,24 @@ class SideBar extends React.Component {
     />
   }
 
+  following() {
+    const { users, user, currentUser } = this.props;
+    if (!this.props.following || !user.followeeIds) { return null; }
+    const followees = [];
+    for (const userId in users) {
+      if (user.followeeIds.includes(parseInt(userId))) {
+        followees.push(users[userId]);
+      }
+    }
+    return <Following
+      user={user}
+      followees={followees}
+      currentUser={this.props.users[currentUser.id]}
+      handleToggleFollow={this.handleToggleFollow.bind(this)}
+    />
+
+  }
+
   render() {
     return (
       <aside className="sidebar-right">
@@ -114,6 +132,7 @@ class SideBar extends React.Component {
         {this.infoStatsModule()}
         {this.descriptionModule()}
         {this.followers()}
+        {this.following()}
       </aside>
     );
   }
@@ -178,6 +197,30 @@ const Followers = ({ user, currentUser, followers, handleToggleFollow }) => {
   );
 }
 
+const Following = ({ user, currentUser, followees, handleToggleFollow }) => {
+  return (
+    <section className="sidebar-module followers">
+      <a className="sidebar-header" href="#">
+        <h3 className="sidebar-header-title">
+          <span className="sidebar-header-follower-icon"></span>
+          <span>{FormatUtil.formatPlays(user.numFollowing)} Following</span>
+        </h3>
+        <span className="sidebar-header-title">View all</span>
+      </a>
+
+      <div className="sidebar-content followers-content">
+        <ul className="sidebar-user-avatar-list">
+          {
+            followees.map(followee => {
+              return <FollowingItem key={followee.id} followee={followee} currentUser={currentUser} handleToggleFollow={handleToggleFollow}/>
+            })
+          }
+        </ul>
+      </div>
+    </section>
+  );
+}
+
 const FollowerItem = ({ follower, currentUser, handleToggleFollow }) => {
   const style = { backgroundImage: `url(${follower.avatarUrl})` };
   let active;
@@ -193,13 +236,43 @@ const FollowerItem = ({ follower, currentUser, handleToggleFollow }) => {
       <div className="user-avatar-list-item-body" style={style}>
         <div className="floating-user-menu">
           <div className="floating-user-content">
-            <div className="floating-user-content-avatar" style={style} ></div>
-            <div className="floating-user-content-description">{follower.username}</div>
+            <Link to={`/users/${follower.id}`} className="floating-user-content-avatar" style={style} ></Link>
+            <Link to={`/users/${follower.id}`} className="floating-user-content-description">{follower.username}</Link>
             <div className="floating-user-content-stats">
               <a className="floating-user-content-stats-followers" href="#">{FormatUtil.formatPlays(follower.numFollowers)}</a>
             </div>
             <div className="floating-user-content-location">{follower.location}</div>
             <button onClick={handleToggleFollow(follower.id)} className={`bc-btn floating-user-content-follow-btn ${active}`} type="button">{(active === "active") ? "Following" : "Follow"}</button>
+          </div>
+          <div className="floating-user-menu-arrow"></div>
+          </div>
+      </div>
+    </li>
+  );
+}
+
+const FollowingItem = ({ followee, currentUser, handleToggleFollow }) => {
+  const style = { backgroundImage: `url(${followee.avatarUrl})` };
+  let active;
+  if (!currentUser || !currentUser.follows) {
+    active = false;
+  } else {
+    const follows = currentUser.follows;
+    active = ((followee.id in follows) ? "active" : "");
+  }
+
+  return (
+    <li className="user-avatar-list-item">
+      <div className="user-avatar-list-item-body" style={style}>
+        <div className="floating-user-menu">
+          <div className="floating-user-content">
+            <Link to={`/users/${followee.id}`} className="floating-user-content-avatar" style={style} ></Link>
+            <Link to={`/users/${followee.id}`} className="floating-user-content-description">{followee.username}</Link>
+            <div className="floating-user-content-stats">
+              <a className="floating-user-content-stats-followers" href="#">{FormatUtil.formatPlays(followee.numFollowers)}</a>
+            </div>
+            <div className="floating-user-content-location">{followee.location}</div>
+            <button onClick={handleToggleFollow(followee.id)} className={`bc-btn floating-user-content-follow-btn ${active}`} type="button">{(active === "active") ? "Following" : "Follow"}</button>
           </div>
           <div className="floating-user-menu-arrow"></div>
           </div>

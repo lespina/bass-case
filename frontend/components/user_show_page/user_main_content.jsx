@@ -6,7 +6,7 @@ const UserMainContent = ({ user }) => {
   return (
     <section className="relative">
       <UserStreamContainer user={user}/>
-      <Sidebar user={user} infoStats={true} description={true} followers={true} followees={true}/>
+      <Sidebar user={user} infoStats={true} description={true} followers={true} following={true}/>
     </section>
   );
 };
