@@ -263,7 +263,6 @@
 .sidebar-user-avatar-list {
   margin-top: 0;
   padding: 10px 0 8px;
-  /* overflow: hidden; */
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
@@ -289,10 +288,11 @@
   background: 0 0;
   text-align: center;
   position: relative;
-  background-image: url(https://i1.sndcdn.com/avatars-000289936051-6xkfwv-t120x120.jpg);
   border: 2px solid #fff;
   box-sizing: border-box;
   background-origin: border-box;
+  background-size: cover;
+  background-position: center center;
 }
 
 .floating-user-menu {
@@ -358,7 +358,6 @@
   position: relative;
   box-shadow: rgba(0,0,0,.1)0 0 0 1px inset;
   background-repeat: no-repeat;
-  background-image: url(https://i1.sndcdn.com/avatars-000289936051-6xkfwv-t200x200.jpg);
 }
 
 .floating-user-content-description {
@@ -392,7 +391,7 @@
   width: 16px;
   height: 12px;
   background-size: 20px 20px;
-  background-image: url('../images/followers-icon.png');
+  background-image: image-url('followers-icon.png');
   vertical-align: top;
   background-repeat: no-repeat;
   background-position: center center;

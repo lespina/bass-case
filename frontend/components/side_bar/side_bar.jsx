@@ -91,7 +91,7 @@ class SideBar extends React.Component {
 
   followers() {
     const { users, user, currentUser } = this.props;
-    if (!this.props.followers) { return null; }
+    if (!this.props.followers || !user.followerIds) { return null; }
     const followers = [];
     for (const userId in users) {
       if (user.followerIds.includes(parseInt(userId))) {
@@ -179,8 +179,7 @@ const Followers = ({ user, currentUser, followers, handleToggleFollow }) => {
 }
 
 const FollowerItem = ({ follower, currentUser, handleToggleFollow }) => {
-  const style = { backgroundImage: `url(${follower.avtarUrl})` };
-
+  const style = { backgroundImage: `url(${follower.avatarUrl})` };
   let active;
   if (!currentUser || !currentUser.follows) {
     active = false;
@@ -191,10 +190,10 @@ const FollowerItem = ({ follower, currentUser, handleToggleFollow }) => {
 
   return (
     <li className="user-avatar-list-item">
-      <div className="user-avatar-list-item-body">
+      <div className="user-avatar-list-item-body" style={style}>
         <div className="floating-user-menu">
           <div className="floating-user-content">
-            <div className="floating-user-content-avatar" style={{ style }} ></div>
+            <div className="floating-user-content-avatar" style={style} ></div>
             <div className="floating-user-content-description">{follower.username}</div>
             <div className="floating-user-content-stats">
               <a className="floating-user-content-stats-followers" href="#">{FormatUtil.formatPlays(follower.numFollowers)}</a>
