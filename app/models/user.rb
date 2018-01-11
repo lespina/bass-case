@@ -63,7 +63,11 @@ class User < ApplicationRecord
 
   has_many :followees,
     through: :follows,
-    source: :followee_id
+    source: :followee
+
+  has_many :followers,
+    through: :been_followeds,
+    source: :follower
 
   attr_reader :password
 

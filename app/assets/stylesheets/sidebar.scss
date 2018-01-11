@@ -1,0 +1,195 @@
+.sidebar-right {
+  position: absolute;
+  top: 30px;
+  bottom: 0;
+  right: 0;
+  width: 300px;
+}
+
+.sidebar-module {
+  margin-bottom: 20px;
+  transition: all 200ms linear;
+}
+
+.sidebar-header {
+  color: #999;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.sidebar-header-title, .sidebar-header-refresh {
+  line-height: 24px;
+  font-size: 14px;
+  font-weight: 300;
+}
+
+.sidebar-header-follower-icon {
+  background-size: 25px 25px;
+  background-image: image-url('followers-icon.png');
+  width: 21px;
+  margin-right: 4px;
+  height: 21px;
+  vertical-align: top;
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-position: center center;
+  line-height: 24px;
+}
+
+.sidebar-header-refresh {
+  background: image-url('refresh-icon.png') no-repeat 0 center;
+  padding-left: 15px;
+  background-size: 13px 13px;
+  opacity: .8;
+  margin-top: 0;
+  line-height: 24px;
+  font-size: 14px;
+}
+
+.sidebar-content {
+  min-height: 210px;
+  padding-top: 5px;
+}
+
+.sidebar-list {
+  display: table;
+  width: 100%;
+}
+
+.user-suggestion-item {
+  padding: 10px 0;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  position: relative;
+  min-height: 50px;
+  width: 100%
+}
+
+.user-suggestion-avatar {
+  margin-right: 10px;
+  word-wrap: break-word;
+
+  // background-image: image-url(https://i1.sndcdn.com/avatars-000140203855-d7ymj4-t120x120.jpg);
+  width: 50px;
+  height: 50px;
+  opacity: 1;
+
+  box-shadow: rgba(0,0,0,.1)0 0 0 1px inset;
+  border-radius: 50%;
+  position: relative;
+  background-repeat: no-repeat;
+  transition: opacity .2s linear;
+  background-size: cover;
+}
+
+.user-suggestion-content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  flex-direction: column;
+  width: 100%
+}
+
+.user-suggestion-title {
+  white-space: nowrap;
+  margin: 6px 0 0 0;
+  color: #999;
+  margin-top: 0;
+  width: 100%
+}
+
+.user-suggestion-title-link {
+  margin-right: -13px;
+  padding-right: 16px;
+  float: left;
+  max-width: 100%;
+  box-sizing: border-box;
+  color: #333;
+  font-size: 14px;
+  font-weight: 300;
+}
+
+.user-suggestion-meta {
+  display: flex;
+}
+
+.user-suggestion-stats {
+  display: flex;
+  flex-grow: 1;
+}
+
+.user-suggestion-followers {
+  margin-right: 5px;
+  padding-right: 4px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  color: #999;
+  font-size: 11px;
+  line-height: 12px;
+  font-weight: 300;
+}
+
+.user-suggestion-followers:before, .user-suggestion-tracks:before {
+  content: "";
+  display: inline-block;
+  color: transparent;
+  width: 16px;
+  height: 12px;
+  vertical-align: top;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 20px 20px;
+  background-image: image-url('followers-icon.png');
+}
+
+.user-suggestion-followers:before {
+  background-size: 20px 20px;
+  background-image: image-url('followers-icon.png');
+}
+
+.user-suggestion-tracks {
+  margin-right: 5px;
+  padding-right: 4px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  color: #999;
+  font-size: 11px;
+  line-height: 12px;
+  font-weight: 300;
+}
+
+.user-suggestion-tracks:before {
+  background-size: 16px 16px;
+  background-image: image-url('track-icon.png');
+}
+
+.user-suggestion-actions {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.user-suggestion-follow-btn {
+  min-width: 25px;
+  font-family: "Lucida Grande";
+  font-size: 11px;
+  padding: 2px 9px 2px 8px;
+  height: 22px;
+  line-height: 16px;
+  font-weight: 300;
+}
+
+.user-suggestion-follow-btn:hover {
+  border-color: #ccc;
+}
+
+.user-suggestion-follow-btn.active {
+  color: #f50;
+  background-color: white;
+  border-color: #f50;
+}
+
+.user-suggestion-follow-btn.active {
+  border-color: #f50;
+}
