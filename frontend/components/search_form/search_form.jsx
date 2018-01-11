@@ -1,4 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
+const USER = "user";
+const SONG = "song";
 
 class SearchForm extends React.Component {
   constructor(props) {
@@ -63,26 +67,44 @@ class SearchForm extends React.Component {
     return (
       <section className="nav-middle">
         <form className="nav-search">
-          <input onChange={this.handleChange('searchString')} value={this.state.searchString} type="search" placeholder="Search"></input>
+          <input className="nav-search-input" onChange={this.handleChange('searchString')} value={this.state.searchString} type="search" placeholder="Search"></input>
+          <ul className="search-results">
+            {
+              this.state.searchResults.map((result, idx) => {
+                let type;
+                if (result.username) {
+                  type = USER;
+                } else {
+                  type = SONG;
+                }
+                return <SearchResultItem key={idx} result={result} type={type}/>;
+              })
+            }
+          </ul>
           <button type="submit">Search</button>
         </form>
-
-        <ul>
-          {
-            this.state.searchResults.map((result, idx) => {
-              let text;
-              if (result.username) {
-                text = result.username;
-              } else {
-                text = result.title;
-              }
-              return <li key={idx}>{text}</li>;
-            })
-          }
-        </ul>
       </section>
     );
   }
 }
+
+const SearchResultItem = ({ result, type }) => {
+  const displayText = ((type === USER) ? result.username : result.title);
+  const iconClass = ((type === USER) ? "user-icon" : "song-icon");
+  const imageUrl = ((type === USER) ? result.avatarUrl : result.imageUrl);
+  const style = {
+    backgroundImage: `url(${imageUrl})`,
+  };
+
+  return (
+    <li className="search-result-item">
+      <div className="search-result-content">
+        <Link to={`/${type}s/${result.id}`} className="search-result-image" style={style}></Link>
+        <Link to={`/${type}s/${result.id}`} className="search-result-text">{displayText}</Link>
+      </div>
+      <div className={`search-result-icon ${iconClass}`}></div>
+    </li>
+  );
+};
 
 export default SearchForm;
