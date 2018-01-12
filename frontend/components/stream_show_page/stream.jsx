@@ -58,7 +58,7 @@ class Stream extends React.Component {
             createRepost={this.props.createRepost}
             deleteRepost={this.props.deleteRepost}
           />
-          <div className="user-main-stream-loading"></div>
+          {/* <div className="user-main-stream-loading"></div> */}
         </div>
       </main>
     );

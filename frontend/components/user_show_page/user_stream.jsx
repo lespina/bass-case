@@ -25,7 +25,7 @@ class UserStream extends React.Component {
 
   render() {
     this.filterSongs();
-    
+
     return (
       <main className="user-main border-right-light">
         <div className="user-main-stream">
@@ -43,7 +43,7 @@ class UserStream extends React.Component {
             createRepost={this.props.createRepost}
             deleteRepost={this.props.deleteRepost}
           />
-          <div className="user-main-stream-loading"></div>
+          {/* <div className="user-main-stream-loading"></div> */}
         </div>
       </main>
     );

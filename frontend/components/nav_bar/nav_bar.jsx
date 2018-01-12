@@ -36,17 +36,11 @@ class NavBar extends React.Component {
                 <NavLink className="nav-home" activeClassName="nav-selected" exact to="/">
                   Home
                 </NavLink>
-                <NavLink className="nav-collection" activeClassName="nav-selected" exact to="/collection">
+                <NavLink className="nav-collection" activeClassName="nav-selected" to={`/users/${currentUser.id}`}>
                   Collection
                 </NavLink>
               </section>
 
-              {/* <section className="nav-middle">
-                <form className="nav-search">
-                  <input type="search" placeholder="Search"></input>
-                  <button type="submit">Search</button>
-                </form>
-              </section> */}
               <SearchFormContainer/>
 
               <section className="nav-right">

@@ -42,10 +42,10 @@ class UserShow extends React.Component {
 
     const tabs = [
       {text: 'All', pathname: '', userShow: true},
-      {text: 'Tracks', pathname: 'tracks', userShow: true},
-      {text: 'Albums', pathname: 'albums', userShow: true},
-      {text: 'Playlists', pathname: 'playlists', userShow: true},
-      {text: 'Reposts', pathname: 'reposts', userShow: true},
+      // {text: 'Tracks', pathname: 'tracks', userShow: true},
+      // {text: 'Albums', pathname: 'albums', userShow: true},
+      // {text: 'Playlists', pathname: 'playlists', userShow: true},
+      // {text: 'Reposts', pathname: 'reposts', userShow: true},
     ];
 
     if (!this.fetched) {

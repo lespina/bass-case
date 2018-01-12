@@ -183,7 +183,7 @@ const Followers = ({ user, currentUser, followers, handleToggleFollow }) => {
           <span className="sidebar-header-follower-icon"></span>
           <span>{FormatUtil.formatPlays(user.followerIds.length)} Followers</span>
         </h3>
-        <span className="sidebar-header-title">View all</span>
+        {/* <span className="sidebar-header-title">View all</span> */}
       </a>
 
       <div className="sidebar-content followers-content">
@@ -207,7 +207,7 @@ const Following = ({ user, currentUser, followees, handleToggleFollow }) => {
           <span className="sidebar-header-follower-icon"></span>
           <span>{FormatUtil.formatPlays(user.followeeIds.length)} Following</span>
         </h3>
-        <span className="sidebar-header-title">View all</span>
+        {/* <span className="sidebar-header-title">View all</span> */}
       </a>
 
       <div className="sidebar-content followers-content">

@@ -7,8 +7,8 @@ import Sidebar from '../side_bar/side_bar';
 const StreamMainContent = ({ currentUser }) => {
   const tabs = [
     {text: 'Stream', pathname: ''},
-    {text: 'Trending', pathname: 'trending'},
-    {text: 'Discover', pathname: 'discover'},
+    // {text: 'Trending', pathname: 'trending'},
+    // {text: 'Discover', pathname: 'discover'},
   ];
 
   const style = {
