@@ -43,7 +43,7 @@ class PlayBar extends React.Component {
 
   componentWillUpdate(nextProps, nextState) {
     const { time, start } = nextState;
-    if (this.offset + time.getTime() - start.getTime() > this.props.playback.duration) {
+    if (this.offset + time.getTime() - start.getTime() > this.props.playback.duration > 0) {
       this.props.next();
     }
   }

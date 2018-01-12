@@ -45,7 +45,9 @@ const playbackReducer = (state = initialState, action) => {
   switch (action.type) {
     case RECEIVE_DURATION:
       newState = _.merge({}, state);
-      newState.duration = action.duration;
+      if (action.duration > 0) {
+        newState.duration = action.duration;
+      }
       newState.lastAction = action.type;
       return newState;
     case PREVIOUS:
