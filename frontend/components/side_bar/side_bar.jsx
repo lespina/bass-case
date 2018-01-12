@@ -99,6 +99,9 @@ class SideBar extends React.Component {
       if (user.followerIds.includes(parseInt(userId))) {
         followers.push(users[userId]);
       }
+      if (followers.length >= 9) {
+        break;
+      }
     }
     return <Followers
       user={user}
@@ -115,6 +118,9 @@ class SideBar extends React.Component {
     for (const userId in users) {
       if (user.followeeIds.includes(parseInt(userId))) {
         followees.push(users[userId]);
+      }
+      if (followees.length >= 9) {
+        break;
       }
     }
     return <Following
