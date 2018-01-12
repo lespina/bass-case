@@ -6,6 +6,8 @@ const LandingHeroImage = (props) => {
     <header className="hero">
 
         <section className="hero-image">
+          <div className="hero-overlay-1"></div>
+          <div className="hero-overlay-2"></div>
           <div className="hero-logo">
             <span className="hero-logo-image"></span>
             <span className="hero-logo-text">BASSCASE</span>
