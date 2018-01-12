@@ -1,7 +1,12 @@
 import React from 'react';
+import _ from 'lodash';
 import UserSuggestionItem from './user_suggestion_item';
 
-const UserSuggestionModule = ({ refresh, users, currentUser, handleToggleFollow}) => {
+const UserSuggestionModule = ({ refresh, users, userIds, currentUser, handleToggleFollow}) => {
+  const selectedUsers = _.values(users).filter((user) => {
+    return userIds.includes(user.id);
+  });
+
   return (
     <section className="sidebar-module who-to-follow">
       <a className="sidebar-header" href="#">
@@ -15,7 +20,7 @@ const UserSuggestionModule = ({ refresh, users, currentUser, handleToggleFollow}
       <div className="sidebar-content">
         <ul className="sidebar-list">
           {
-            users.map(user => {
+            selectedUsers.map(user => {
 
               let active;
               if (!currentUser || !currentUser.follows) {

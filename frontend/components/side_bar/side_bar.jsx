@@ -31,7 +31,8 @@ class SideBar extends React.Component {
 
     while (selectedUsers.length < 3) {
       shuffle(users);
-      selectedUsers.push(users.pop());
+      selectedUsers.push(users[0].id);
+      users.shift();
     }
 
     this.setState({ users: selectedUsers });
@@ -69,7 +70,8 @@ class SideBar extends React.Component {
 
     return (
       <UserSuggestionModule
-        users={this.state.users}
+        users={this.props.users}
+        userIds={this.state.users}
         currentUser={this.props.users[currentUser.id]}
         handleToggleFollow={this.handleToggleFollow.bind(this)}
         refresh={this.chooseUsers.bind(this)}
