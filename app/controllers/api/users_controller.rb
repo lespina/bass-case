@@ -23,6 +23,11 @@ class Api::UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
 
+    if @user.username == 'guest'
+      render json: ['You do not have authority to edit the guest account.'], status: 401
+      return
+    end
+
     if @user.update(user_params)
       @all_info = true
       render :show

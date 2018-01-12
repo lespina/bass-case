@@ -43,12 +43,13 @@ class SongIndex extends React.Component {
   }
 
   render() {
+    this.songs = this.songs || shuffle(this.props.songs);
 
     return (
       <div className="song-index-container">
         <ul className="song-index">
           {
-            shuffle(this.props.songs).slice(0, 12).map((song, idx) => {
+            this.songs.slice(0, 12).map((song, idx) => {
               const { currentSongId, playing, users, history, addToNextUp } = this.props;
               const artist = users[song.artistId];
 
