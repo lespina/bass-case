@@ -28,7 +28,7 @@ const QueueItem = ({
   const activeLikes = ((currentUser && currentUser.likes && song.id in currentUser.likes) ? 'active' : '' );
   const likeText = ((currentUser && currentUser.likes && song.id in currentUser.likes) ? 'Liked' : 'Like' );
   const activeReposts = ((currentUser && currentUser.reposts && song.id in currentUser.reposts) ? 'active' : '' );
-  const repostText = ((currentUser && currentUser.likes && song.id in currentUser.likes) ? 'Reposted' : 'Repost' );
+  const repostText = ((currentUser && currentUser.reposts && song.id in currentUser.reposts) ? 'Reposted' : 'Repost' );
   return (
     <div className={`queue-item ${dimmed}`}>
       <div className={`queue-item-actions ${open}`}>
