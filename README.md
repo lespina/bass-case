@@ -6,13 +6,13 @@
 ![Landing Page](/app/assets/images/landing.png "BassCase Landing Page")
 
 ### Technologies
-BassCase is built with a Ruby on Rails/Postgres backend and a React/Redux frontend.  Additional libraries used include:
 
-* shuffle-array
-* react-sound
-* react-sortable-hoc
-* react-draggable
-* lodash
+BassCase is built with a Ruby on Rails/Postgres backend and a React/Redux frontend.  
+
+* [shuffle-array](https://www.npmjs.com/package/shuffle-array) - Index & queue order randomization.
+* [react-sound](https://github.com/leoasis/react-sound) - Audio file playback & control
+* [react-sortable-hoc](https://github.com/clauderic/react-sortable-hoc) - Drag-handle sorting support on next-up song queue
+* [react-draggable](https://github.com/mzabriskie/react-draggable) - Seeking song position on playbar
 
 ### Key Features
 
@@ -96,3 +96,10 @@ If one looks closely, each queue item contains a little 'handle' icon on the lef
 ![Drag Handles](/app/assets/images/drag-handles.png "BassCase Sortable Queue (1/2)")
 
 These are actually designated spots by which the user may click and drag a given song queue item from its current spot to a new place up or down the queue for intuitive, painless reordering.
+
+### Future Directions
+
+* Add song show page with comments
+* Add waveforms display with seeking and progress scroll
+* Infinite scroll with lazy fetching
+* Refactor progress bar into slider for simpler and more precise seeking behavior
