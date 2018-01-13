@@ -1,5 +1,5 @@
 
-# <div style="display:flex;justify-content:space-between;align-items:flex-end"> BassCase README <div style="display:inline-block;height:80px;width: 160px;"><img src="https://s3.amazonaws.com/basscase-dev/BASSCASE.png" alt="BassCase"></img></div></div>
+# <div style="display:flex;justify-content:space-between;align-items:flex-end"> BassCase README <img src="https://s3.amazonaws.com/basscase-dev/BASSCASE.png" alt="BassCase" style="display:inline-block;height:80px;width:160px;"></img></div>
 
 [BassCase](https://bass-case.herokuapp.com/) is a single page web application clone of the social music-sharing and listening website, [SoundCloud](https://soundcloud.com/), featuring audio track uploads, user profiles, likes, reposts, follows, continuous playback, and seamless control of queued track order.
 
