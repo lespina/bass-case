@@ -16,27 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
     store = configureStore();
   }
 
-  // TESTING START
-  window.getState = store.getState;
-  window.dispatch = store.dispatch;
-  // TESTING END
-
   const root = document.getElementById('root');
   ReactDOM.render(<Root store={store}/>, root);
 });
-
-
-// TESTING START
-import * as SessionApiUtil from './util/session_api_util';
-import * as SessionActions from './actions/session_actions';
-window.SessionApiUtil = SessionApiUtil;
-window.SessionActions = SessionActions;
-
-import * as SongApiUtil from './util/song_api_util';
-import * as SongActions from './actions/song_actions';
-window.SongApiUtil = SongApiUtil;
-window.SongActions = SongActions;
-
-import * as PlaybackActions from './actions/playback_actions';
-window.PlaybackActions = PlaybackActions;
-// TESTING END

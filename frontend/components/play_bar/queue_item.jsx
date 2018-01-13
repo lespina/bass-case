@@ -50,7 +50,6 @@ const QueueItem = ({
         <Link to={`/users/${artist.id}`} className="queue-item-details-artist truncate">{artist.username}</Link>
         <a className="queue-item-details-title truncate">{title}</a>
       </div>
-      {/* <div className="queue-item-details-duration">1:44</div> */}
     </div>
   );
 };
