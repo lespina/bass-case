@@ -50,7 +50,7 @@ Users may 'like' and 'repost' songs, either from being displayed on the main pag
 
 Reposted songs appear together with uploaded tracks on a user's profile page.
 
-![Reposts](/app/assets/images/like-4.png "BassCase Likes (4/4)")
+![Reposts](/app/assets/images/user-profile-with-reposts.png "BassCase Profile With Reposts")
 
 #### Follows
 Users may follow or unfollow other users to subscribe to their post/repost history.  This follow toggle button appears where the 'edit' button normally does on the users own profile.
