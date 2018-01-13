@@ -7,9 +7,9 @@ class SortablePlayBarQueue extends React.Component {
     let songIdx = this.props.songIdx;
     if (songIdx === oldIndex) {
       songIdx = newIndex;
-    } else if (songIdx === newIndex && oldIndex < songIdx) {
+    } else if (oldIndex < songIdx) {
       songIdx -= 1;
-    } else if (songIdx === newIndex && oldIndex > songIdx) {
+    } else if (oldIndex > songIdx) {
       songIdx += 1;
     }
 
