@@ -114,7 +114,7 @@ class SessionForm extends React.Component {
         </ul>
       );
     } else {
-      return;
+      return null;
     }
   }
 

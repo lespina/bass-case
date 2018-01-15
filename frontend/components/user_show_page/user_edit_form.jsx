@@ -145,7 +145,21 @@ class UserEditForm extends React.Component {
   }
 
   errors() {
-    return <div></div>;
+    const { errors } = this.props;
+
+    if (errors.length > 0) {
+      return (
+        <ul className="session-form-errors">
+          {
+            errors.map((error, idx) => {
+              return <li key={idx}>{error}</li>;
+            })
+          }
+        </ul>
+      );
+    } else {
+      return null;
+    }
   }
 
   render() {
@@ -166,6 +180,7 @@ class UserEditForm extends React.Component {
                 {this.avatarChooser()}
               </div>
               {this.inputs()}
+              {this.errors()}
             </div>
           </div>
           <div className="user-edit-form-partition"></div>
@@ -182,7 +197,8 @@ class UserEditForm extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  user: state.entities.users[state.session.currentUser.id]
+  user: state.entities.users[state.session.currentUser.id],
+  errors: state.errors.user
 });
 
 const mapDispatchToProps = (dispatch) => ({
