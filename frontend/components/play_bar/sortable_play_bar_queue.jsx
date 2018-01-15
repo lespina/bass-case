@@ -3,13 +3,13 @@ import { arrayMove } from 'react-sortable-hoc';
 import PlayBarQueue from './play_bar_queue';
 
 class SortablePlayBarQueue extends React.Component {
-  onSortEnd({oldIndex, newIndex}) {
+  onSortEnd({ oldIndex, newIndex }) {
     let songIdx = this.props.songIdx;
     if (songIdx === oldIndex) {
       songIdx = newIndex;
-    } else if (oldIndex < songIdx) {
+    } else if (oldIndex < songIdx && newIndex >= songIdx) {
       songIdx -= 1;
-    } else if (oldIndex > songIdx) {
+    } else if (oldIndex > songIdx && newIndex <= songIdx) {
       songIdx += 1;
     }
 

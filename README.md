@@ -38,15 +38,21 @@ If a user is so inclined, they may upload multiple songs individually from the u
 ![Multiple Upload Forms](/app/assets/images/multiple-upload-form.png "BassCase Uploads (3/3)")
 
 #### Likes & Reposts
-Users may 'like' and 'repost' songs, either from being displayed on the main page and directly from their song queue via a collapsible song actions menu.  
+Users may 'like' and 'repost' songs in a number of locations wherever they appear, including
+  1. Directly from the post in a user's stream or user profile
+  2. Directly in the play bar for the current song
+  3. In the up-next queue on the right-hand side of any hovered-over song
+  4. In the pop-up actions menu on right-hand side of any hovered-over song in the up-next queue
 
-![Likes & Reposts 1/4](/app/assets/images/actions-1.png "BassCase Likes & Reposts (1/4)")
+![Likes & Reposts](/app/assets/images/actions.png "BassCase Likes & Reposts")
+
+<!-- ![Likes & Reposts 1/4](/app/assets/images/actions-1.png "BassCase Likes & Reposts (1/4)")
 
 ![Likes & Reposts 2/4](/app/assets/images/actions-2.png "BassCase Likes & Reposts (2/4)")
 
 ![Likes & Reposts 3/4](/app/assets/images/actions-3.png "BassCase Likes & Reposts (3/4)")
 
-![Likes & Reposts 4/4](/app/assets/images/actions-4.png "BassCase Likes & Reposts (4/4)")
+![Likes & Reposts 4/4](/app/assets/images/actions-4.png "BassCase Likes & Reposts (4/4)") -->
 
 Reposted songs appear together with uploaded tracks on a user's profile page.
 
@@ -57,7 +63,7 @@ Users may follow or unfollow other users to subscribe to their post/repost histo
 
 ![Follows (1/3)](/app/assets/images/follows-1.png "BassCase Follows (1/3)")
 
-Additionally, users may be followed within the 'who to follow' sidebar or by hovering over another user's followers/followees and clicking the follow toggle button.
+Additionally, users may follow others within the 'who to follow' sidebar or by hovering over another user's followers/followees and clicking the follow toggle button.
 
 ![Follows (2/3)](/app/assets/images/follows-2.png "BassCase Follows (2/3)")
 
