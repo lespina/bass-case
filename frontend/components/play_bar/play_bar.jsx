@@ -237,14 +237,14 @@ class PlayBar extends React.Component {
             <section className="playbar-timeline">
               <div className="progress-background"></div>
               <div className="progress-bar" style={progressWidth}></div>
-              <Draggable
+              {/* <Draggable
                 key={key}
                 axis="x"
                 bounds="parent"
                 onStop={this.handleDragEnd}
-                >
+                > */}
                   <div className="progress-handle" style={handleLeftDist}></div>
-              </Draggable>
+              {/* </Draggable> */}
             </section>
             <div className="playbar-timeline-time-left">
               -{this.format(this.parseSec(duration - this.offset - time.getTime()))}
