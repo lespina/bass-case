@@ -25,6 +25,7 @@ class Playback extends React.Component {
   componentDidMount() {
     // this.props.fetchSongs();
     this.props.fetchPlaybackSongs();
+    soundManager.setup({debugMode: false});
   }
 
   shouldComponentUpdate(nextProps) {
