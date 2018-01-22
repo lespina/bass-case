@@ -27,7 +27,7 @@ class User < ApplicationRecord
   validates_attachment_content_type :profile_image, content_type: /\Aimage\/.*\z/
 
   has_attached_file :banner_image, styles: { large: "1240x260#" }, default_url: ""
-  validates_attachment_content_type :profile_image, content_type: /\Aimage\/.*\z/
+  validates_attachment_content_type :banner_image, content_type: /\Aimage\/.*\z/
 
   validates :bio, length: { maximum: 140, allow_nil: true }
 
