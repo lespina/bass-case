@@ -51,7 +51,7 @@ class SongIndexItem extends React.Component {
 
             <div className="playable-tile-description">
               <div className="playable-tile-description-title">
-                <a className="truncate" href="#">{title}</a>
+                <a className="truncate">{title}</a>
               </div>
               <div className="playable-tile-description-username">
                 <Link className="truncate" to={`/users/${artist.id}`}>{artist.username}</Link>

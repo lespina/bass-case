@@ -261,7 +261,7 @@ class PlayBar extends React.Component {
               </div>
               <section className="playbar-song-text-container">
                 <Link className="playbar-artist truncate" to={`/users/${artist.id}`}>{artist.username}</Link>
-                <a className="playbar-title truncate" href="#">{song.title}</a>
+                <a className="playbar-title truncate">{song.title}</a>
               </section>
               <div onClick={this.handleToggleLike} className={`playbar-like ${active}`}></div>
 

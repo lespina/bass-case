@@ -5,7 +5,7 @@
 .search-results {
   width: 95%;
   position: absolute;
-  top: 46px;
+  top: -2000px;
   opacity: 0;
   visibility: hidden;
   transition: opacity .2s linear;
@@ -24,6 +24,7 @@
 }
 
 .nav-search-input:focus + .search-results, .search-results:active {
+  top: 46px;
   opacity: 1;
   visibility: visible;
 }
@@ -106,4 +107,8 @@
   display: block;
   width: 100%;
   line-height: 1.4;
+}
+
+.song-result {
+  cursor: default;
 }

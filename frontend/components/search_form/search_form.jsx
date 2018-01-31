@@ -111,6 +111,18 @@ const SearchResultItem = ({ result, type }) => {
     backgroundImage: `url(${imageUrl})`,
   };
 
+  if (type === SONG) {
+    return (
+      <li className="search-result-item song-result">
+        <div className="search-result-content song-result">
+          <div className="search-result-image song-result" style={style}></div>
+          <div className="search-result-text song-result">{displayText}</div>
+        </div>
+        <div className={`search-result-icon ${iconClass} song-result`}></div>
+      </li>
+    );
+  }
+
   return (
     <li className="search-result-item">
       <div className="search-result-content">

@@ -9,10 +9,8 @@
 
 BassCase is built with a Ruby on Rails/Postgres backend and a React/Redux frontend.  
 
-* [shuffle-array](https://www.npmjs.com/package/shuffle-array) - Index & queue order randomization.
 * [react-sound](https://github.com/leoasis/react-sound) - Audio file playback & control
 * [react-sortable-hoc](https://github.com/clauderic/react-sortable-hoc) - Drag-handle sorting support on next-up song queue
-* [react-draggable](https://github.com/mzabriskie/react-draggable) - Seeking song position on playbar
 
 ### Key Features
 

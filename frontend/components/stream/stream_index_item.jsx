@@ -82,7 +82,7 @@ class StreamIndexItem extends React.Component {
                   <div className="sound-title-info-first">
                     {this.usernames()}
                   </div>
-                  <a href="#" className="sound-title-info-second">{song.title}</a>
+                  <a className="sound-title-info-second">{song.title}</a>
                   <div className="sound-title-info-third">
                     <div className="sound-title-info-upload-time">{FormatUtil.timeSince(createdAt)}</div>
                     {/* <a className="tag-container tag-small">
