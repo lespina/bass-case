@@ -74,6 +74,12 @@ class PlayBar extends React.Component {
     }
   }
 
+  redirectToLogin(e) {
+    e.preventDefault();
+    this.props.history.push('/login');
+    return;
+  }
+
   handleToggleLike(e) {
     e.preventDefault();
     const { currentUser, playback, songs, deleteLike, createLike, users } = this.props;
@@ -260,7 +266,7 @@ class PlayBar extends React.Component {
                 <a className="playbar-image" href="#" style={{ backgroundImage: `url(${song.imageUrl})` }}>Artwork</a>
               </div>
               <section className="playbar-song-text-container">
-                <Link className="playbar-artist truncate" to={`/users/${artist.id}`}>{artist.username}</Link>
+                <a onClick={this.redirectToLogin.bind(this)} className="playbar-artist truncate" href={`/users/${artist.id}`}>{artist.username}</a>
                 <a className="playbar-title truncate">{song.title}</a>
               </section>
               <div onClick={this.handleToggleLike} className={`playbar-like ${active}`}></div>

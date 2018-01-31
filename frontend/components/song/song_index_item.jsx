@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 class SongIndexItem extends React.Component {
-  redirectToLogin() {
+  redirectToLogin(e) {
+    e.preventDefault();
     this.props.history.push('/login');
     return;
   }
@@ -54,7 +55,7 @@ class SongIndexItem extends React.Component {
                 <a className="truncate">{title}</a>
               </div>
               <div className="playable-tile-description-username">
-                <Link className="truncate" to={`/users/${artist.id}`}>{artist.username}</Link>
+                <a className="truncate pointer" href={`/users/${artist.id}`} onClick={this.redirectToLogin.bind(this)}>{artist.username}</a>
               </div>
             </div>
           </div>

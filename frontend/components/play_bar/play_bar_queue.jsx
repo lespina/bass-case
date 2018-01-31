@@ -12,6 +12,12 @@ class PlayBarQueue extends React.Component {
     this.updateMoreActions = this.updateMoreActions.bind(this);
   }
 
+  redirectToLogin(e) {
+    e.preventDefault();
+    this.props.history.push('/login');
+    return;
+  }
+
   handleTogglePlayback(songIdx) {
     return (e) => {
       e.preventDefault();
@@ -146,6 +152,7 @@ class PlayBarQueue extends React.Component {
                         handleToggleRepost={this.handleToggleRepost(song)}
                         addToNextUp={addToNextUp}
                         currentUser={currentUserWithLikes}
+                        redirectToLogin={this.redirectToLogin.bind(this)}
                       />;
                     }, this)
                   }
