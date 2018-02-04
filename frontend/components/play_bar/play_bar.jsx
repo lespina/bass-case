@@ -34,7 +34,9 @@ class PlayBar extends React.Component {
     document.addEventListener('keydown', (e) => {
       switch (e.keyCode) {
         case 32:
-          this.handleSimpleAction('togglePlayback')(e);
+          if (e.target.tagName !== "INPUT") {
+            this.handleSimpleAction('togglePlayback')(e);
+          }
       }
     });
     this.toggleTimer();
