@@ -31,6 +31,13 @@ class PlayBar extends React.Component {
   }
 
   componentDidMount() {
+    document.addEventListener('keydown', (e) => {
+      e.preventDefault();
+      switch (e.keyCode) {
+        case 32:
+          this.handleSimpleAction('togglePlayback')(e);
+      }
+    });
     this.toggleTimer();
   }
 
@@ -263,7 +270,7 @@ class PlayBar extends React.Component {
             </div>
             <section className="playbar-song-info">
               <div className="playbar-image">
-                <a className="playbar-image" href="#" style={{ backgroundImage: `url(${song.imageUrl})` }}>Artwork</a>
+                <a className="playbar-image" style={{ backgroundImage: `url(${song.imageUrl})` }}>Artwork</a>
               </div>
               <section className="playbar-song-text-container">
                 <a onClick={this.redirectToLogin.bind(this)} className="playbar-artist truncate" href={`/users/${artist.id}`}>{artist.username}</a>
