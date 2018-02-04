@@ -32,7 +32,6 @@ class PlayBar extends React.Component {
 
   componentDidMount() {
     document.addEventListener('keydown', (e) => {
-      e.preventDefault();
       switch (e.keyCode) {
         case 32:
           this.handleSimpleAction('togglePlayback')(e);
