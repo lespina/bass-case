@@ -49,3 +49,17 @@ export const deleteFollow = (followeeId) => {
     method: 'delete',
   });
 };
+
+export const createRepost = (songId) => {
+  return $.ajax({
+    url: `api/users/reposts/${songId}`,
+    method: 'post',
+  });
+};
+
+export const deleteRepost = (songId) => {
+  return $.ajax({
+    url: `api/users/reposts/${songId}`,
+    method: 'delete',
+  });
+};

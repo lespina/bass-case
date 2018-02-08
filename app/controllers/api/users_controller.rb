@@ -73,6 +73,26 @@ class Api::UsersController < ApplicationController
     end
   end
 
+  def repost
+    @repost = current_user.reposts.new(song_id: params[:song_id])
+    if @repost.save
+      render :repost
+    else
+      render json: @repost.errors.full_messages, status: 422
+    end
+  end
+
+  def unrepost
+    @repost = current_user.reposts.find_by(song_id: params[:song_id])
+
+    if @repost
+      @repost.destroy
+      render :repost
+    else
+      render json: ['Repost does not exist or you are not authorized to destroy it'], status: 401
+    end
+  end
+
   private
   def user_params
     params.require(:user).permit(:username, :password, :bio, :location, :profile_image, :banner_image)

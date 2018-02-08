@@ -12,8 +12,10 @@ class UserStream extends React.Component {
       _.values(songs).forEach((song) => {
         if (song.artistId === user.id) {
           this.songActions[user.id].push([song, song.createdAt]);
-        } else if (user.id in song.reposts) {
-          this.songActions[user.id].push([song, song.reposts[user.id]]);
+        }
+        if (user.repostedSongIds.has(song.id)) {
+          const createdAt = user.reposts[song.id];
+          this.songActions[user.id].push([song, createdAt]);
         }
       }, this);
     } else {

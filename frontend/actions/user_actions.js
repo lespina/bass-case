@@ -7,6 +7,8 @@ export const RECEIVE_LIKE = "RECEIVE_LIKE";
 export const REMOVE_LIKE = "REMOVE_LIKE";
 export const RECEIVE_FOLLOW = "RECEIVE_FOLLOW";
 export const REMOVE_FOLLOW = "REMOVE_FOLLOW";
+export const RECEIVE_REPOST = "RECEIVE_REPOST";
+export const REMOVE_REPOST = "REMOVE_REPOST";
 
 export const receiveUsers = (users) => ({
   type: RECEIVE_USERS,
@@ -47,6 +49,19 @@ export const removeFollow = (payload) => ({
   followeeId: payload.followeeId
 });
 
+export const receiveRepost = (payload) => ({
+  type: RECEIVE_REPOST,
+  userId: payload.userId,
+  songId: payload.songId,
+  createdAt: payload.createdAt,
+});
+
+export const removeRepost = (payload) => ({
+  type: REMOVE_REPOST,
+  userId: payload.userId,
+  songId: payload.songId,
+  createdAt: payload.createdAt,
+});
 
 export const fetchUsers = () => (dispatch) => {
   return UserApiUtil.fetchUsers().then(users => {
@@ -105,6 +120,26 @@ export const createFollow = (followeeId) => (dispatch) => {
 export const deleteFollow = (followeeId) => (dispatch) => {
   return UserApiUtil.deleteFollow(followeeId).then(payload => {
     dispatch(removeFollow(payload));
+    return payload;
+  }, errors => {
+    console.log(errors.responseJSON);
+    return errors;
+  });
+};
+
+export const createRepost = (songId) => (dispatch) => {
+  return UserApiUtil.createRepost(songId).then(payload => {
+    dispatch(receiveRepost(payload));
+    return payload;
+  }, errors => {
+    console.log(errors.responseJSON);
+    return errors;
+  });
+};
+
+export const deleteRepost = (songId) => (dispatch) => {
+  return UserApiUtil.deleteRepost(songId).then(payload => {
+    dispatch(removeRepost(payload));
     return payload;
   }, errors => {
     console.log(errors.responseJSON);

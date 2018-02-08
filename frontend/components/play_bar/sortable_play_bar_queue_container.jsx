@@ -10,7 +10,6 @@ import {
   addToNextUp
 } from '../../actions/playback_actions';
 import { receiveMoreActionsIndex } from '../../actions/menu_actions';
-import { createRepost, deleteRepost } from '../../actions/repost_actions';
 
 const mapStateToProps = (state) => {
   const { songQueue, songIdx, playing } = state.ui.playback;
@@ -37,8 +36,6 @@ const mapDispatchToProps = (dispatch) => {
     receiveNewPlaybackSongs: (songs) => dispatch(receiveNewPlaybackSongs(songs)),
     receiveMoreActionsIndex: (idx) => dispatch(receiveMoreActionsIndex('queueIdx', idx)),
     addToNextUp: (songId) => dispatch(addToNextUp(songId)),
-    createRepost: (userId, songId) => dispatch(createRepost(userId, songId)),
-    deleteRepost: (repostId) => dispatch(deleteRepost(repostId)),
   };
 };
 

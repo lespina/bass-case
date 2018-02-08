@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import { togglePlayback, receivePlaybackSong, addToNextUp } from '../../actions/playback_actions';
-import { createRepost, deleteRepost } from '../../actions/repost_actions';
 import UserStream from './user_stream';
 
 const mapStateToProps = (state, ownProps) => {
@@ -22,8 +21,6 @@ const mapDispatchToProps = (dispatch) => ({
   togglePlayback: () => dispatch(togglePlayback()),
   receivePlaybackSong: (songId) => dispatch(receivePlaybackSong(songId)),
   addToNextUp: (songId) => dispatch(addToNextUp(songId)),
-  createRepost: (userId, songId) => dispatch(createRepost(userId, songId)),
-  deleteRepost: (likeId) => dispatch(deleteRepost(likeId)),
 });
 
 export default connect(

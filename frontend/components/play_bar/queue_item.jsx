@@ -2,6 +2,7 @@ import React from 'react';
 import { SortableElement, SortableHandle } from 'react-sortable-hoc';
 import { Link } from 'react-router-dom';
 import LikeToggle from '../like_toggle/like_toggle_container';
+import RepostToggle from '../repost_toggle/repost_toggle_container';
 
 const QueueItemHandle = SortableHandle(() => {
   return (
@@ -32,7 +33,6 @@ class QueueItem extends React.Component {
       open,
       updateMoreActions,
       artist,
-      handleToggleRepost
     } = this.props;
 
     let ourPausedClass = paused;
@@ -48,7 +48,7 @@ class QueueItem extends React.Component {
             <div className={`more-actions queue-actions-menu ${open}`}>
               <LikeToggle type="QUEUE_ITEM_ACTION" song={song}/>
               <button onClick={addToNextUp.bind(null, song.id)} className="more-actions-btn more-add-next-up-btn">Add to Next up</button>
-              <button onClick={handleToggleRepost} className={`more-actions-btn more-repost-btn ${activeReposts}`}>{repostText}</button>
+              <RepostToggle song={song} type="QUEUE_ITEM"/>
             </div>
           </div>
         </div>
