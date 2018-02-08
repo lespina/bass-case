@@ -27,7 +27,6 @@ class PlayBar extends React.Component {
     this.toggleQueue = this.toggleQueue.bind(this);
     this.hideQueue = this.hideQueue.bind(this);
     this.handleDragEnd = this.handleDragEnd.bind(this);
-    this.handleToggleLike = this.handleToggleLike.bind(this);
     this.offset = 0;
   }
 
@@ -87,22 +86,6 @@ class PlayBar extends React.Component {
     e.preventDefault();
     this.props.history.push('/login');
     return;
-  }
-
-  handleToggleLike(e) {
-    e.preventDefault();
-    const { currentUser, playback, songs, deleteLike, createLike, users } = this.props;
-    if (!currentUser) {
-      this.props.history.push('/login');
-      return;
-    }
-    const song = songs[playback.songQueue[playback.songIdx]];
-    const likingUser = users[currentUser.id];
-    if (song.id in likingUser.likes) {
-      deleteLike(likingUser.likes[song.id]);
-    } else {
-      createLike(likingUser.id, song.id);
-    }
   }
 
   getOffset({ playback }) {
@@ -231,8 +214,6 @@ class PlayBar extends React.Component {
     const progressWidth = { width: `${this.getProgressPos()}%` };
     const handleLeftDist = { left: `${this.getHandlePos()}%` };
 
-    const active = ((currentUser && users[currentUser.id].likes && song.id in users[currentUser.id].likes) ? 'active' : '' );
-
     return (
       <div>
         <div className="bottom-filler"/>
@@ -278,7 +259,6 @@ class PlayBar extends React.Component {
                 <a onClick={this.redirectToLogin.bind(this)} className="playbar-artist truncate" href={`/users/${artist.id}`}>{artist.username}</a>
                 <a className="playbar-title truncate">{song.title}</a>
               </section>
-              {/* <div onClick={this.handleToggleLike} className={`playbar-like ${active}`}></div> */}
               <LikeToggle type="PLAY_BAR" song={song}/>
 
               <div onClick={this.toggleQueue} className="playback-queue">

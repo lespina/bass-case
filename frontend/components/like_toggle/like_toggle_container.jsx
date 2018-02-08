@@ -5,7 +5,7 @@ import { createLike, deleteLike } from '../../actions/user_actions';
 
 const mapStateToProps = (state) => {
   return {
-    currentUserId: state.session.currentUser.id,
+    sessionCurrentUser: state.session.currentUser,
     users: state.entities.users
   };
 };

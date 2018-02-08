@@ -7,8 +7,9 @@ class LikeToggle extends React.Component {
   }
 
   currentUser() {
-    const { users, currentUserId } = this.props;
-    return users[currentUserId];
+    const { users, sessionCurrentUser } = this.props;
+    if (sessionCurrentUser) return users[sessionCurrentUser.id];
+    return null;
   }
 
   handleToggleLike(e) {
@@ -31,8 +32,8 @@ class LikeToggle extends React.Component {
   render() {
     const { song, type } = this.props;
     const currentUser = this.currentUser();
-    const likeActive = ((currentUser.likedSongIds.has(song.id)) ? 'active' : '' );
-    const likeText = ((currentUser.likedSongIds.has(song.id)) ? 'Liked' : 'Like' );
+    const likeActive = ((currentUser && currentUser.likedSongIds.has(song.id)) ? 'active' : '' );
+    const likeText = ((currentUser && currentUser.likedSongIds.has(song.id)) ? 'Liked' : 'Like' );
 
     let content;
     switch (type) {

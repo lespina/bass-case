@@ -60,8 +60,6 @@ class StreamIndex extends React.Component {
                   receivePlaybackSong={this.props.receivePlaybackSong}
                   addToNextUp={this.props.addToNextUp}
                   currentUser={this.props.currentUser}
-                  createLike={this.props.createLike}
-                  deleteLike={this.props.deleteLike}
                   createRepost={this.props.createRepost}
                   deleteRepost={this.props.deleteRepost}
                 />

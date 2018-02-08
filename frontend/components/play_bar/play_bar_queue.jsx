@@ -7,7 +7,6 @@ class PlayBarQueue extends React.Component {
   constructor(props) {
     super(props);
     this.handleTogglePlayback = this.handleTogglePlayback.bind(this);
-    this.handleToggleLike = this.handleToggleLike.bind(this);
     this.handleToggleRepost = this.handleToggleRepost.bind(this);
     this.updateMoreActions = this.updateMoreActions.bind(this);
   }
@@ -43,24 +42,6 @@ class PlayBarQueue extends React.Component {
         deleteRepost(repostingUser.reposts[song.id]);
       } else {
         createRepost(repostingUser.id, song.id);
-      }
-    };
-  }
-
-  handleToggleLike(song) {
-    return (e) => {
-      e.preventDefault();
-
-      const { currentUser, deleteLike, createLike, users } = this.props;
-      if (!currentUser) {
-        this.props.history.push('/login');
-        return;
-      }
-      const likingUser = users[currentUser.id];
-      if (song.id in likingUser.likes) {
-        deleteLike(likingUser.likes[song.id]);
-      } else {
-        createLike(likingUser.id, song.id);
       }
     };
   }
@@ -148,7 +129,6 @@ class PlayBarQueue extends React.Component {
                         open={open}
                         paused={paused}
                         currentSongId={this.currentSongId()}
-                        handleToggleLike={this.handleToggleLike(song)}
                         handleToggleRepost={this.handleToggleRepost(song)}
                         addToNextUp={addToNextUp}
                         currentUser={currentUserWithLikes}

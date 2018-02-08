@@ -7,8 +7,6 @@ class UserStream extends React.Component {
     const { songs, user } =  this.props;
     const songIds = user.songIds;
 
-
-
     this.songActions = { [user.id]: [] };
     if (songIds) {
       _.values(songs).forEach((song) => {
@@ -38,8 +36,6 @@ class UserStream extends React.Component {
             currentSongId={this.props.currentSongId}
             playing={this.props.playing}
             currentUser={this.props.currentUser}
-            createLike={this.props.createLike}
-            deleteLike={this.props.deleteLike}
             createRepost={this.props.createRepost}
             deleteRepost={this.props.deleteRepost}
           />

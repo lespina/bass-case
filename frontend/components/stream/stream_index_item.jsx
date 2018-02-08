@@ -6,21 +6,7 @@ import LikeToggle from '../like_toggle/like_toggle_container';
 class StreamIndexItem extends React.Component {
   constructor(props) {
     super(props);
-    this.handleToggleLike = this.handleToggleLike.bind(this);
     this.handleToggleRepost = this.handleToggleRepost.bind(this);
-  }
-
-
-  handleToggleLike(e) {
-    e.preventDefault();
-    const { currentUser, song, deleteLike, createLike } = this.props;
-    if (currentUser.likedSongIds.has(song.id)) {
-      // deleteLike(currentUser.likes[song.id]);
-      deleteLike(song.id);
-    } else {
-      // createLike(currentUser.id, song.id);
-      createLike(song.id);
-    }
   }
 
   handleToggleRepost(e) {
@@ -104,7 +90,6 @@ class StreamIndexItem extends React.Component {
 
             <div className="sound-footer">
               <div className="sound-actions">
-                {/* <button onClick={this.handleToggleLike} type="button" className={`bc-btn sound-actions-btn action-like ${likeActive}`}>{song.numLikes}</button> */}
                 <LikeToggle type="STREAM_INDEX_ITEM" song={song}/>
                 <button onClick={this.handleToggleRepost} type="button" className={`bc-btn sound-actions-btn action-repost ${repostActive}`}>{Object.keys(song.reposts).length}</button>
                 <button onClick={addToNextUp.bind(null, song.id)} type="button" className="bc-btn sound-actions-btn action-next-up">Add to Next up</button>
