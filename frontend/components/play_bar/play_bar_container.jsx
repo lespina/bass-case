@@ -15,7 +15,7 @@ import {
   fetchPlaybackSongs,
   fetchPlaybackSong
 } from '../../actions/playback_actions';
-import { createLike, deleteLike } from '../../actions/like_actions';
+// import { createLike, deleteLike } from '../../actions/like_actions';
 
 const mapStateToProps = (state) => {
   return {
@@ -36,8 +36,8 @@ const mapDispatchToProps = (dispatch) => {
     seekTo: (position) => dispatch(seekTo(position)),
     toggleMute: () => dispatch(toggleMute()),
     receiveVolume: (volume) => dispatch(receiveVolume(volume)),
-    createLike: (userId, songId) => dispatch(createLike(userId, songId)),
-    deleteLike: (likeId) => dispatch(deleteLike(likeId)),
+    // createLike: (userId, songId) => dispatch(createLike(userId, songId)),
+    // deleteLike: (likeId) => dispatch(deleteLike(likeId)),
   };
 };
 

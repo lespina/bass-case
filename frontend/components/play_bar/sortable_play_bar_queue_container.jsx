@@ -10,7 +10,7 @@ import {
   addToNextUp
 } from '../../actions/playback_actions';
 import { receiveMoreActionsIndex } from '../../actions/menu_actions';
-import { createLike, deleteLike } from '../../actions/like_actions';
+// import { createLike, deleteLike } from '../../actions/like_actions';
 import { createRepost, deleteRepost } from '../../actions/repost_actions';
 
 const mapStateToProps = (state) => {
@@ -38,8 +38,8 @@ const mapDispatchToProps = (dispatch) => {
     receiveNewPlaybackSongs: (songs) => dispatch(receiveNewPlaybackSongs(songs)),
     receiveMoreActionsIndex: (idx) => dispatch(receiveMoreActionsIndex('queueIdx', idx)),
     addToNextUp: (songId) => dispatch(addToNextUp(songId)),
-    createLike: (userId, songId) => dispatch(createLike(userId, songId)),
-    deleteLike: (likeId) => dispatch(deleteLike(likeId)),
+    // createLike: (userId, songId) => dispatch(createLike(userId, songId)),
+    // deleteLike: (likeId) => dispatch(deleteLike(likeId)),
     createRepost: (userId, songId) => dispatch(createRepost(userId, songId)),
     deleteRepost: (repostId) => dispatch(deleteRepost(repostId)),
   };

@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { RECEIVE_SONGS, RECEIVE_SONG } from '../actions/song_actions';
 import { RECEIVE_PLAYBACK_SONGS, RECEIVE_PLAYBACK_SONG } from '../actions/playback_actions';
-import { RECEIVE_LIKE, REMOVE_LIKE } from '../actions/like_actions';
+import { RECEIVE_LIKE, REMOVE_LIKE } from '../actions/user_actions';
 import { RECEIVE_REPOST, REMOVE_REPOST } from '../actions/repost_actions';
 
 const initialState = {};

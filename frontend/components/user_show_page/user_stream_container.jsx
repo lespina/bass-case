@@ -24,8 +24,8 @@ const mapDispatchToProps = (dispatch) => ({
   togglePlayback: () => dispatch(togglePlayback()),
   receivePlaybackSong: (songId) => dispatch(receivePlaybackSong(songId)),
   addToNextUp: (songId) => dispatch(addToNextUp(songId)),
-  createLike: (songId) => dispatch(createLike(songId)),
-  deleteLike: (songId) => dispatch(deleteLike(songId)),
+  // createLike: (songId) => dispatch(createLike(songId)),
+  // deleteLike: (songId) => dispatch(deleteLike(songId)),
   createRepost: (userId, songId) => dispatch(createRepost(userId, songId)),
   deleteRepost: (likeId) => dispatch(deleteRepost(likeId)),
 });

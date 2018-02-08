@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import * as FormatUtil from '../../util/format_util';
+import LikeToggle from '../like_toggle/like_toggle_container';
 
 class StreamIndexItem extends React.Component {
   constructor(props) {
@@ -103,7 +104,8 @@ class StreamIndexItem extends React.Component {
 
             <div className="sound-footer">
               <div className="sound-actions">
-                <button onClick={this.handleToggleLike} type="button" className={`bc-btn sound-actions-btn action-like ${likeActive}`}>{song.numLikes}</button>
+                {/* <button onClick={this.handleToggleLike} type="button" className={`bc-btn sound-actions-btn action-like ${likeActive}`}>{song.numLikes}</button> */}
+                <LikeToggle type="STREAM_INDEX_ITEM" song={song}/>
                 <button onClick={this.handleToggleRepost} type="button" className={`bc-btn sound-actions-btn action-repost ${repostActive}`}>{Object.keys(song.reposts).length}</button>
                 <button onClick={addToNextUp.bind(null, song.id)} type="button" className="bc-btn sound-actions-btn action-next-up">Add to Next up</button>
               </div>

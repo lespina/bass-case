@@ -9,6 +9,7 @@ import {
   TOGGLE_PLAYBACK, SEEK
 } from '../../actions/playback_actions';
 import PlayBarQueueContainer from './sortable_play_bar_queue_container';
+import LikeToggle from '../like_toggle/like_toggle_container';
 
 class PlayBar extends React.Component {
 
@@ -277,7 +278,8 @@ class PlayBar extends React.Component {
                 <a onClick={this.redirectToLogin.bind(this)} className="playbar-artist truncate" href={`/users/${artist.id}`}>{artist.username}</a>
                 <a className="playbar-title truncate">{song.title}</a>
               </section>
-              <div onClick={this.handleToggleLike} className={`playbar-like ${active}`}></div>
+              {/* <div onClick={this.handleToggleLike} className={`playbar-like ${active}`}></div> */}
+              <LikeToggle type="PLAY_BAR" song={song}/>
 
               <div onClick={this.toggleQueue} className="playback-queue">
                 <svg width="24" height="24" viewBox="0 0 24 24">

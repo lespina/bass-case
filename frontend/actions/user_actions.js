@@ -3,6 +3,8 @@ import * as UserApiUtil from '../util/user_api_util';
 export const RECEIVE_USERS = "RECEIVE_USERS";
 export const RECEIVE_USER = "RECEIVE_USER";
 export const RECEIVE_USER_ERRORS = "RECEIVE_USER_ERRORS";
+export const RECEIVE_LIKE = "RECEIVE_LIKE";
+export const REMOVE_LIKE = "REMOVE_LIKE";
 
 export const receiveUsers = (users) => ({
   type: RECEIVE_USERS,
@@ -18,6 +20,19 @@ export const receiveUserErrors = (errors) => ({
   type: RECEIVE_USER_ERRORS,
   errors
 });
+
+export const receiveLike = (payload) => ({
+  type: RECEIVE_LIKE,
+  userId: payload.userId,
+  songId: payload.songId
+});
+
+export const removeLike = (payload) => ({
+  type: REMOVE_LIKE,
+  userId: payload.userId,
+  songId: payload.songId
+});
+
 
 export const fetchUsers = () => (dispatch) => {
   return UserApiUtil.fetchUsers().then(users => {
@@ -42,22 +57,6 @@ export const updateUser = (userId, formData) => (dispatch) => {
     return errors;
   });
 };
-
-
-export const RECEIVE_LIKE = "RECEIVE_LIKE";
-export const REMOVE_LIKE = "REMOVE_LIKE";
-
-export const receiveLike = (payload) => ({
-  type: RECEIVE_LIKE,
-  userId: payload.userId,
-  songId: payload.songId
-});
-
-export const removeLike = (payload) => ({
-  type: REMOVE_LIKE,
-  userId: payload.userId,
-  songId: payload.songId
-});
 
 export const createLike = (songId) => (dispatch) => {
   return UserApiUtil.createLike(songId).then(payload => {

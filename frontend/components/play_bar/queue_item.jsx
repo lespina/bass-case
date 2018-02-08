@@ -1,6 +1,7 @@
 import React from 'react';
 import { SortableElement, SortableHandle } from 'react-sortable-hoc';
 import { Link } from 'react-router-dom';
+import LikeToggle from '../like_toggle/like_toggle_container';
 
 const QueueItemHandle = SortableHandle(() => {
   return (
@@ -45,10 +46,12 @@ class QueueItem extends React.Component {
     return (
       <div className={`queue-item ${dimmed}`}>
         <div className={`queue-item-actions ${open}`}>
-          <button onClick={handleToggleLike} className={`bc-btn playable-like-btn queue-like-btn ${activeLikes}`}>Like</button>
+          {/* <button onClick={handleToggleLike} className={`bc-btn playable-like-btn queue-like-btn ${activeLikes}`}>Like</button> */}
+          <LikeToggle type="QUEUE_ITEM" song={song}/>
           <div onClick={updateMoreActions} className={`bc-btn playable-more-btn queue-more-btn ${open}`}>
             <div className={`more-actions queue-actions-menu ${open}`}>
-              <button onClick={handleToggleLike} className={`more-actions-btn more-like-btn ${activeLikes}`}>{likeText}</button>
+              {/* <button onClick={handleToggleLike} className={`more-actions-btn more-like-btn ${activeLikes}`}>{likeText}</button> */}
+              <LikeToggle type="QUEUE_ITEM_ACTION" song={song}/>
               <button onClick={addToNextUp.bind(null, song.id)} className="more-actions-btn more-add-next-up-btn">Add to Next up</button>
               <button onClick={handleToggleRepost} className={`more-actions-btn more-repost-btn ${activeReposts}`}>{repostText}</button>
             </div>
