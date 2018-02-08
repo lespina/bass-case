@@ -35,3 +35,17 @@ export const deleteLike = (songId) => {
     method: 'delete',
   });
 };
+
+export const createFollow = (followeeId) => {
+  return $.ajax({
+    url: `api/users/follows/${followeeId}`,
+    method: 'post',
+  });
+};
+
+export const deleteFollow = (followeeId) => {
+  return $.ajax({
+    url: `api/users/follows/${followeeId}`,
+    method: 'delete',
+  });
+};

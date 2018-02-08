@@ -5,6 +5,8 @@ export const RECEIVE_USER = "RECEIVE_USER";
 export const RECEIVE_USER_ERRORS = "RECEIVE_USER_ERRORS";
 export const RECEIVE_LIKE = "RECEIVE_LIKE";
 export const REMOVE_LIKE = "REMOVE_LIKE";
+export const RECEIVE_FOLLOW = "RECEIVE_FOLLOW";
+export const REMOVE_FOLLOW = "REMOVE_FOLLOW";
 
 export const receiveUsers = (users) => ({
   type: RECEIVE_USERS,
@@ -31,6 +33,18 @@ export const removeLike = (payload) => ({
   type: REMOVE_LIKE,
   userId: payload.userId,
   songId: payload.songId
+});
+
+export const receiveFollow = (payload) => ({
+  type: RECEIVE_FOLLOW,
+  followerId: payload.followerId,
+  followeeId: payload.followeeId
+});
+
+export const removeFollow = (payload) => ({
+  type: REMOVE_FOLLOW,
+  followerId: payload.followerId,
+  followeeId: payload.followeeId
 });
 
 
@@ -71,6 +85,26 @@ export const createLike = (songId) => (dispatch) => {
 export const deleteLike = (songId) => (dispatch) => {
   return UserApiUtil.deleteLike(songId).then(payload => {
     dispatch(removeLike(payload));
+    return payload;
+  }, errors => {
+    console.log(errors.responseJSON);
+    return errors;
+  });
+};
+
+export const createFollow = (followeeId) => (dispatch) => {
+  return UserApiUtil.createFollow(followeeId).then(payload => {
+    dispatch(receiveFollow(payload));
+    return payload;
+  }, errors => {
+    console.log(errors.responseJSON);
+    return errors;
+  });
+};
+
+export const deleteFollow = (followeeId) => (dispatch) => {
+  return UserApiUtil.deleteFollow(followeeId).then(payload => {
+    dispatch(removeFollow(payload));
     return payload;
   }, errors => {
     console.log(errors.responseJSON);

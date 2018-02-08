@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { createFollow, deleteFollow } from '../../actions/follow_actions';
 import UserSuggestionModule from './user_suggestion_module';
 import * as FormatUtil from '../../util/format_util';
+import FollowToggle from '../follow_toggle/follow_toggle_container';
 
 class SideBar extends React.Component {
   constructor(props) {
@@ -252,7 +253,7 @@ const FollowerItem = ({ follower, currentUser, handleToggleFollow }) => {
               <a className="floating-user-content-stats-followers" href="#">{FormatUtil.formatPlays(follower.followerIds.length)}</a>
             </div>
             <div className="floating-user-content-location">{follower.location}</div>
-            <button onClick={handleToggleFollow(follower.id)} className={`bc-btn floating-user-content-follow-btn ${active}`} type="button">{(active === "active") ? "Following" : "Follow"}</button>
+            <FollowToggle followee={followee} type="SIDE_BAR"/>
           </div>
           <div className="floating-user-menu-arrow"></div>
           </div>
@@ -284,7 +285,7 @@ const FollowingItem = ({ followee, currentUser, handleToggleFollow }) => {
               <a className="floating-user-content-stats-followers" href="#">{FormatUtil.formatPlays(followee.followerIds.length)}</a>
             </div>
             <div className="floating-user-content-location">{followee.location}</div>
-            <button onClick={handleToggleFollow(followee.id)} className={`bc-btn floating-user-content-follow-btn ${active}`} type="button">{(active === "active") ? "Following" : "Follow"}</button>
+            <FollowToggle followee={followee} type="SIDE_BAR"/>
           </div>
           <div className="floating-user-menu-arrow"></div>
           </div>

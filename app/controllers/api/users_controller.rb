@@ -53,6 +53,26 @@ class Api::UsersController < ApplicationController
     end
   end
 
+  def follow
+    @follow = current_user.follows.new(followee_id: params[:followee_id])
+    if @follow.save
+      render :follow
+    else
+      render json: @follow.errors.full_messages, status: 422
+    end
+  end
+
+  def unfollow
+    @follow = current_user.follows.find_by(followee_id: params[:followee_id])
+
+    if @follow
+      @follow.destroy
+      render :follow
+    else
+      render json: ['Follow does not exist or you are not authorized to destroy it'], status: 401
+    end
+  end
+
   private
   def user_params
     params.require(:user).permit(:username, :password, :bio, :location, :profile_image, :banner_image)

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import * as FormatUtil from '../../util/format_util';
+import FollowToggle from '../follow_toggle/follow_toggle_container';
 
 const UserSuggestionItem = ({ user, active, handleToggleFollow }) => {
 
@@ -25,9 +26,7 @@ const UserSuggestionItem = ({ user, active, handleToggleFollow }) => {
           </div>
 
           <div className="user-suggestion-actions">
-            <button onClick={handleToggleFollow} type="button" className={`bc-btn user-suggestion-follow-btn ${active}`}>
-              {(active === "active") ? "Followed" : "Follow"}
-            </button>
+            <FollowToggle followee={user} type="SIDE_BAR"/>
           </div>
         </div>
 
