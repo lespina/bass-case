@@ -12,6 +12,7 @@ class Api::SessionsController < ApplicationController
 
     if @user
       login(@user)
+      @new_session = true
       render 'api/users/show.json.jbuilder'
     else
       render json: ['Invalid credentials'], status: 401

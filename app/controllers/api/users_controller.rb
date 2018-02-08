@@ -1,10 +1,9 @@
 class Api::UsersController < ApplicationController
   def index
-    @users = User.includes(:songs, :liked_songs).all
+    @users = User.includes(:songs, :followers, :followees).all
   end
 
   def show
-    @all_info = true
     @user = User.find(params[:id])
   end
 
@@ -13,7 +12,6 @@ class Api::UsersController < ApplicationController
 
     if @user.save
       login(@user)
-      @all_info
       render :show
     else
       render json: @user.errors.full_messages, status: 422
@@ -29,10 +27,29 @@ class Api::UsersController < ApplicationController
     end
 
     if @user.update(user_params)
-      @all_info = true
       render :show
     else
       render json: @user.errors.full_messages, status: 422
+    end
+  end
+
+  def like
+    @like = current_user.likes.new(song_id: params[:song_id])
+    if @like.save
+      render :like
+    else
+      render json: @like.errors.full_messages, status: 422
+    end
+  end
+
+  def unlike
+    @like = current_user.likes.find_by(song_id: params[:song_id])
+
+    if @like
+      @like.destroy
+      render :like
+    else
+      render json: ['Like does not exist or you are not authorized to destroy it'], status: 401
     end
   end
 

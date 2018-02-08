@@ -8,11 +8,13 @@ Rails.application.routes.draw do
     resources :reposts, only: [:destroy]
     resources :songs, only: [:index, :create, :show, :update]
     resources :users, only: [:index, :create, :show, :update] do
-      resources :likes, only: [:create]
+      # resources :likes, only: [:create]
       resources :follows, only: [:create]
       resources :reposts, only: [:create]
     end
     resource :session, only: [:create, :destroy]
+    post 'users/likes/:song_id', to: 'users#like'
+    delete 'users/likes/:song_id', to: 'users#unlike'
   end
 
 end

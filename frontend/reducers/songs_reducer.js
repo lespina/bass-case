@@ -19,12 +19,12 @@ const songsReducer = (state = initialState, action) => {
       return newState;
     case RECEIVE_LIKE:
       newState = _.merge({}, state);
-      const likedSong = newState[action.like.songId];
+      const likedSong = newState[action.songId];
       likedSong.numLikes += 1;
       return newState;
     case REMOVE_LIKE:
       newState = _.merge({}, state);
-      const unlikedSong = newState[action.like.songId];
+      const unlikedSong = newState[action.songId];
       unlikedSong.numLikes -= 1;
       return newState;
     case RECEIVE_REPOST:

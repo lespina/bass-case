@@ -1,7 +1,8 @@
 import _ from 'lodash';
 import { RECEIVE_CURRENT_USER } from '../actions/session_actions';
-import { RECEIVE_USERS, RECEIVE_USER } from '../actions/user_actions';
-import { RECEIVE_LIKE, REMOVE_LIKE } from '../actions/like_actions';
+import { RECEIVE_USERS, RECEIVE_USER, RECEIVE_LIKE, REMOVE_LIKE } from '../actions/user_actions';
+// import { RECEIVE_LIKE, REMOVE_LIKE } from '../actions/like_actions';
+
 import { RECEIVE_REPOST, REMOVE_REPOST } from '../actions/repost_actions';
 import { RECEIVE_FOLLOW, REMOVE_FOLLOW } from '../actions/follow_actions';
 
@@ -11,20 +12,33 @@ const usersReducer = (state = initialState, action) => {
   let newState;
   switch (action.type) {
     case RECEIVE_USERS:
-      return action.users;
+      newState = _.merge({}, action.users);
+      for (let userId in newState) {
+        newState[userId].likedSongIds = new Set(newState[userId].likedSongIds);
+      }
+      return newState;
     case RECEIVE_USER:
       newState = _.merge({}, state);
       newState[action.user.id] = action.user;
+      newState[action.user.id].likedSongIds = new Set(action.user.likedSongIds);
       return newState;
+    // case RECEIVE_LIKE:
+    //   newState = _.merge({}, state);
+    //   const userReceiveLikes = newState[action.like.userId].likes;
+    //   userReceiveLikes[action.like.songId] = action.like.id;
+    //   return newState;
+    // case REMOVE_LIKE:
+    //   newState = _.merge({}, state);
+    //   const userRemoveLikes = newState[action.like.userId].likes;
+    //   delete userRemoveLikes[action.like.songId];
+    //   return newState;
     case RECEIVE_LIKE:
       newState = _.merge({}, state);
-      const userReceiveLikes = newState[action.like.userId].likes;
-      userReceiveLikes[action.like.songId] = action.like.id;
+      newState[action.userId].likedSongIds.add(action.songId);
       return newState;
     case REMOVE_LIKE:
       newState = _.merge({}, state);
-      const userRemoveLikes = newState[action.like.userId].likes;
-      delete userRemoveLikes[action.like.songId];
+      newState[action.userId].likedSongIds.delete(action.songId);
       return newState;
     case RECEIVE_REPOST:
       newState = _.merge({}, state);

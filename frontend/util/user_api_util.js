@@ -21,3 +21,17 @@ export const updateUser = (userId, formData) => {
     data: formData,
   });
 };
+
+export const createLike = (songId) => {
+  return $.ajax({
+    url: `api/users/likes/${songId}`,
+    method: 'post',
+  });
+};
+
+export const deleteLike = (songId) => {
+  return $.ajax({
+    url: `api/users/likes/${songId}`,
+    method: 'delete',
+  });
+};
