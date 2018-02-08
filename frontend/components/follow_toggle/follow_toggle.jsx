@@ -37,8 +37,15 @@ class FollowToggle extends React.Component {
 
     let content;
     switch (type) {
-      case 'SIDE_BAR':
+      case 'USER_SUGGESTION_MODULE':
+        content = <button onClick={this.handleToggleFollow} className={`bc-btn user-suggestion-follow-btn ${active}`} type="button">{followText}</button>;
+        break;
+      case 'FLOATING_USER_CONTENT':
         content = <button onClick={this.handleToggleFollow} className={`bc-btn floating-user-content-follow-btn ${active}`} type="button">{followText}</button>;
+        break;
+      case 'INFO_BAR':
+        content = <button onClick={this.handleToggleFollow} className={`bc-btn user-info-follow-btn ${active}`} type="button" >{followText}</button>;
+        break;
     }
 
     return (

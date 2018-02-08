@@ -1,43 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink, Link, withRouter } from 'react-router-dom';
-import { createFollow, deleteFollow } from '../../actions/follow_actions';
+import FollowToggle from '../follow_toggle/follow_toggle_container';
 
 class InfoBar extends React.Component {
   constructor(props) {
     super(props);
-    this.handleToggleFollow = this.handleToggleFollow.bind(this);
-  }
-
-  handleToggleFollow(e) {
-    e.preventDefault();
-    const { users, currentUser, user, deleteFollow, createFollow } = this.props;
-    const follows = users[currentUser.id].follows;
-
-    if (user.id in follows) {
-      this.props.unfollow(follows[user.id]);
-    } else {
-      this.props.follow(currentUser.id, user.id);
-    }
   }
 
   followButton() {
-    const { user, currentUser, users } = this.props;
-
-    if (!user) { return null; }
-
-    const isCurrentUser = (currentUser && user.id === parseInt(currentUser.id));
-    const follows = users[currentUser.id].follows;
-    const followStatus = (follows && user.id in follows);
-    const followClassname = ((followStatus) ? "following" : "");
-
-    if (!isCurrentUser) {
+    const { user, currentUser } = this.props;
+    const isCurrentUser = (currentUser && user && user.id === parseInt(currentUser.id));
+    if (user && !isCurrentUser) {
       return (
-        <button onClick={this.handleToggleFollow} type="button" className={`bc-btn user-info-follow-btn ${followClassname}`}>
-          {
-            (followStatus) ? "Following" : "Follow"
-          }
-        </button>
+        <FollowToggle followee={user} type="INFO_BAR"/>
       );
     } else {
       return <div></div>;
@@ -94,14 +70,9 @@ const mapStateToProps = (state) => ({
   currentUser: state.session.currentUser
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  follow: (followerId, followeeId) => dispatch(createFollow(followerId, followeeId)),
-  unfollow: (followId) => dispatch(deleteFollow(followId)),
-});
-
 export default withRouter(
   connect(
     mapStateToProps,
-    mapDispatchToProps
+    null
   )(InfoBar)
 );

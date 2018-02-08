@@ -3,7 +3,6 @@ import { Link, withRouter } from 'react-router-dom';
 import _ from 'lodash';
 import shuffle from 'shuffle-array';
 import { connect } from 'react-redux';
-import { createFollow, deleteFollow } from '../../actions/follow_actions';
 import UserSuggestionModule from './user_suggestion_module';
 import * as FormatUtil from '../../util/format_util';
 import FollowToggle from '../follow_toggle/follow_toggle_container';
@@ -39,26 +38,6 @@ class SideBar extends React.Component {
     this.setState({ users: selectedUsers });
   }
 
-  handleToggleFollow(userId) {
-    const { users, currentUser } = this.props;
-
-    if (!currentUser) {
-      return (e) => {
-        this.props.history.push('/login');
-      };
-    }
-
-    const follows = users[currentUser.id].follows;
-
-    return (e) => {
-      if (userId in follows) {
-        this.props.unfollow(follows[userId]);
-      } else {
-        this.props.follow(currentUser.id, userId);
-      }
-    };
-  }
-
   userSuggestionModule() {
     const { userSuggestion, currentUser } = this.props;
 
@@ -74,7 +53,6 @@ class SideBar extends React.Component {
         users={this.props.users}
         userIds={this.state.users}
         currentUser={this.props.users[currentUser.id]}
-        handleToggleFollow={this.handleToggleFollow.bind(this)}
         refresh={this.chooseUsers.bind(this)}
       />
     );
@@ -97,19 +75,19 @@ class SideBar extends React.Component {
     if (!this.props.followers || !user.followerIds) { return null; }
     const followers = [];
     for (const userId in users) {
-      if (user.followerIds.includes(parseInt(userId))) {
+      if (user.followerIds.has(parseInt(userId))) {
         followers.push(users[userId]);
       }
       if (followers.length >= 9) {
         break;
       }
     }
+
     return <Followers
       user={user}
       followers={followers}
       currentUser={this.props.users[currentUser.id]}
-      handleToggleFollow={this.handleToggleFollow.bind(this)}
-    />
+    />;
   }
 
   following() {
@@ -117,7 +95,7 @@ class SideBar extends React.Component {
     if (!this.props.following || !user.followeeIds) { return null; }
     const followees = [];
     for (const userId in users) {
-      if (user.followeeIds.includes(parseInt(userId))) {
+      if (user.followeeIds.has(parseInt(userId))) {
         followees.push(users[userId]);
       }
       if (followees.length >= 9) {
@@ -128,8 +106,7 @@ class SideBar extends React.Component {
       user={user}
       followees={followees}
       currentUser={this.props.users[currentUser.id]}
-      handleToggleFollow={this.handleToggleFollow.bind(this)}
-    />
+    />;
 
   }
 
@@ -154,11 +131,11 @@ const InfoStatsModule = ({ user }) => {
         <tr>
           <td className="info-stat">
             <h3 className="info-stat-title">Followers</h3>
-            <div className="info-stat-value">{FormatUtil.formatPlays(user.followerIds.length)}</div>
+            <div className="info-stat-value">{FormatUtil.formatPlays(user.followerIds.size)}</div>
           </td>
           <td className="info-stat">
             <h3 className="info-stat-title">Following</h3>
-            <div className="info-stat-value">{FormatUtil.formatPlays(user.followeeIds.length)}</div>
+            <div className="info-stat-value">{FormatUtil.formatPlays(user.followeeIds.size)}</div>
           </td>
           <td className="info-stat">
             <h3 className="info-stat-title">Tracks</h3>
@@ -182,13 +159,13 @@ const Description = ({ user }) => {
   );
 }
 
-const Followers = ({ user, currentUser, followers, handleToggleFollow }) => {
+const Followers = ({ user, currentUser, followers }) => {
   return (
     <section className="sidebar-module followers">
       <a className="sidebar-header" href="#">
         <h3 className="sidebar-header-title">
           <span className="sidebar-header-follower-icon"></span>
-          <span>{FormatUtil.formatPlays(user.followerIds.length)} Followers</span>
+          <span>{FormatUtil.formatPlays(user.followerIds.size)} Followers</span>
         </h3>
         {/* <span className="sidebar-header-title">View all</span> */}
       </a>
@@ -197,7 +174,7 @@ const Followers = ({ user, currentUser, followers, handleToggleFollow }) => {
         <ul className="sidebar-user-avatar-list">
           {
             followers.map(follower => {
-              return <FollowerItem key={follower.id} follower={follower} currentUser={currentUser} handleToggleFollow={handleToggleFollow}/>
+              return <FollowerItem key={follower.id} follower={follower} currentUser={currentUser}/>
             })
           }
         </ul>
@@ -206,13 +183,13 @@ const Followers = ({ user, currentUser, followers, handleToggleFollow }) => {
   );
 }
 
-const Following = ({ user, currentUser, followees, handleToggleFollow }) => {
+const Following = ({ user, currentUser, followees }) => {
   return (
     <section className="sidebar-module followers">
       <a className="sidebar-header" href="#">
         <h3 className="sidebar-header-title">
           <span className="sidebar-header-follower-icon"></span>
-          <span>{FormatUtil.formatPlays(user.followeeIds.length)} Following</span>
+          <span>{FormatUtil.formatPlays(user.followeeIds.size)} Following</span>
         </h3>
         {/* <span className="sidebar-header-title">View all</span> */}
       </a>
@@ -221,7 +198,7 @@ const Following = ({ user, currentUser, followees, handleToggleFollow }) => {
         <ul className="sidebar-user-avatar-list">
           {
             followees.map(followee => {
-              return <FollowingItem key={followee.id} followee={followee} currentUser={currentUser} handleToggleFollow={handleToggleFollow}/>
+              return <FollowingItem key={followee.id} followee={followee} currentUser={currentUser}/>
             })
           }
         </ul>
@@ -230,16 +207,8 @@ const Following = ({ user, currentUser, followees, handleToggleFollow }) => {
   );
 }
 
-const FollowerItem = ({ follower, currentUser, handleToggleFollow }) => {
+const FollowerItem = ({ follower, currentUser }) => {
   const style = { backgroundImage: `url(${follower.avatarUrl})` };
-  let active;
-  if (!currentUser || !currentUser.follows) {
-    active = false;
-  } else {
-    const follows = currentUser.follows;
-    active = ((follower.id in follows) ? "active" : "");
-  }
-
   const lower = ((follower.avatarUrl[0] === '/') ? { top: '-205px' } : {});
 
   return (
@@ -250,10 +219,10 @@ const FollowerItem = ({ follower, currentUser, handleToggleFollow }) => {
             <Link to={`/users/${follower.id}`} className="floating-user-content-avatar" style={style} ></Link>
             <Link to={`/users/${follower.id}`} className="floating-user-content-description">{follower.username}</Link>
             <div className="floating-user-content-stats">
-              <a className="floating-user-content-stats-followers" href="#">{FormatUtil.formatPlays(follower.followerIds.length)}</a>
+              <a className="floating-user-content-stats-followers" href="#">{FormatUtil.formatPlays(follower.followerIds.size)}</a>
             </div>
             <div className="floating-user-content-location">{follower.location}</div>
-            <FollowToggle followee={followee} type="SIDE_BAR"/>
+            <FollowToggle followee={follower} type="FLOATING_USER_CONTENT"/>
           </div>
           <div className="floating-user-menu-arrow"></div>
           </div>
@@ -262,16 +231,8 @@ const FollowerItem = ({ follower, currentUser, handleToggleFollow }) => {
   );
 }
 
-const FollowingItem = ({ followee, currentUser, handleToggleFollow }) => {
+const FollowingItem = ({ followee, currentUser }) => {
   const style = { backgroundImage: `url(${followee.avatarUrl})` };
-  let active;
-  if (!currentUser || !currentUser.follows) {
-    active = false;
-  } else {
-    const follows = currentUser.follows;
-    active = ((followee.id in follows) ? "active" : "");
-  }
-
   const lower = ((followee.avatarUrl[0] === '/') ? { top: '-205px' } : {});
 
   return (
@@ -282,10 +243,10 @@ const FollowingItem = ({ followee, currentUser, handleToggleFollow }) => {
             <Link to={`/users/${followee.id}`} className="floating-user-content-avatar" style={style} ></Link>
             <Link to={`/users/${followee.id}`} className="floating-user-content-description">{followee.username}</Link>
             <div className="floating-user-content-stats">
-              <a className="floating-user-content-stats-followers" href="#">{FormatUtil.formatPlays(followee.followerIds.length)}</a>
+              <a className="floating-user-content-stats-followers" href="#">{FormatUtil.formatPlays(followee.followerIds.size)}</a>
             </div>
             <div className="floating-user-content-location">{followee.location}</div>
-            <FollowToggle followee={followee} type="SIDE_BAR"/>
+            <FollowToggle followee={followee} type="FLOATING_USER_CONTENT"/>
           </div>
           <div className="floating-user-menu-arrow"></div>
           </div>
@@ -300,12 +261,7 @@ const mapStateToProps = (state) => ({
   users: state.entities.users,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  follow: (userId, songId) => dispatch(createFollow(userId, songId)),
-  unfollow: (followId) => dispatch(deleteFollow(followId)),
-});
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  null
 )(withRouter(SideBar));

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import * as FormatUtil from '../../util/format_util';
 import FollowToggle from '../follow_toggle/follow_toggle_container';
 
-const UserSuggestionItem = ({ user, active, handleToggleFollow }) => {
+const UserSuggestionItem = ({ user }) => {
 
   const style = { backgroundImage: `url(${user.avatarUrl})` };
   if (!user.songIds) { return null; }
@@ -18,7 +18,7 @@ const UserSuggestionItem = ({ user, active, handleToggleFollow }) => {
         <div className="user-suggestion-meta">
           <div className="user-suggestion-stats">
             <div className="user-suggestion-followers">
-              &nbsp;&nbsp;{FormatUtil.formatPlays(user.followerIds.length)}
+              &nbsp;&nbsp;{FormatUtil.formatPlays(user.followerIds.size)}
             </div>
             <div className="user-suggestion-tracks">
               &nbsp;&nbsp;{FormatUtil.formatPlays(user.songIds.length)}
@@ -26,7 +26,7 @@ const UserSuggestionItem = ({ user, active, handleToggleFollow }) => {
           </div>
 
           <div className="user-suggestion-actions">
-            <FollowToggle followee={user} type="SIDE_BAR"/>
+            <FollowToggle followee={user} type="USER_SUGGESTION_MODULE"/>
           </div>
         </div>
 
