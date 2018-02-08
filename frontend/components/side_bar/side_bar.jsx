@@ -4,10 +4,13 @@ import _ from 'lodash';
 import shuffle from 'shuffle-array';
 import { connect } from 'react-redux';
 import UserSuggestionModule from './user_suggestion_module';
-import * as FormatUtil from '../../util/format_util';
 import FollowToggle from '../follow_toggle/follow_toggle_container';
+import * as FormatUtil from '../../util/format_util';
+
+const ROW_LIMIT = 9;
 
 class SideBar extends React.Component {
+  
   constructor(props) {
     super(props);
     this.state = {
@@ -78,12 +81,12 @@ class SideBar extends React.Component {
       if (user.followerIds.has(parseInt(userId))) {
         followers.push(users[userId]);
       }
-      if (followers.length >= 9) {
+      if (followers.length >= ROW_LIMIT) {
         break;
       }
     }
 
-    return <Followers
+    return <FollowersIndex
       user={user}
       followers={followers}
       currentUser={this.props.users[currentUser.id]}
@@ -98,11 +101,11 @@ class SideBar extends React.Component {
       if (user.followeeIds.has(parseInt(userId))) {
         followees.push(users[userId]);
       }
-      if (followees.length >= 9) {
+      if (followees.length >= ROW_LIMIT) {
         break;
       }
     }
-    return <Following
+    return <FollowingIndex
       user={user}
       followees={followees}
       currentUser={this.props.users[currentUser.id]}
@@ -159,7 +162,7 @@ const Description = ({ user }) => {
   );
 }
 
-const Followers = ({ user, currentUser, followers }) => {
+const FollowersIndex = ({ user, currentUser, followers }) => {
   return (
     <section className="sidebar-module followers">
       <a className="sidebar-header" href="#">
@@ -183,7 +186,7 @@ const Followers = ({ user, currentUser, followers }) => {
   );
 }
 
-const Following = ({ user, currentUser, followees }) => {
+const FollowingIndex = ({ user, currentUser, followees }) => {
   return (
     <section className="sidebar-module followers">
       <a className="sidebar-header" href="#">

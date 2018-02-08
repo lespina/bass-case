@@ -25,14 +25,10 @@ class StreamIndex extends React.Component {
     }, this);
 
     return sortedActions.sort((action1, action2) => {
-      // const song1 = action1[1];
-      // const song2 = action2[1];
-      //
-      // const time1 = new Date(song1.createdAt).getTime();
-      // const time2 = new Date(song2.createdAt).getTime();
-      const time1 = new Date(action1[2]).getTime();
-      const time2 = new Date(action2[2]).getTime();
-
+      const createdAt1 = action1[2];
+      const createdAt2 = action2[2];
+      const time1 = new Date(createdAt1).getTime();
+      const time2 = new Date(createdAt2).getTime();
       return time2 - time1;
     });
   }
@@ -43,9 +39,7 @@ class StreamIndex extends React.Component {
         <ul className="stream-index">
           {
             this.timeSortedActions().map((songAction, idx) => {
-              const userId = songAction[0];
-              const song = songAction[1];
-              const createdAt = songAction[2];
+              const [userId, song, createdAt] = songAction;
               const artist = this.props.users[song.artistId];
               return (
                 <StreamIndexItem

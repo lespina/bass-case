@@ -8,17 +8,16 @@ class Stream extends React.Component {
 
   filterSongs() {
     const { songs, users, currentUser } =  this.props;
-    const followedUserIds = Object.keys(currentUser.follows).concat(currentUser.id.toString());
     const followedUsers = [];
-    for (const userId in users) {
-      if (followedUserIds.includes(userId)) {
+    for (let userId in users) {
+      if (currentUser.followeeIds.has(parseInt(userId))) {
         followedUsers.push(users[userId]);
       }
     }
 
     this.songActions = {};
-
-    followedUserIds.forEach(followedUserId => {
+    
+    currentUser.followeeIds.forEach(followedUserId => {
       this.songActions[followedUserId] = [];
     }, this);
 
@@ -36,7 +35,7 @@ class Stream extends React.Component {
   }
 
   render() {
-    if (!this.props.currentUser.follows) { return null; }
+    if (this.props.currentUser.followeeIds.size === 0) { return null; }
 
     this.filterSongs();
 

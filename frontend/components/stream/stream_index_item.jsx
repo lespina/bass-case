@@ -49,7 +49,7 @@ class StreamIndexItem extends React.Component {
     } = this.props;
 
     const likeActive = ((currentUser.likedSongIds.has(song.id)) ? 'active' : '' );
-    const repostActive = ((song.id in currentUser.reposts) ? 'active' : '' );
+    const repostActive = ((currentUser.reposts && song.id in currentUser.reposts) ? 'active' : '' );
     const paused = ((playing && parseInt(currentSongId) === song.id) ? 'stream-paused' : '');
     const coverImage = { backgroundImage: `url(${song.imageUrl})` };
 

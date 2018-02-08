@@ -83,9 +83,11 @@ class PlayBar extends React.Component {
   }
 
   redirectToLogin(e) {
-    e.preventDefault();
-    this.props.history.push('/login');
-    return;
+    if (!this.props.currentUser) {
+      e.preventDefault();
+      this.props.history.push('/login');
+      return;
+    }
   }
 
   getOffset({ playback }) {
@@ -256,7 +258,7 @@ class PlayBar extends React.Component {
                 <a className="playbar-image" style={{ backgroundImage: `url(${song.imageUrl})` }}>Artwork</a>
               </div>
               <section className="playbar-song-text-container">
-                <a onClick={this.redirectToLogin.bind(this)} className="playbar-artist truncate" href={`/users/${artist.id}`}>{artist.username}</a>
+                <Link onClick={this.redirectToLogin.bind(this)} className="playbar-artist truncate" to={`/users/${artist.id}`}>{artist.username}</Link>
                 <a className="playbar-title truncate">{song.title}</a>
               </section>
               <LikeToggle type="PLAY_BAR" song={song}/>
