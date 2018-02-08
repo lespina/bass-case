@@ -29,8 +29,6 @@ class SortablePlayBarQueue extends React.Component {
       playing,
       songIdx,
       addToNextUp,
-      createLike,
-      deleteLike,
       receiveMoreActionsIndex,
       moreActionsIdx,
       togglePlayback,
@@ -48,8 +46,6 @@ class SortablePlayBarQueue extends React.Component {
       addToNextUp={addToNextUp}
       receiveMoreActionsIndex={receiveMoreActionsIndex}
       moreActionsIdx={moreActionsIdx}
-      createLike={createLike}
-      deleteLike={deleteLike}
       createRepost={createRepost}
       deleteRepost={deleteRepost}
       users={users}

@@ -53,8 +53,6 @@ class Stream extends React.Component {
             currentSongId={this.props.currentSongId}
             playing={this.props.playing}
             currentUser={this.props.currentUser}
-            createLike={this.props.createLike}
-            deleteLike={this.props.deleteLike}
             createRepost={this.props.createRepost}
             deleteRepost={this.props.deleteRepost}
           />
