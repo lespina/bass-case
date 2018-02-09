@@ -19,6 +19,13 @@ class SideBar extends React.Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.match.params.id !== this.props.match.params.id) {
+      this.fetchedFollowers = false;
+      this.fetchedFollowees = false;
+    }
+  }
+
   chooseUsers() {
     const { currentUser, fetchUser } = this.props;
 
@@ -88,6 +95,11 @@ class SideBar extends React.Component {
       }
     }
 
+    if (followers.length > 0 && !this.fetchedFollowers) {
+      this.props.fetchUsers(Array.from(user.followerIds));
+      this.fetchedFollowers = true;
+    }
+
     return <FollowersIndex
       user={user}
       followers={followers}
@@ -107,6 +119,12 @@ class SideBar extends React.Component {
         break;
       }
     }
+
+    if (followees.length > 0 && !this.fetchedFollowees) {
+      this.props.fetchUsers(Array.from(user.followeeIds));
+      this.fetchedFollowees = true;
+    }
+
     return <FollowingIndex
       user={user}
       followees={followees}
@@ -130,6 +148,9 @@ class SideBar extends React.Component {
 }
 
 const InfoStatsModule = ({ user }) => {
+
+  if (!user.followerIds) { return null; }
+
   return (
     <table className="user-info-stats-table">
       <tbody>

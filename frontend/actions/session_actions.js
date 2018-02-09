@@ -1,7 +1,7 @@
 import * as SessionApiUtil from '../util/session_api_util';
 import * as UserApiUtil from '../util/user_api_util';
 
-import { receiveUser } from './session_actions';
+import { receiveUser } from './user_actions';
 
 export const RECEIVE_CURRENT_USER = 'RECEIVE_CURRENT_USER';
 export const RECEIVE_SESSION_ERRORS = 'RECEIVE_SESSION_ERRORS';

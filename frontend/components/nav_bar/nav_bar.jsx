@@ -7,17 +7,17 @@ import SearchFormContainer from '../search_form/search_form_container';
 
 class NavBar extends React.Component {
 
-  componentDidMount() {
-    if (this.props.currentUser) {
-      this.props.fetchUser(this.props.currentUser.id);
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (!this.props.currentUser && Boolean(nextProps.currentUser)) {
-      this.props.fetchUser(nextProps.currentUser.id);
-    }
-  }
+  // componentDidMount() {
+  //   if (this.props.currentUser) {
+  //     this.props.fetchUser(this.props.currentUser.id);
+  //   }
+  // }
+  //
+  // componentWillReceiveProps(nextProps) {
+  //   if (!this.props.currentUser && Boolean(nextProps.currentUser)) {
+  //     this.props.fetchUser(nextProps.currentUser.id);
+  //   }
+  // }
 
   render() {
     const { currentUser, logout, avatarUrl } = this.props;

@@ -24,7 +24,6 @@ class UserShow extends React.Component {
     }
   }
 
-
   updateImage(type) {
     return (e) => {
       e.preventDefault();

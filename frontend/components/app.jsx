@@ -36,8 +36,8 @@ class App extends React.Component {
           <AuthRoute path="/signup" component={SessionFormContainer}/>
 
           <Switch>
-            <ProtectedRoute path="/users/:id" component={UserShow} onRootPage={this.props.onRootPage} />
             <ProtectedRoute path="/upload" component={Upload}/>
+            <ProtectedRoute path="/users/:id" component={UserShow} onRootPage={this.props.onRootPage} />
             <ProtectedRoute path="/" component={StreamShowContainer}/>
           </Switch>
 
