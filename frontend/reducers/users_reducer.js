@@ -28,7 +28,7 @@ const usersReducer = (state = initialState, action) => {
     case RECEIVE_USER:
       newState = _.merge({}, state);
       newState[action.user.id] = action.user;
-      newState[action.user.id].likedSongIds = new Set(action.user.likedSongIds);
+      newState[action.user.id].likedSongIds = new Set(newState[action.user.id].likedSongIds);
       newState[action.user.id].followerIds = new Set(newState[action.user.id].followerIds);
       newState[action.user.id].followeeIds = new Set(newState[action.user.id].followeeIds);
       newState[action.user.id].repostedSongIds = new Set(newState[action.user.id].repostedSongIds);
@@ -70,6 +70,10 @@ const usersReducer = (state = initialState, action) => {
       newState = _.merge({}, state);
       if (!Boolean(newState[action.user.id])) {
         newState[action.user.id] = action.user;
+        newState[action.user.id].likedSongIds = new Set(newState[action.user.id].likedSongIds);
+        newState[action.user.id].followerIds = new Set(newState[action.user.id].followerIds);
+        newState[action.user.id].followeeIds = new Set(newState[action.user.id].followeeIds);
+        newState[action.user.id].repostedSongIds = new Set(newState[action.user.id].repostedSongIds);
       }
       return newState;
     default:
