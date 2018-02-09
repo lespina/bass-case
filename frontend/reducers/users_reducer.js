@@ -5,17 +5,24 @@ import { RECEIVE_USERS, RECEIVE_USER, RECEIVE_LIKE, REMOVE_LIKE, RECEIVE_FOLLOW,
 const initialState = {};
 
 const usersReducer = (state = initialState, action) => {
-  let newState;
+  Object.freeze(state);
+  let newState = {};
   let follower;
   let followee;
   switch (action.type) {
     case RECEIVE_USERS:
-      newState = _.merge({}, action.users);
-      for (let userId in newState) {
-        newState[userId].likedSongIds = new Set(newState[userId].likedSongIds);
-        newState[userId].followerIds = new Set(newState[userId].followerIds);
-        newState[userId].followeeIds = new Set(newState[userId].followeeIds);
-        newState[userId].repostedSongIds = new Set(newState[userId].repostedSongIds);
+      if (action.doNotReplace) {
+        newState = _.merge({}, state, action.users);
+        for (let userId in action.users) {
+          newState[userId].likedSongIds = new Set(newState[userId].likedSongIds);
+          newState[userId].followerIds = new Set(newState[userId].followerIds);
+          newState[userId].followeeIds = new Set(newState[userId].followeeIds);
+          newState[userId].repostedSongIds = new Set(newState[userId].repostedSongIds);
+        }
+      } else {
+        if (!state.users) {
+          newState = _.merge({}, action.users);
+        }
       }
       return newState;
     case RECEIVE_USER:

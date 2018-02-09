@@ -3,8 +3,18 @@ import React from 'react';
 import StreamIndex from '../stream/stream_index';
 
 class Stream extends React.Component {
+  constructor(props) {
+    super(props);
+    this.fetched = false;
+    this.setFetched = this.setFetched.bind(this);
+  }
+
+  setFetched() {
+    this.fetched = true;
+  }
+
   componentDidMount() {
-    this.props.fetchUser(this.props.sessionCurrentUser.id);
+    this.props.fetchUser(this.props.sessionCurrentUser.id, true).then(this.setFetched());
   }
 
   currentUser() {
@@ -16,6 +26,8 @@ class Stream extends React.Component {
   filterSongs() {
     const { songs, users } =  this.props;
     const currentUser = this.currentUser();
+    if (!currentUser.followeeIds) { return; }
+
     const followedUsers = [currentUser];
     for (let userId in users) {
       if (currentUser.followeeIds.has(parseInt(userId))) {
@@ -35,6 +47,7 @@ class Stream extends React.Component {
         if (song.artistId === followedUser.id) {
           this.songActions[followedUser.id].push([song, song.createdAt]);
         }
+        if (!followedUser.repostedSongIds) { return; }
         if (followedUser.repostedSongIds.has(song.id)) {
           const createdAt = followedUser.reposts[song.id];
           this.songActions[followedUser.id].push([song, createdAt]);
@@ -44,7 +57,8 @@ class Stream extends React.Component {
   }
 
   render() {
-    if (!this.currentUser()) { return null; }
+    const currentUser = this.currentUser();
+    if (!currentUser || !this.fetched) { return null; }
 
     this.filterSongs();
 
@@ -52,7 +66,7 @@ class Stream extends React.Component {
       <main className="stream-main border-right-light">
         <div className="user-main-stream">
           <StreamIndex
-            songActions={this.songActions}
+            songActions={this.songActions || {}}
             user={this.currentUser()}
             users={this.props.users}
             togglePlayback={this.props.togglePlayback}

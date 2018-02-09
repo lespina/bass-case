@@ -1,4 +1,7 @@
 import * as SessionApiUtil from '../util/session_api_util';
+import * as UserApiUtil from '../util/user_api_util';
+
+import { receiveUser } from './session_actions';
 
 export const RECEIVE_CURRENT_USER = 'RECEIVE_CURRENT_USER';
 export const RECEIVE_SESSION_ERRORS = 'RECEIVE_SESSION_ERRORS';
@@ -21,6 +24,10 @@ export const toggleOnRootPage = () => ({
 export const login = (user) => (dispatch) => {
   return SessionApiUtil.login(user).then(response => {
     dispatch(receiveCurrentUser(response));
+    UserApiUtil.fetchUser(response.id).then(userResponse => {
+      dispatch(receiveUser(userResponse));
+      return(userResponse);
+    });
     return response;
   }, errors => {
     dispatch(receiveSessionErrors(errors.responseJSON));
@@ -31,6 +38,10 @@ export const login = (user) => (dispatch) => {
 export const signup = (user) => (dispatch) => {
   return SessionApiUtil.signup(user).then(response => {
     dispatch(receiveCurrentUser(response));
+    UserApiUtil.fetchUser(response.id).then(userResponse => {
+      dispatch(receiveUser(userResponse));
+      return(userResponse);
+    });
     return response;
   }, errors => {
     dispatch(receiveSessionErrors(errors.responseJSON));

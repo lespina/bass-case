@@ -1,6 +1,11 @@
 class Api::UsersController < ApplicationController
   def index
-    @users = User.includes(:songs, :followers, :followees).all
+    if (params[:userIds])
+      @users = User.includes(:songs, :followers, :followees, :liked_songs, :reposted_songs, :reposts).where(id: params[:userIds])
+      @all_info = true
+    else
+      @users = User.includes(:songs, :followers, :followees).all
+    end
   end
 
   def show

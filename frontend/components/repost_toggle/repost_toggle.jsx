@@ -32,6 +32,9 @@ class RepostToggle extends React.Component {
   render() {
     const { song, type } = this.props;
     const currentUser = this.currentUser();
+
+    if (!currentUser.repostedSongIds) { return; }
+
     const active = ((currentUser && currentUser.repostedSongIds.has(song.id)) ? 'active' : '' );
     const repostText = ((currentUser && currentUser.repostedSongIds.has(song.id)) ? 'Reposted' : 'Repost' );
 

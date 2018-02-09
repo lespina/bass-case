@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
+import { fetchUsers } from '../../actions/user_actions';
 import _ from 'lodash';
 import shuffle from 'shuffle-array';
 import { connect } from 'react-redux';
@@ -10,7 +11,7 @@ import * as FormatUtil from '../../util/format_util';
 const ROW_LIMIT = 9;
 
 class SideBar extends React.Component {
-  
+
   constructor(props) {
     super(props);
     this.state = {
@@ -19,7 +20,7 @@ class SideBar extends React.Component {
   }
 
   chooseUsers() {
-    const { currentUser } = this.props;
+    const { currentUser, fetchUser } = this.props;
 
     let users;
     if (!currentUser) {
@@ -38,6 +39,7 @@ class SideBar extends React.Component {
       users.shift();
     }
 
+    this.props.fetchUsers(selectedUsers);
     this.setState({ users: selectedUsers });
   }
 
@@ -211,6 +213,8 @@ const FollowingIndex = ({ user, currentUser, followees }) => {
 }
 
 const FollowerItem = ({ follower, currentUser }) => {
+  if (!follower.followerIds) { return null; }
+
   const style = { backgroundImage: `url(${follower.avatarUrl})` };
   const lower = ((follower.avatarUrl[0] === '/') ? { top: '-205px' } : {});
 
@@ -235,6 +239,8 @@ const FollowerItem = ({ follower, currentUser }) => {
 }
 
 const FollowingItem = ({ followee, currentUser }) => {
+  if (!followee.followerIds) { return null; }
+
   const style = { backgroundImage: `url(${followee.avatarUrl})` };
   const lower = ((followee.avatarUrl[0] === '/') ? { top: '-205px' } : {});
 
@@ -264,7 +270,11 @@ const mapStateToProps = (state) => ({
   users: state.entities.users,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  fetchUsers: (userIds) => dispatch(fetchUsers(userIds)),
+});
+
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps,
 )(withRouter(SideBar));

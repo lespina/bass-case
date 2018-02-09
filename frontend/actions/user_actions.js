@@ -10,9 +10,10 @@ export const REMOVE_FOLLOW = "REMOVE_FOLLOW";
 export const RECEIVE_REPOST = "RECEIVE_REPOST";
 export const REMOVE_REPOST = "REMOVE_REPOST";
 
-export const receiveUsers = (users) => ({
+export const receiveUsers = (payload) => ({
   type: RECEIVE_USERS,
-  users
+  doNotReplace: payload.doNotReplace,
+  users: payload.users
 });
 
 export const receiveUser = (user) => ({
@@ -63,24 +64,27 @@ export const removeRepost = (payload) => ({
   createdAt: payload.createdAt,
 });
 
-export const fetchUsers = () => (dispatch) => {
-  return UserApiUtil.fetchUsers().then(users => {
-    dispatch(receiveUsers(users));
-    return users;
+export const fetchUsers = (userIds) => (dispatch) => {
+  return UserApiUtil.fetchUsers(userIds).then(payload => {
+    dispatch(receiveUsers(payload));
+    return payload;
   });
 };
 
-export const fetchUser = (userId) => (dispatch) => {
+export const fetchUser = (userId, andFollowees) => (dispatch) => {
   return UserApiUtil.fetchUser(userId).then(user => {
     dispatch(receiveUser(user));
-    return(user);
+    if (andFollowees) {
+      fetchUsers(user.followeeIds);
+    }
+    return user;
   });
 };
 
 export const updateUser = (userId, formData) => (dispatch) => {
   return UserApiUtil.updateUser(userId, formData).then(user => {
     dispatch(receiveUser(user));
-    return(user);
+    return user;
   }, errors => {
     dispatch(receiveUserErrors(errors.responseJSON));
     return errors;
