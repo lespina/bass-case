@@ -38,8 +38,8 @@ class User < ApplicationRecord
   after_initialize :ensure_session_token
 
   has_many :songs, dependent: :destroy
-  has_many :likes
-  has_many :reposts
+  has_many :likes, dependent: :destroy
+  has_many :reposts, dependent: :destroy
 
   has_many :liked_songs,
     through: :likes,
@@ -51,15 +51,13 @@ class User < ApplicationRecord
 
   has_many :follows,
     class_name: :Follow,
-    foreign_key: :follower_id
+    foreign_key: :follower_id,
+    dependent: :destroy
 
   has_many :been_followeds,
     class_name: :Follow,
-    foreign_key: :followee_id
-
-  # has_many :followers,
-  #   class_name: :User,
-  #   foreign_key: :follower_id
+    foreign_key: :followee_id,
+    dependent: :destroy
 
   has_many :followees,
     through: :follows,
