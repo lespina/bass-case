@@ -75,7 +75,7 @@ export const fetchUser = (userId, andFollowees) => (dispatch) => {
   return UserApiUtil.fetchUser(userId).then(user => {
     dispatch(receiveUser(user));
     if (andFollowees !== undefined) {
-      fetchUsers(user.followeeIds);
+      dispatch(fetchUsers(Array.from(user.followeeIds)));
     }
     return user;
   });
