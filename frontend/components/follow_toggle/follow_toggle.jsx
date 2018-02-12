@@ -33,7 +33,7 @@ class FollowToggle extends React.Component {
     const { followee, type } = this.props;
     const currentUser = this.currentUser();
 
-    if (!currentUser || !currentUser.followeeIds) { return null; }
+    if (currentUser && !currentUser.followeeIds) { return null; }
 
     const active = ((currentUser && currentUser.followeeIds.has(followee.id)) ? 'active' : '' );
     const followText = ((currentUser && currentUser.followeeIds.has(followee.id)) ? 'Following' : 'Follow' );
