@@ -33,7 +33,7 @@ class LikeToggle extends React.Component {
     const { song, type } = this.props;
     const currentUser = this.currentUser();
 
-    if (!currentUser || !currentUser.likedSongIds) { return null; }
+    if (currentUser && !currentUser.likedSongIds) { return null; }
 
     const likeActive = ((currentUser && currentUser.likedSongIds.has(song.id)) ? 'active' : '' );
     const likeText = ((currentUser && currentUser.likedSongIds.has(song.id)) ? 'Liked' : 'Like' );
