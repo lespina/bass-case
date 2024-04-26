@@ -16,7 +16,7 @@
     "react-sound": "^1.0.0",
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.2.0",
+    "redux-thunk": "^2.1.2",
     "shuffle-array": "^1.0.1",
     "webpack": "^3.10.0"
   },
@@ -24,11 +24,11 @@
     "redux-logger": "^3.0.6"
   },
   "engines": {
-    "node": "v6.10.1",
-    "npm": "3.10.10"
+    "node": "v20.2.0",
+    "npm": "9.6.6"
   },
   "description": "This README would normally document whatever steps are necessary to get the application up and running.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "index.js",
   "directories": {
     "test": "test"
