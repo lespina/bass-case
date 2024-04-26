@@ -118,3 +118,14 @@ These are actually designated spots by which the user may click and drag a given
 * Add waveforms display with seeking and progress scroll
 * Infinite scroll with lazy fetching
 * Refactor progress bar into slider for simpler and more precise seeking behavior
+
+
+### How to run locally
+
+```
+Install ruby, npm, & bundle.
+
+bundle install
+npm install -f
+npm start
+```
