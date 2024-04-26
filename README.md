@@ -122,10 +122,44 @@ These are actually designated spots by which the user may click and drag a given
 
 ### How to run locally
 
-```
-Install ruby, npm, & bundle.
+Install ruby, npm, & postgres, shared-mime-info, imagemagick & bundle. 
 
-bundle install
+```
+brew install postgresql
+brew install libpq
+brew install shared-mime-info
+brew install imagemagick
+```
+
+Update development.rb paperclip config
+```
+# in terminal, find your imagemagick path
+which convert
+  => "/opt/local/bin/" (example)
+
+# /config/environments/development.rb
+Paperclip.options[:command_path] = "/opt/local/bin/" (change this line to output of `which convert`)
+```
+
+Set up ENV variables for S3 configs:
+```
+# in terminal or bash config file such as .bashrc or .zshrc
+export s3_bucket="(...)"
+export s3_access_key_id="(...)"
+export s3_secret_access_key="(...)"
+export s3_region="(...)"
+```
+
+In one console window, install gems & run rails server.
+```
+bundle install --path vendor/bundle
+bin/rails server
+```
+
+In another console window, install js packages and run webpack
+```
 npm install -f
 npm start
 ```
+
+Website should now be served to localhost:3000 reachable in your web browser.
