@@ -72,7 +72,7 @@ class NavBar extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   const currentUser = state.session.currentUser;
-  const avatarUrl = (currentUser ? state.entities.users[currentUser.id].avatarUrl : null);
+  const avatarUrl = (currentUser && state.entities.users[currentUser.id] ? state.entities.users[currentUser.id].avatarUrl : null);
 
   return {
     currentUser,
