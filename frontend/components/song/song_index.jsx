@@ -43,7 +43,9 @@ class SongIndex extends React.Component {
   }
 
   render() {
-    this.songs = this.songs || shuffle(this.props.songs);
+    if (this.songs && this.songs.length === 0 || !this.songs) {
+      this.songs = shuffle(this.props.songs);
+    }
 
     return (
       <div className="song-index-container">
