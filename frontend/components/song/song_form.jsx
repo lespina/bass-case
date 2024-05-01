@@ -1,7 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import SongFormItem from './song_form_item';
-// const jsmediatags = require("../../../jsmediatags.min.js");
+import jsmediatags from 'jsmediatags';
 
 class SongForm extends React.Component {
   constructor(props) {
@@ -9,20 +9,38 @@ class SongForm extends React.Component {
 
     this.state = {
       audioFiles: [],
-      imageUrl: null
+      imageData: null
     };
 
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.addAudio = this.addAudio.bind(this);
+    this.handleAudioFileChange = this.handleAudioFileChange.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
   }
 
-  addAudio(e) {
+  handleAudioFileChange(e) {
     e.preventDefault();
-    const file = e.currentTarget.files;
-    if (file.length > 0) {
-      this.setState({ audioFiles: this.state.audioFiles.concat(file)});
+    const fileList = e.currentTarget.files;
+    const updateImageData = (newData) => {
+      this.setState({ imageData: newData });
+      this.forceUpdate();
     }
+
+    const file = fileList.item(0);
+    jsmediatags.read(file, {
+      onSuccess: (result) => {
+        if (result.tags.picture) {
+          const { data } = result.tags.picture;
+          let base64String = "";
+          for (let i = 0; i < data.length; i++) {
+            base64String += String.fromCharCode(data[i]);
+          }
+          const imageData = `data:${data.format};base64,${window.btoa(base64String)}`;
+          updateImageData(imageData);
+        }
+      },
+      onFailure: error => console.log('FAILURE!:(', error.type, error.info),
+    });
+
+    this.setState({ audioFiles: this.state.audioFiles.concat(fileList) });
   }
 
   handleChange(attrName) {
@@ -30,17 +48,6 @@ class SongForm extends React.Component {
       e.preventDefault();
       this.setState({ [attrName]: e.target.value });
     };
-  }
-
-  handleSubmit(e) {
-    e.preventDefault();
-    const formData = new FormData();
-
-    formData.append("song[title]", this.state.title);
-    formData.append("song[image]", this.state.image);
-    formData.append("song[audio]", this.state.audio);
-
-    this.props.createSong(formData);
   }
 
   handleCancel(idx) {
@@ -66,6 +73,7 @@ class SongForm extends React.Component {
               return <SongFormItem
                 key={idx}
                 idx={idx}
+                includedImageData={this.state.imageData}
                 audio={audio[0]}
                 createSong={this.props.createSong}
                 handleCancel={this.handleCancel(numFiles - 1 - idx)}
@@ -81,7 +89,7 @@ class SongForm extends React.Component {
   }
 
   render() {
-    const { audioFiles, title, imageUrl } = this.state;
+    const { audioFiles } = this.state;
     const hasUploads = (audioFiles.length > 0);
     return (
       <section className={`upload ${(hasUploads) ? "has-active-uploads" : ""}`}>
@@ -91,7 +99,7 @@ class SongForm extends React.Component {
           <div className="upload-chooser">
             <form>
               <label className="choose-file-btn bc-btn" htmlFor="audio-upload">Choose a file to upload</label>
-              <input id="audio-upload" onChange={this.addAudio} type="file"></input>
+              <input id="audio-upload" onChange={this.handleAudioFileChange} type="file"></input>
             </form>
           </div>
         </section>

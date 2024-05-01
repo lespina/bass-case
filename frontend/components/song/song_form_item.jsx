@@ -6,13 +6,27 @@ class SongFormItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: "",
+      title: props.title,
       image: null,
-      imageUrl: DEFAULT_IMAGE_URL,
+      imageUrl: props.includedImageData || DEFAULT_IMAGE_URL,
       isSaving: false,
     };
+
     this.updateImage = this.updateImage.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleIncludedImageData(this.props);
+  }
+
+  handleIncludedImageData(props) {
+    const imageData = props.includedImageData;
+    if (imageData) {
+      fetch(imageData)
+        .then((res) => res.blob())
+        .then((blob) => {
+          const image = new File([blob], props.audio.name.replace('mp3','jpg'), { type: 'image/jpeg' });
+          this.setState({ image });
+    });
+    }
   }
 
   handleChange(attrName) {
@@ -58,7 +72,7 @@ class SongFormItem extends React.Component {
       this.setState({ isSaving: false });
       return song;
     }, errors => {
-      console.log(errors);
+      console.error(errors);
       this.setState({ isSaving: false });
     });
   }
@@ -81,8 +95,20 @@ class SongFormItem extends React.Component {
     }
   }
 
+  getImageUrl() {
+    if (this.props.includedImageData && this.state.imageUrl === DEFAULT_IMAGE_URL) {
+      return this.props.includedImageData;
+    } else {
+      return this.state.imageUrl;
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.handleIncludedImageData(nextProps);
+  }
+
   render() {
-    const { isSaving, title, imageUrl } = this.state;
+    const { isSaving, title } = this.state;
     const { idx, audio } = this.props;
     const disabled = ((isSaving) ? { disabled: "disabled" } : {});
 
@@ -108,7 +134,7 @@ class SongFormItem extends React.Component {
                   <span>{audio.name}</span>
                 </div>
 
-                <div className="image-preview" style={{ backgroundImage: `url(${imageUrl})` }}>
+                <div className="image-preview" style={{ backgroundImage: `url(${this.getImageUrl()})` }}>
                   <div className="image-button">
                     <div className="image-chooser">
                       <label className="image-chooser-btn bc-btn" htmlFor={`image-chooser-input-${idx}`}>Update image</label>
