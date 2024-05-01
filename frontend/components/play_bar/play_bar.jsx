@@ -31,12 +31,23 @@ class PlayBar extends React.Component {
   }
 
   componentDidMount() {
-    document.addEventListener('keydown', (e) => {
+    const handleSpacebarPressFn = (e) => {
       switch (e.keyCode) {
         case 32:
           if (e.target.tagName !== "INPUT") {
             this.handleSimpleAction('togglePlayback')(e);
           }
+      }
+    };
+    document.addEventListener('keydown', handleSpacebarPressFn);
+
+    window.addEventListener('hashchange', (e) => {
+      const userEditPathRegex = /users\/\d+\/edit/
+      if (userEditPathRegex.test(window.location.hash)) {
+        document.removeEventListener('keydown', handleSpacebarPressFn);
+      } else {
+        document.removeEventListener('keydown', handleSpacebarPressFn);
+        document.addEventListener('keydown', handleSpacebarPressFn);
       }
     });
     this.toggleTimer();
