@@ -9,6 +9,7 @@ import FollowToggle from '../follow_toggle/follow_toggle_container';
 import * as FormatUtil from '../../util/format_util';
 
 const ROW_LIMIT = 9;
+const USER_SUGGESTION_MODULE_MAX_SIZE = 3
 
 class SideBar extends React.Component {
 
@@ -40,7 +41,8 @@ class SideBar extends React.Component {
 
     const selectedUsers = [];
 
-    while (selectedUsers.length < 3) {
+    while (selectedUsers.length < USER_SUGGESTION_MODULE_MAX_SIZE
+        && users.length >= USER_SUGGESTION_MODULE_MAX_SIZE) {
       shuffle(users);
       selectedUsers.push(users[0].id);
       users.shift();
