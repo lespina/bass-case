@@ -28,3 +28,6 @@ npm-debug.log
 
 # Ignore application configuration
 /config/application.yml
+
+# Ignore seed user deletion script
+delete_seed_users.txt

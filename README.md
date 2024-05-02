@@ -141,18 +141,21 @@ which convert
 Paperclip.options[:command_path] = "/opt/local/bin/" (change this line to output of `which convert`)
 ```
 
-Set up ENV variables for S3 configs:
+Set up ENV variables for your chosen seed user password & S3 configs:
 ```
 # in terminal or bash config file such as .bashrc or .zshrc
+export BASSCASE_SEED_PASSWORD="(...)"
+
 export s3_bucket="(...)"
 export s3_access_key_id="(...)"
 export s3_secret_access_key="(...)"
 export s3_region="(...)"
 ```
 
-In one console window, install gems & run rails server.
+In one console window, install gems, setup db & run rails server.
 ```
 bundle install --path vendor/bundle
+bin/rails db:setup
 bin/rails server
 ```
 
