@@ -4,7 +4,6 @@ import * as FormatUtil from '../../util/format_util';
 import FollowToggle from '../follow_toggle/follow_toggle_container';
 
 const UserSuggestionItem = ({ user }) => {
-
   const style = { backgroundImage: `url(${user.avatarUrl})` };
   if (!user.songIds) { return null; }
   return (

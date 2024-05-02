@@ -20,9 +20,7 @@ const usersReducer = (state = initialState, action) => {
           newState[userId].repostedSongIds = new Set(newState[userId].repostedSongIds);
         }
       } else {
-        if (!state.users) {
-          newState = _.merge({}, action.users);
-        }
+        newState = _.merge({}, state, action.users);
       }
       return newState;
     case RECEIVE_USER:

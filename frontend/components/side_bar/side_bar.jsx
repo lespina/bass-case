@@ -16,8 +16,13 @@ class SideBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      users: null,
+      users: [],
     };
+    this.chooseUsers.bind(this);
+  }
+
+  componentDidMount() {
+    this.chooseUsers();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -28,7 +33,7 @@ class SideBar extends React.Component {
   }
 
   chooseUsers() {
-    const { currentUser, fetchUser } = this.props;
+    const { currentUser } = this.props;
 
     let users;
     if (!currentUser) {
@@ -42,10 +47,9 @@ class SideBar extends React.Component {
     const selectedUsers = [];
 
     while (selectedUsers.length < USER_SUGGESTION_MODULE_MAX_SIZE
-        && users.length >= USER_SUGGESTION_MODULE_MAX_SIZE) {
+        && users.length > 0) {
       shuffle(users);
-      selectedUsers.push(users[0].id);
-      users.shift();
+      selectedUsers.push(users.shift().id);
     }
 
     this.props.fetchUsers(selectedUsers);
@@ -58,7 +62,6 @@ class SideBar extends React.Component {
     if (!userSuggestion) { return null; }
 
     if (!this.state.users) {
-      this.chooseUsers();
       return null;
     }
 
@@ -136,6 +139,10 @@ class SideBar extends React.Component {
   }
 
   render() {
+    if (Object.keys(this.props.users).length === 0) {
+      return null;
+    }
+
     return (
       <aside className="sidebar-right">
         {this.userSuggestionModule()}
