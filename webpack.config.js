@@ -47,5 +47,6 @@ module.exports = {
   },
   node: {
     fs: "empty"
-  }
+  },
+  externals: { 'react-native-fs': 'reactNativeFs' }
 };
