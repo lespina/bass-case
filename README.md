@@ -162,4 +162,12 @@ npm install -f
 npm start
 ```
 
-Website should now be served to localhost:3000 reachable in your web browser.
+Website should now be served to localhost:3000 reachable in your web browser.  Note, you must seed the db with at least 1 user or the app will not render (ex. guest account).  Alternatively, comment out the following conditional before you create your first user:
+```
+// app.jsx
+if (Object.keys(this.props.users).length === 0 || Object.keys(this.props.songs).length === 0) {
+      return null;
+    }
+```
+
+The landing page will also look formatted incorrectly until ther are at least 12 songs in the DB.
