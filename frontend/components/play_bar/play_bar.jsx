@@ -21,13 +21,14 @@ class PlayBar extends React.Component {
       queueVisible: "",
       position: {},
       key: 0,
+      offset: 0,
     };
     this.increment = this.increment.bind(this);
     this.toggleTimer = this.toggleTimer.bind(this);
     this.toggleQueue = this.toggleQueue.bind(this);
     this.hideQueue = this.hideQueue.bind(this);
     this.handleDragEnd = this.handleDragEnd.bind(this);
-    this.offset = 0;
+    this.handleClickPlaybar = this.handleClickPlaybar.bind(this);
   }
 
   componentDidMount() {
@@ -55,14 +56,14 @@ class PlayBar extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.playback.lastAction === SEEK) {
-      this.offset = this.getOffset(nextProps);
+      this.setState({ offset: this.getOffset(nextProps)});
       this.resetTime();
     }
   }
 
   componentWillUpdate(nextProps, nextState) {
     const { time, start } = nextState;
-    if (this.offset + time.getTime() - start.getTime() > this.props.playback.duration > 0) {
+    if (this.state.offset + time.getTime() - start.getTime() > this.props.playback.duration > 0) {
       this.props.next();
     }
   }
@@ -80,7 +81,7 @@ class PlayBar extends React.Component {
       case RECEIVE_PLAYBACK_SONG:
       case RECEIVE_PLAYBACK_SONG_FROM_QUEUE:
         if (this.state.start === nextState.start) {
-          this.offset = 0;
+          this.setState({ offset: 0 });
           this.resetTime();
           this.setState({ key: this.state.key + 1 });
         }
@@ -177,19 +178,51 @@ class PlayBar extends React.Component {
   }
 
   getProgressPos() {
-    return 100 * (this.state.time.getTime() + this.offset) / this.props.playback.duration;
+    return 100 * (this.state.time.getTime() + this.state.offset) / this.props.playback.duration;
   }
 
   getHandlePos() {
-    return 100 * (this.state.time.getTime()) / this.props.playback.duration;
+    const percent = (this.state.time.getTime() + this.state.offset) / this.props.playback.duration;
+
+    const playbarTimeline = document.getElementsByClassName('playbar-timeline')[0];
+
+    if (!playbarTimeline) {
+      return 0;
+    }
+
+    const timelineRect = playbarTimeline.getClientRects()[0];
+    const width = timelineRect.width;
+
+    const progressHandle = document.getElementsByClassName('progress-handle')[0];
+    const translateOffset = this.parseHorizontalDisplacement(progressHandle.style.transform);
+
+    return Math.round(width * percent - translateOffset);
+  }
+
+  parseHorizontalDisplacement(transformString) {
+    const length = transformString.substr(10).indexOf('px,');
+    return transformString.substr(10, length);
   }
 
   handleDragEnd(e, data) {
-    const timelineRect = e.target.parentElement.getClientRects()[0];
+    const timelineRect = document.getElementsByClassName('playbar-timeline')[0].getClientRects()[0];
     const width = timelineRect.width;
-    const handleRect = e.target.getClientRects()[0];
-    const normalizedSeekPos = (handleRect.x - timelineRect.x) / width;
-    const seekPos = Math.floor(normalizedSeekPos * this.props.playback.duration);
+    const progressHandle = document.getElementsByClassName('progress-handle')[0];
+    const handleDisplacementX = this.parseHorizontalDisplacement(progressHandle.style.transform);
+
+    const seekPercent = handleDisplacementX / width;
+    const seekPos = seekPercent * this.props.playback.duration;
+    this.props.seekTo(seekPos);
+  }
+
+  handleClickPlaybar(e) {
+    const timelineRect = document.getElementsByClassName('playbar-timeline')[0].getClientRects()[0];
+    const offsetLeft = timelineRect.left;
+    const width = timelineRect.width;
+    const clickDisplacementX = e.pageX - offsetLeft;
+
+    const seekPercent = clickDisplacementX / width;
+    const seekPos = seekPercent * this.props.playback.duration;
     this.props.seekTo(seekPos);
   }
 
@@ -225,7 +258,7 @@ class PlayBar extends React.Component {
     }
 
     const progressWidth = { width: `${this.getProgressPos()}%` };
-    const handleLeftDist = { left: `${this.getHandlePos()}%` };
+    const handleLeftDist = { left: `${this.getHandlePos()}px` };
 
     return (
       <div>
@@ -241,22 +274,22 @@ class PlayBar extends React.Component {
               <div onClick={this.handleSimpleAction('toggleLoop')} className={`playbar-loop controls ${loopStatus}`}></div>
             </section>
             <span className="playbar-timeline-time-passed">
-             {this.format(this.parseSec(this.offset + time.getTime()))}
+             {this.format(this.parseSec(this.state.offset + time.getTime()))}
             </span>
-            <section className="playbar-timeline">
+            <section onClick={this.handleClickPlaybar} className="playbar-timeline">
               <div className="progress-background"></div>
               <div className="progress-bar" style={progressWidth}></div>
-              {/* <Draggable
-                key={key}
-                axis="x"
-                bounds="parent"
-                onStop={this.handleDragEnd}
-                > */}
-                  <div className="progress-handle" style={handleLeftDist}></div>
-              {/* </Draggable> */}
+                <Draggable
+                  key={key}
+                  axis="x"
+                  bounds="parent"
+                  onStop={this.handleDragEnd}
+                  >
+                    <div className="progress-handle" style={handleLeftDist}></div>
+                </Draggable>
             </section>
             <div className="playbar-timeline-time-left">
-              -{this.format(this.parseSec(duration - this.offset - time.getTime()))}
+              -{this.format(this.parseSec(duration - this.state.offset - time.getTime()))}
             </div>
             <div className={`playbar-volume ${muteStatus}`}>
               <div onClick={this.handleSimpleAction('toggleMute')} className="volume-mute-div">Content</div>

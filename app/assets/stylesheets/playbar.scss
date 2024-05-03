@@ -526,6 +526,7 @@
   top: 50%;
   // width: 30px;
 }
+
 .progress-handle {
   font: 0/0 a;
   position: absolute;
@@ -541,9 +542,8 @@
   margin-top: -4px;
   margin-left: -4px;
   opacity: 0;
-  transition: opacity 150ms, left 1800ms;
+  transition: opacity 150ms, left 90ms;
   left: 0;
-  transform: translate(1px, 0);
 }
 
 .playbar-timeline:hover .progress-handle, .progress-handle:active {
