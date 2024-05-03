@@ -122,13 +122,14 @@ These are actually designated spots by which the user may click and drag a given
 
 ### How to run locally
 
-Install ruby, npm, & postgres, shared-mime-info, imagemagick & bundle. 
+Install ruby, npm, & postgres, shared-mime-info, imagemagick, taglib & bundle. 
 
 ```
 brew install postgresql
 brew install libpq
 brew install shared-mime-info
 brew install imagemagick
+brew install taglib
 ```
 
 Update development.rb paperclip config
@@ -157,6 +158,11 @@ In one console window, install gems, setup db & run rails server.
 bundle install --path vendor/bundle
 bin/rails db:setup
 bin/rails server
+```
+
+If you get an error with installing gem taglib-ruby, add set the following ENV variable and run `bundle install` again:
+```
+export TAGLIB_DIR=(your taglib install directory, run `brew info taglib` to check this, ex. "/opt/homebrew/Cellar/taglib/1.13.1")
 ```
 
 In another console window, install js packages and run webpack

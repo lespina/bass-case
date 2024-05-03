@@ -6,6 +6,11 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+require 'taglib'
+require 'rack/mime'
+
+SEED_SONGS_FOLDER_PATH = 'seed_songs'
+
 SEED_PASSWORD = ENV['BASSCASE_SEED_PASSWORD']
 
 SEED_USER_PARAMS = {
@@ -106,12 +111,84 @@ def create_seed_users!()
     return created_users.map {|user| user.id }
 end
 
-def make_seed_user_deletion_script(user_ids)
+def create_seed_songs!(user_ids)
+    created_songs = []
+
+    users = User.where("id IN (?)", user_ids).to_a
+
+    song_path_list = Dir.children(SEED_SONGS_FOLDER_PATH).map { |filename| "#{SEED_SONGS_FOLDER_PATH}/#{filename}" }
+
+    num_songs_per_user = (song_path_list.length.to_f / users.length).ceil
+
+    while !song_path_list.empty? do
+        user = users.shift
+
+        num_songs_per_user.times do
+            break if song_path_list.empty?
+
+            song_path = song_path_list.shift
+
+            song = user.songs.new
+            song.plays = 0
+            File.open(song_path) do |file|
+                song.audio = file
+            end
+
+            temp_image_filename = ""
+
+            TagLib::MPEG::File.open(song_path) do |file|
+                tag = file.id3v2_tag
+                cover_img = tag.frame_list('APIC').first
+                song.title = tag.title.empty? ? File.basename(song_path, ".*") : tag.title
+
+                if cover_img.nil?
+                    File.open('app/assets/images/track-artwork/default-track-image.png') do |file|
+                        song.image = file
+                    end
+                else
+                    image_data = cover_img.picture.force_encoding('UTF-8')
+                    mime_type = cover_img.mime_type === 'image/jpg' ? 'image/jpeg' : cover_img.mime_type
+
+                    temp_image_filename = "cover_art#{Rack::Mime::MIME_TYPES.invert[mime_type]}"
+                    File.open(temp_image_filename, "w+") do |file|
+                        file.write(image_data)
+                        song.image = file
+                    end
+                end
+            end
+
+            if song.save
+                created_songs.push(song.id)
+            else
+                File.open('app/assets/images/track-artwork/default-track-image.png') do |file|
+                    song.image = file
+                end
+                if song.save
+                    created_songs.push(song.id)
+                else
+                    puts "Error uploading song:"
+                    puts song.title
+                    puts song.errors.full_messages
+                end
+            end
+
+            File.delete(temp_image_filename) if File.exist?(temp_image_filename)
+        end
+    end
+
+    return created_songs
+end
+
+def make_seed_user_deletion_script(user_ids, song_ids)
     text =
     """
-    List of seed user ids for reference (lowest is the guest account):
+    List of seed user ids & song ids for reference (lowest is the guest account):
 
+    User IDs
     #{user_ids}
+
+    Song IDs
+    #{song_ids}
 
     Run this command in the rails console. Access using `bin/rails console` from the root of basscase repo.  Requires connection to basscase postgres db in specified env.
 
@@ -131,5 +208,7 @@ if SEED_PASSWORD.nil?
     print "Error: required ENV variable BASSCASE_SEED_PASSWORD to seed db with users"
 else
     user_ids = create_seed_users!
-    make_seed_user_deletion_script(user_ids)
+    song_ids = create_seed_songs!(user_ids)
+
+    make_seed_user_deletion_script(user_ids, song_ids)
 end
