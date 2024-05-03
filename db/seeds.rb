@@ -76,6 +76,8 @@ SEED_USER_PARAMS = {
     }
 }
 
+RANDOM_SEED = 412
+
 def create_seed_users!()
     created_users = []
 
@@ -95,13 +97,15 @@ def create_seed_users!()
         # add bi-directional follows for all prev users
         created_users.each do |prev_user|
             # follow user -> previous user
-            user.follows.new(followee_id: prev_user.id).save
+            user.follows.new(followee_id: prev_user.id).save if [true, false].sample
 
             # follow previous user -> user & save immediately
-            prev_user
-                .follows
-                .new(followee_id: user.id)
-                .save
+            if prev_user.username === 'guest' || [true, false].sample
+                prev_user
+                    .follows
+                    .new(followee_id: user.id)
+                    .save
+            end
         end
 
         # add current user to list of created users
@@ -179,6 +183,17 @@ def create_seed_songs!(user_ids)
     return created_songs
 end
 
+def add_likes_and_reposts!(user_ids, song_ids)
+    user_ids.each do |user_id|
+        user = User.find(user_id)
+
+        song_ids.sample(Random.new(RANDOM_SEED).rand(song_ids.length)).each do |song_id|
+            user.likes.new(song_id: song_id).save if [true, false].sample
+            user.reposts.new(song_id: song_id).save if [true, false].sample
+        end
+    end
+end
+
 def make_seed_user_deletion_script(user_ids, song_ids)
     text =
     """
@@ -209,6 +224,7 @@ if SEED_PASSWORD.nil?
 else
     user_ids = create_seed_users!
     song_ids = create_seed_songs!(user_ids)
+    add_likes_and_reposts!(user_ids, song_ids)
 
     make_seed_user_deletion_script(user_ids, song_ids)
 end
