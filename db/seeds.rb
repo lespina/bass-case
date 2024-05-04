@@ -116,6 +116,8 @@ def create_seed_users!()
 end
 
 def create_seed_songs!(user_ids)
+    return [] if !File.directory?(SEED_SONGS_FOLDER_PATH)
+
     created_songs = []
 
     users = User.where("id IN (?)", user_ids).to_a
