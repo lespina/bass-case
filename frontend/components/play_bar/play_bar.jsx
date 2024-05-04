@@ -11,6 +11,8 @@ import {
 import PlayBarQueueContainer from './sortable_play_bar_queue_container';
 import LikeToggle from '../like_toggle/like_toggle_container';
 
+const MAX_VOL_SLIDER_HEIGHT = 92;
+
 class PlayBar extends React.Component {
 
   constructor(props) {
@@ -31,6 +33,7 @@ class PlayBar extends React.Component {
     this.handleDragEnd = this.handleDragEnd.bind(this);
     this.handleClickPlaybar = this.handleClickPlaybar.bind(this);
     this.setExpandedVolume = this.setExpandedVolume.bind(this);
+    this.handleVolumeClick = this.handleVolumeClick.bind(this);
   }
 
   componentDidMount() {
@@ -233,24 +236,41 @@ class PlayBar extends React.Component {
   }
 
   handleVolumeClick(e) {
-    return;
+    const volumeSliderBackgroundRect = document.getElementsByClassName('playbar-volume-slider-background')[0].getClientRects()[0];
+    const offsetBottom = volumeSliderBackgroundRect.bottom;
+    const height = volumeSliderBackgroundRect.height;
+
+    const clickDisplacementY = offsetBottom - e.pageY;
+
+    let newVolumePercent = Math.round(100 * clickDisplacementY / height);
+
+    if (newVolumePercent > 100) { newVolumePercent = 100; }
+    if (newVolumePercent < 0) { newVolumePercent = 0; }
+
+    this.props.receiveVolume(newVolumePercent);
   }
 
   getVolumeSliderProgress() {
     const { volume } = this.props.playback;
-    const maxHeightPx = 92;
     const handleHeightOffset = 10;
 
-    const result = `${Math.round(100 * volume / maxHeightPx) - handleHeightOffset}px`;
-    return result;
+    let result = Math.round(100 * volume / MAX_VOL_SLIDER_HEIGHT) - handleHeightOffset;
+
+    if (result < 0) { result = 0; }
+    if (result > MAX_VOL_SLIDER_HEIGHT) { result = MAX_VOL_SLIDER_HEIGHT; }
+
+    return `${result}px`;;
   }
 
   getVolumeHandleTopPos() {
     const { volume } = this.props.playback;
-    const maxHeightPx = 92;
 
-    const result = `${Math.round(100 * (100 - volume) / maxHeightPx)}px`;
-    return result;
+    let result = Math.round(100 * (100 - volume) / MAX_VOL_SLIDER_HEIGHT);
+
+    if (result < 10) { result = 10; }
+    if (result > MAX_VOL_SLIDER_HEIGHT + 2) { result = MAX_VOL_SLIDER_HEIGHT + 2; }
+
+    return `${result}px`;
   }
 
   render() {

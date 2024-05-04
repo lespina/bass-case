@@ -232,8 +232,9 @@
   width: 2px;
   margin-left: 14px;
   opacity: 0;
-  transition: opacity .1s linear;
-  transition-delay: .1s;
+  transition:
+    opacity .1s linear .1s,
+    height 60ms ease-in-out;
   bottom: 13px;
   position: absolute;
 }
@@ -245,8 +246,9 @@
   // background-color: rgb(255, 85, 0);
   margin-left: 11px;
   opacity: 0;
-  transition: opacity .1s linear;
-  transition-delay: .1s;
+  transition:
+    opacity .1s linear .1s,
+    top 60ms ease-in-out;
   position: absolute;
   display: block;
   border-radius: 100%;
