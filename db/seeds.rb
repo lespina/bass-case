@@ -116,7 +116,10 @@ def create_seed_users!()
 end
 
 def create_seed_songs!(user_ids)
-    return [] if !File.directory?(SEED_SONGS_FOLDER_PATH)
+    if !File.directory?(SEED_SONGS_FOLDER_PATH)
+        puts 'No seed music detected, skipping song uploads'
+        return []
+    end
 
     created_songs = []
 
@@ -186,6 +189,8 @@ def create_seed_songs!(user_ids)
 end
 
 def add_likes_and_reposts!(user_ids, song_ids)
+    return if !File.directory?(SEED_SONGS_FOLDER_PATH)
+
     user_ids.each do |user_id|
         user = User.find(user_id)
 
