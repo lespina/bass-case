@@ -34,6 +34,7 @@ class Playback extends React.Component {
       case RECEIVE_POSITION:
       case RECEIVE_DURATION:
       case RECEIVE_NEW_PLAYBACK_SONGS:
+      case RECEIVE_VOLUME:
       case TOGGLE_SHUFFLE:
       case TOGGLE_LOOP:
       case UPDATE_QUEUE:
