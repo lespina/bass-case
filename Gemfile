@@ -30,7 +30,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'jquery-rails'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
-gem "paperclip", "~> 6.1.0"
+gem 'kt-paperclip', '~> 7.2', '>= 7.2.2'
 
 gem 'aws-sdk-s3', '~> 1.149.0'
 
