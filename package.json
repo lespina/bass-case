@@ -45,7 +45,8 @@
     "setupdb": "bin/rails db:prepare",
     "bundleclean": "bundle clean --force",
     "clean": "rm -rf node_modules && npm install && bundleclean && bundle install",
-    "start": "run-p frontend server"
+    "start": "npm run clean && npm run frontend",
+    "all": "run-p frontend server"
   },
   "keywords": [],
   "author": "Luke Espina",
