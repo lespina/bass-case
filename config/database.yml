@@ -80,6 +80,4 @@ test:
 #
 production:
   <<: *default
-  database: bass-case_production
-  username: bass-case
-  password: <%= ENV['BASS-CASE_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
