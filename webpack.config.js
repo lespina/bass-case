@@ -1,5 +1,6 @@
 const path = require("path");
 const webpack = require("webpack");
+const TerserPlugin = require("terser-webpack-plugin");
 
 let plugins = []; // if using any plugins for both dev and production
 const devPlugins = []; // if using any plugins for development
@@ -9,19 +10,17 @@ const prodPlugins = [
     'process.env': {
       'NODE_ENV': JSON.stringify('production')
     }
-  }),
-  new webpack.optimize.UglifyJsPlugin({
-    compress: {
-      warnings: true
-    }
   })
 ];
 
+const isProd = process.env.NODE_ENV === 'production';
+
 plugins = plugins.concat(
-  process.env.NODE_ENV === 'production' ? prodPlugins : devPlugins
+  isProd ? prodPlugins : devPlugins
 );
 
 module.exports = {
+  mode: isProd ? 'production' : 'development',
   context: __dirname,
   entry: "./frontend/bass_case.jsx",
   output: {
@@ -30,23 +29,28 @@ module.exports = {
   },
   plugins: plugins,
   module: {
-    loaders: [
+    rules: [
       {
         test: [/\.jsx?$/, /\.js?$/],
         exclude: /node_modules/,
         loader: 'babel-loader',
-        query: {
-          presets: ['env', 'react']
+        options: {
+          presets: ['@babel/preset-env', '@babel/preset-react']
         }
       }
-    ]
+    ],
   },
   devtool: 'source-map',
   resolve: {
-    extensions: [".js", ".jsx", "*"]
+    extensions: [".js", ".jsx", "*"],
+    fallback: {
+      fs: false,
+      buffer: require.resolve('buffer/')
+    }
   },
-  node: {
-    fs: "empty"
+  optimization: {
+    minimize: true,
+    minimizer: [new TerserPlugin()],
   },
   externals: { 'react-native-fs': 'reactNativeFs' }
 };

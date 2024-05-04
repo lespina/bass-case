@@ -34,3 +34,6 @@ delete_seed_users.txt
 
 # Ignore seed songs folder
 */seed_songs/*
+
+# auto-gen license file
+bundle.js.LICENSE.txt
