@@ -22,6 +22,7 @@ class PlayBar extends React.Component {
       position: {},
       key: 0,
       offset: 0,
+      isVolumeExpanded: false,
     };
     this.increment = this.increment.bind(this);
     this.toggleTimer = this.toggleTimer.bind(this);
@@ -29,6 +30,7 @@ class PlayBar extends React.Component {
     this.hideQueue = this.hideQueue.bind(this);
     this.handleDragEnd = this.handleDragEnd.bind(this);
     this.handleClickPlaybar = this.handleClickPlaybar.bind(this);
+    this.setExpandedVolume = this.setExpandedVolume.bind(this);
   }
 
   componentDidMount() {
@@ -226,6 +228,31 @@ class PlayBar extends React.Component {
     this.props.seekTo(seekPos);
   }
 
+  setExpandedVolume(shouldExpand) {
+    this.setState({ isVolumeExpanded: shouldExpand });
+  }
+
+  handleVolumeClick(e) {
+    return;
+  }
+
+  getVolumeSliderProgress() {
+    const { volume } = this.props.playback;
+    const maxHeightPx = 92;
+    const handleHeightOffset = 10;
+
+    const result = `${Math.round(100 * volume / maxHeightPx) - handleHeightOffset}px`;
+    return result;
+  }
+
+  getVolumeHandleTopPos() {
+    const { volume } = this.props.playback;
+    const maxHeightPx = 92;
+
+    const result = `${Math.round(100 * (100 - volume) / maxHeightPx)}px`;
+    return result;
+  }
+
   render() {
     const { key, start, time } = this.state;
     const { songs, playback, users, currentUser } = this.props;
@@ -260,6 +287,8 @@ class PlayBar extends React.Component {
     const progressWidth = { width: `${this.getProgressPos()}%` };
     const handleLeftDist = { left: `${this.getHandlePos()}px` };
 
+    const expanded = this.state.isVolumeExpanded ? 'expanded' : '';
+
     return (
       <div>
         <div className="bottom-filler"/>
@@ -291,10 +320,12 @@ class PlayBar extends React.Component {
             <div className="playbar-timeline-time-left">
               -{this.format(this.parseSec(duration - this.state.offset - time.getTime()))}
             </div>
-            <div className={`playbar-volume ${muteStatus}`}>
+            <div className={`playbar-volume ${muteStatus} ${expanded}`} onMouseEnter={(e)=>this.setExpandedVolume(true)} onMouseLeave={(e)=>this.setExpandedVolume(false)}>
               <div onClick={this.handleSimpleAction('toggleMute')} className="volume-mute-div">Content</div>
-              <div className="playbar-volume-slider">
-
+              <div onClick={this.handleVolumeClick} className="playbar-volume-slider-wrapper" role="slider">
+                <div className="playbar-volume-slider-background" />
+                <div className="playbar-volume-slider-progress" style={{height: this.getVolumeSliderProgress()}}></div>
+                <div className="playbar-volume-slider-handle" style={{top: this.getVolumeHandleTopPos()}}></div>
               </div>
             </div>
             <section className="playbar-song-info">

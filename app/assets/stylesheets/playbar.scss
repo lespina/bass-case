@@ -155,6 +155,125 @@
   background-image: image-url('volume-muted-button.svg');
 }
 
+.playbar-volume-slider-wrapper {
+  left: -5px;
+  width: 30px;
+  bottom: 40px;
+  background-color: #f2f2f2;
+  border: 1px solid transparent;
+  position: absolute;
+  z-index: 1;
+  height: 0;
+  transition: height .1s;
+  transform: translateZ(0);
+  overflow: hidden;
+  outline: 0;
+  cursor: pointer;
+}
+
+.playbar-volume-slider-wrapper::before {
+  bottom: -10px;
+  left: 8px;
+  border-color: transparent transparent #ccc #ccc;
+  border-style: solid;
+  border-width: 5px;
+  box-shadow: -3px 3px 4px rgba(0, 0, 0, .1);
+  z-index: 0;
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  box-sizing: border-box;
+  transform-origin: 0 0;
+  transform: rotate(-45deg);
+  pointer-events: none;
+  cursor: pointer;
+}
+
+.playbar-volume-slider-wrapper::after {
+  bottom: -8px;
+  left: 9px;
+  border-color: transparent transparent #f2f2f2 #f2f2f2;
+  border-style: solid;
+  border-width: 4px;
+  z-index: 1;
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  box-sizing: border-box;
+  transform-origin: 0 0;
+  transform: rotate(-45deg);
+  pointer-events: none;
+  cursor: pointer;
+}
+
+.playbar-volume-slider-background {
+  background-color: #ccc;
+  height: 92px;
+  width: 2px;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  outline: 0;
+  margin-left: 14px;
+  opacity: 0;
+  transition: opacity .1s linear;
+  transition-delay: .1s;
+  position: absolute;
+  display: block;
+  bottom: 13px;
+  left: 0;
+}
+
+.playbar-volume-slider-progress {
+  background: #f50;
+  // background: rgb(255, 85, 0);
+  width: 2px;
+  margin-left: 14px;
+  opacity: 0;
+  transition: opacity .1s linear;
+  transition-delay: .1s;
+  bottom: 13px;
+  position: absolute;
+}
+
+.playbar-volume-slider-handle {
+  width: 8px;
+  height: 8px;
+  background-color: #f50;
+  // background-color: rgb(255, 85, 0);
+  margin-left: 11px;
+  opacity: 0;
+  transition: opacity .1s linear;
+  transition-delay: .1s;
+  position: absolute;
+  display: block;
+  border-radius: 100%;
+  // border: 1.5px solid #000;
+}
+
+.expanded {
+  .playbar-volume-slider-wrapper {
+    height: 118px;
+    border-color: #ccc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
+    overflow: initial;
+  }
+
+  .playbar-volume-slider-background {
+    opacity: 1;
+  }
+
+  .playbar-volume-slider-progress {
+    opacity: 1;
+  }
+
+  .playbar-volume-slider-handle {
+    opacity: 1;
+  }
+}
+
 /* ---------------- */
 
 .playbar-song-info {
