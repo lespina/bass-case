@@ -34,3 +34,6 @@ delete_seed_users.txt
 
 # auto-gen license file
 bundle.js.LICENSE.txt
+
+# generated list of user ids from seeds.rb
+test_user_ids.txt

@@ -127,7 +127,7 @@ def create_seed_users!()
 end
 
 def create_seed_songs_combined!(user_ids)
-    if !File.directory?(SEED_SONGS_AUDIO_FOLDER_PATH)
+    if !File.directory?(SEED_SONGS_AUDIO_FOLDER_PATH) && !File.directory?(SEED_SONGS_COMBINED_PATH)
         puts 'No seed music detected, skipping song uploads'
         return []
     end
@@ -136,7 +136,9 @@ def create_seed_songs_combined!(user_ids)
 
     users = User.where("id IN (?)", user_ids).to_a
 
-    mp3_path_list = Dir.children(SEED_SONGS_COMBINED_PATH).map { |filename| "#{SEED_SONGS_COMBINED_PATH}/#{filename} }"
+    mp3_path_list = Dir.children(SEED_SONGS_COMBINED_PATH)
+        .select { |filename| File.extname(filename) == ".mp3" }
+        .map { |filename| "#{SEED_SONGS_COMBINED_PATH}/#{filename}" }
 
     num_songs_per_user = (mp3_path_list.length.to_f / users.length).ceil
 
@@ -160,7 +162,7 @@ def create_seed_songs_combined!(user_ids)
             TagLib::MPEG::File.open(mp3_path) do |file|
                 tag = file.id3v2_tag
                 cover_img = tag.frame_list('APIC').first
-                song.title = tag.title.empty? ? File.basename(Dir.children(audio_path)[0], ".*") : tag.title
+                song.title = tag.title.empty? ? File.basename(mp3_path, ".*") : tag.title
 
                 if cover_img.nil?
                     File.open('app/assets/images/track-artwork/default-track-image.png') do |file|
@@ -201,7 +203,7 @@ def create_seed_songs_combined!(user_ids)
 end
 
 def create_seed_songs!(user_ids)
-    if !File.directory?(SEED_SONGS_AUDIO_FOLDER_PATH)
+    if !File.directory?(SEED_SONGS_AUDIO_FOLDER_PATH) && !File.directory?(SEED_SONGS_COMBINED_PATH)
         puts 'No seed music detected, skipping song uploads'
         return []
     end
@@ -210,12 +212,14 @@ def create_seed_songs!(user_ids)
 
     users = User.where("id IN (?)", user_ids).to_a
 
-    song_data_list = Dir.children(SEED_SONGS_AUDIO_FOLDER_PATH).map do |song_number|
-        {
-            audio: "#{SEED_SONGS_AUDIO_FOLDER_PATH}/#{song_number}/original",
-            art: "#{SEED_SONGS_ARTWORK_FOLDER_PATH}/#{song_number}/original"
-        }
-    end
+    song_data_list = Dir.children(SEED_SONGS_AUDIO_FOLDER_PATH)
+        .select { |filename| File.directory?("#{SEED_SONGS_AUDIO_FOLDER_PATH}/#{filename}") }
+        .map do |song_number|
+            {
+                audio: "#{SEED_SONGS_AUDIO_FOLDER_PATH}/#{song_number}/original",
+                art: "#{SEED_SONGS_ARTWORK_FOLDER_PATH}/#{song_number}/original"
+            }
+        end
 
     num_songs_per_user = (song_data_list.length.to_f / users.length).ceil
 
@@ -232,13 +236,15 @@ def create_seed_songs!(user_ids)
             audio_path = song_data[:audio]
             artwork_path = song_data[:art]
 
-            File.open("#{audio_path}/#{Dir.children(audio_path)[0]}") do |file|
+            mp3_file_path = "#{audio_path}/#{Dir.children(audio_path)[0]}"
+
+            File.open(mp3_file_path) do |file|
                 song.audio = file
             end
 
-            TagLib::MPEG::File.open(audio_path) do |file|
+            TagLib::MPEG::File.open(mp3_file_path) do |file|
                 tag = file.id3v2_tag
-                song.title = tag.title.empty? ? File.basename(Dir.children(audio_path)[0], ".*") : tag.title
+                song.title = tag.title.empty? ? File.basename(mp3_file_path, ".*") : tag.title
 
                 if File.directory?(artwork_path)
                     File.open("#{artwork_path}/#{Dir.children(artwork_path)[0]}") do |file|
@@ -284,7 +290,11 @@ def add_likes_and_reposts!(user_ids, song_ids)
     end
 end
 
-def make_seed_user_deletion_script(user_ids, song_ids)
+def make_test_user_ids_file!(user_ids)
+    File.write("db/test_user_ids.txt", user_ids.to_s)
+end
+
+def make_seed_user_deletion_script!(user_ids, song_ids)
     text =
     """
     List of seed user ids & song ids for reference (lowest is the guest account):
@@ -314,8 +324,10 @@ if SEED_PASSWORD.nil?
 else
     user_ids = create_seed_users!
 
+    make_test_user_ids_file!(user_ids)
+
     song_ids = USE_COMBINED_PATH ? create_seed_songs_combined!(user_ids) : create_seed_songs!(user_ids)
     add_likes_and_reposts!(user_ids, song_ids)
 
-    make_seed_user_deletion_script(user_ids, song_ids)
+    make_seed_user_deletion_script!(user_ids, song_ids)
 end
