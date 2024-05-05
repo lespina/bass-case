@@ -1,7 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import { connect } from 'react-redux';
-import { updateUser } from '../../actions/user_actions';
+import { receiveUserErrors, updateUser } from '../../actions/user_actions';
 import { withRouter } from 'react-router-dom';
 
 class UserEditForm extends React.Component {
@@ -27,6 +27,8 @@ class UserEditForm extends React.Component {
   }
 
   componentDidMount() {
+    this.props.clearUserErrors();
+
     document.body.classList.toggle('modal-open');
 
     let { classList: origClassList } = _.merge({}, this.state);
@@ -41,6 +43,8 @@ class UserEditForm extends React.Component {
   }
 
   componentWillUnmount() {
+    this.props.clearUserErrors();
+
     document.body.classList.toggle('modal-open');
   }
 
@@ -202,7 +206,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  updateUser: (userId, formData) => dispatch(updateUser(userId, formData))
+  updateUser: (userId, formData) => dispatch(updateUser(userId, formData)),
+  clearUserErrors: () => dispatch(receiveUserErrors([])),
 });
 
 export default withRouter(
