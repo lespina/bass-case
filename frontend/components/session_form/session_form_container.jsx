@@ -1,7 +1,7 @@
 import SessionForm from './session_form';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { signup, login } from '../../actions/session_actions';
+import { signup, login, receiveSessionErrors } from '../../actions/session_actions';
 
 const mapStateToProps = (state, ownProps) => {
   let formType;
@@ -26,6 +26,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
   return {
     processForm: (user) => dispatch(processForm(user)),
+    clearSessionErrors: () => dispatch(receiveSessionErrors([]))
   };
 };
 

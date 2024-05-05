@@ -25,6 +25,8 @@ class SessionForm extends React.Component {
   }
 
   componentDidMount() {
+    this.props.clearSessionErrors();
+
     document.body.classList.toggle('modal-open');
 
     let { classList: origClassList } = _.merge({}, this.state);
@@ -39,11 +41,15 @@ class SessionForm extends React.Component {
   }
 
   componentWillUnmount() {
+    this.props.clearSessionErrors();
+
     document.body.classList.toggle('modal-open');
   }
 
   handleSubmit(e) {
     e.preventDefault();
+
+    this.props.clearSessionErrors();
 
     const { inputType } = this.state;
 
@@ -90,6 +96,8 @@ class SessionForm extends React.Component {
 
   handleBack(e) {
     e.preventDefault();
+
+    this.props.clearSessionErrors();
 
     this.setState({ inputType: USERNAME });
   }
