@@ -22,7 +22,7 @@ class App extends React.Component {
   }
 
   render() {
-    if (Object.keys(this.props.users).length === 0 || Object.keys(this.props.songs).length === 0) {
+    if (Object.keys(this.props.users).length === 0) {
       return null;
     }
 
