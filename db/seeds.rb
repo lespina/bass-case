@@ -9,6 +9,8 @@
 # If ./seed_songs exists, will load all top-level mp3 files and attempt to grab included artwork.
 # Else, will expect ./seed_audios & ./seed_audio_artworks formatted from previous S3 bucket.  If
 # none of these exist, audio upload is skipped
+#
+# You should not commit these folders unless temporarily such as in heroku
 
 require 'taglib'
 require 'rack/mime'

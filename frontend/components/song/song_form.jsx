@@ -3,13 +3,17 @@ import _ from 'lodash';
 import SongFormItem from './song_form_item';
 import jsmediatags from 'jsmediatags';
 
+const MEGABYTES_TO_BYTES = 1000000;
+const FILE_SIZE_LIMIT = 25 * MEGABYTES_TO_BYTES // 25MB
+
 class SongForm extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       audioFiles: [],
-      imageData: null
+      imageData: null,
+      clientSideError: null,
     };
 
     this.handleAudioFileChange = this.handleAudioFileChange.bind(this);
@@ -19,12 +23,19 @@ class SongForm extends React.Component {
   handleAudioFileChange(e) {
     e.preventDefault();
     const fileList = e.currentTarget.files;
+    const file = fileList.item(0);
+
+    if (file.size > FILE_SIZE_LIMIT) {
+      console.error(`File size ${file.size}B is larger than ${FILE_SIZE_LIMIT / MEGABYTES_TO_BYTES}MB, aborting upload!`);
+      this.setState({ clientSideError: `Error: The file size: ${file.size}B is larger than ${FILE_SIZE_LIMIT / MEGABYTES_TO_BYTES}MB limit.`});
+      return;
+    }
+
     const updateImageData = (newData) => {
       this.setState({ imageData: newData });
       this.forceUpdate();
     }
 
-    const file = fileList.item(0);
     jsmediatags.read(file, {
       onSuccess: (result) => {
         if (result.tags.picture) {
@@ -89,7 +100,7 @@ class SongForm extends React.Component {
   }
 
   render() {
-    const { audioFiles } = this.state;
+    const { audioFiles, clientSideError } = this.state;
     const hasUploads = (audioFiles.length > 0);
     return (
       <section className={`upload ${(hasUploads) ? "has-active-uploads" : ""}`}>
@@ -103,6 +114,7 @@ class SongForm extends React.Component {
             </form>
           </div>
         </section>
+        {clientSideError}
         {this.activeUploads()}
       </section>
     );
