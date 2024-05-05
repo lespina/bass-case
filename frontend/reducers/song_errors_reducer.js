@@ -11,7 +11,11 @@ const songErrorsReducer = (state = {}, action) => {
     case RECEIVE_SONG:
       return {};
     case RECEIVE_SONG_ERRORS:
-      newState = _.merge({}, state, action.errors);
+      if (action.replace) {
+        return action.errors;
+      } else {
+        newState = _.merge({}, state, action.errors);
+      }
       return newState;
     default:
       return state;

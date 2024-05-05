@@ -18,12 +18,18 @@ class SongForm extends React.Component {
 
     this.handleAudioFileChange = this.handleAudioFileChange.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
+    this.clearErrors = this.clearErrors.bind(this);
+  }
+
+  clearErrors() {
+    this.setState({ clientSideError: '' });
+    this.props.clearSongErrors();
   }
 
   handleAudioFileChange(e) {
     e.preventDefault();
 
-    this.setState({ clientSideError: '' });
+    this.clearErrors();
 
     const fileList = e.currentTarget.files;
     const file = fileList.item(0);
@@ -66,7 +72,7 @@ class SongForm extends React.Component {
 
   handleCancel(idx) {
     return (e) => {
-      this.setState({ clientSideError: '' });
+      this.clearErrors();
       const updatedAudioFiles = this.state.audioFiles.slice(0);
       updatedAudioFiles.splice(idx, 1);
       this.setState({ audioFiles: updatedAudioFiles });

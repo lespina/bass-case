@@ -14,8 +14,9 @@ export const receiveSong = (song) => ({
   song
 });
 
-export const receiveSongErrors = (errors) => ({
+export const receiveSongErrors = (errors, shouldReplace = false) => ({
   type: RECEIVE_SONG_ERRORS,
+  replace: shouldReplace,
   errors
 });
 
