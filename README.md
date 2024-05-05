@@ -112,14 +112,6 @@ If one looks closely, each queue item contains a little 'handle' icon on the lef
 
 These are actually designated spots by which the user may click and drag a given song queue item from its current spot to a new place up or down the queue for intuitive, painless reordering.
 
-### Future Directions
-
-* Add song show page with comments
-* Add waveforms display with seeking and progress scroll
-* Infinite scroll with lazy fetching
-* Refactor progress bar into slider for simpler and more precise seeking behavior
-
-
 ### How to run locally
 
 Install ruby, npm, & postgres, shared-mime-info, imagemagick, taglib & bundle. 
