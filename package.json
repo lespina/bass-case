@@ -44,7 +44,7 @@
     "server": "bundle install && bin/rails server",
     "setupdb": "bin/rails db:prepare",
     "bundleclean": "bundle clean --force",
-    "clean": "rm -rf node_modules && npm install && bundleclean && bundle install",
+    "clean": "rm -rf node_modules && npm install",
     "start": "npm run clean && npm run frontend",
     "all": "run-p frontend server"
   },

@@ -9,7 +9,8 @@
 require 'taglib'
 require 'rack/mime'
 
-SEED_SONGS_FOLDER_PATH = 'seed_songs'
+SEED_SONGS_AUDIO_FOLDER_PATH = 'seed_audios'
+SEED_SONGS_ARTWORK_FOLDER_PATH = 'seed_audio_artworks'
 
 SEED_PASSWORD = ENV['BASSCASE_SEED_PASSWORD']
 
@@ -116,7 +117,7 @@ def create_seed_users!()
 end
 
 def create_seed_songs!(user_ids)
-    if !File.directory?(SEED_SONGS_FOLDER_PATH)
+    if !File.directory?(SEED_SONGS_AUDIO_FOLDER_PATH)
         puts 'No seed music detected, skipping song uploads'
         return []
     end
@@ -125,45 +126,63 @@ def create_seed_songs!(user_ids)
 
     users = User.where("id IN (?)", user_ids).to_a
 
-    song_path_list = Dir.children(SEED_SONGS_FOLDER_PATH).map { |filename| "#{SEED_SONGS_FOLDER_PATH}/#{filename}" }
+    song_data_list = Dir.children(SEED_SONGS_AUDIO_FOLDER_PATH).map do |song_number|
+        {
+            audio: "#{SEED_SONGS_AUDIO_FOLDER_PATH}/#{song_number}/original",
+            art: "#{SEED_SONGS_ARTWORK_FOLDER_PATH}/#{song_number}/original"
+        }
+    end
 
-    num_songs_per_user = (song_path_list.length.to_f / users.length).ceil
+    num_songs_per_user = (song_data_list.length.to_f / users.length).ceil
 
-    while !song_path_list.empty? do
+    while !song_data_list.empty? do
         user = users.shift
 
         num_songs_per_user.times do
-            break if song_path_list.empty?
-
-            song_path = song_path_list.shift
+            break if song_data_list.empty?
 
             song = user.songs.new
             song.plays = 0
-            File.open(song_path) do |file|
+
+            song_data = song_data_list.shift
+            audio_path = song_data[:audio]
+            artwork_path = song_data[:art]
+
+            File.open("#{audio_path}/#{Dir.children(audio_path)[0]}") do |file|
                 song.audio = file
             end
 
-            temp_image_filename = ""
+            # temp_image_filename = ""
 
-            TagLib::MPEG::File.open(song_path) do |file|
+            TagLib::MPEG::File.open(audio_path) do |file|
                 tag = file.id3v2_tag
-                cover_img = tag.frame_list('APIC').first
-                song.title = tag.title.empty? ? File.basename(song_path, ".*") : tag.title
+                # cover_img = tag.frame_list('APIC').first
+                song.title = tag.title.empty? ? File.basename(Dir.children(audio_path)[0], ".*") : tag.title
 
-                if cover_img.nil?
-                    File.open('app/assets/images/track-artwork/default-track-image.png') do |file|
+                if File.directory?(artwork_path)
+                    File.open("#{artwork_path}/#{Dir.children(artwork_path)[0]}") do |file|
                         song.image = file
                     end
                 else
-                    image_data = cover_img.picture.force_encoding('UTF-8')
-                    mime_type = cover_img.mime_type === 'image/jpg' ? 'image/jpeg' : cover_img.mime_type
-
-                    temp_image_filename = "cover_art#{Rack::Mime::MIME_TYPES.invert[mime_type]}"
-                    File.open(temp_image_filename, "w+") do |file|
-                        file.write(image_data)
+                    File.open('app/assets/images/track-artwork/default-track-image.png') do |file|
                         song.image = file
                     end
                 end
+
+                # if cover_img.nil?
+                #     File.open('app/assets/images/track-artwork/default-track-image.png') do |file|
+                #         song.image = file
+                #     end
+                # else
+                #     image_data = cover_img.picture.force_encoding('UTF-8')
+                #     mime_type = cover_img.mime_type === 'image/jpg' ? 'image/jpeg' : cover_img.mime_type
+
+                #     temp_image_filename = "cover_art#{Rack::Mime::MIME_TYPES.invert[mime_type]}"
+                #     File.open(temp_image_filename, "w+") do |file|
+                #         file.write(image_data)
+                #         song.image = file
+                #     end
+                # end
             end
 
             if song.save
@@ -181,7 +200,7 @@ def create_seed_songs!(user_ids)
                 end
             end
 
-            File.delete(temp_image_filename) if File.exist?(temp_image_filename)
+            # File.delete(temp_image_filename) if File.exist?(temp_image_filename)
         end
     end
 
@@ -189,7 +208,7 @@ def create_seed_songs!(user_ids)
 end
 
 def add_likes_and_reposts!(user_ids, song_ids)
-    return if !File.directory?(SEED_SONGS_FOLDER_PATH)
+    return if !File.directory?(SEED_SONGS_AUDIO_FOLDER_PATH)
 
     user_ids.each do |user_id|
         user = User.find(user_id)
