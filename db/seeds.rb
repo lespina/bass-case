@@ -17,7 +17,7 @@ SEED_PASSWORD = ENV['BASSCASE_SEED_PASSWORD']
 SEED_USER_PARAMS = {
     1 => {
         username: "guest",
-        password: SEED_PASSWORD,
+        password: "password",
         bio: "Meep, meep.",
         location: "Sesame Street"
     },
