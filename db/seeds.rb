@@ -6,11 +6,19 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+# If ./seed_songs exists, will load all top-level mp3 files and attempt to grab included artwork.
+# Else, will expect ./seed_audios & ./seed_audio_artworks formatted from previous S3 bucket.  If
+# none of these exist, audio upload is skipped
+
 require 'taglib'
 require 'rack/mime'
 
 SEED_SONGS_AUDIO_FOLDER_PATH = 'seed_audios'
 SEED_SONGS_ARTWORK_FOLDER_PATH = 'seed_audio_artworks'
+
+SEED_SONGS_COMBINED_PATH = 'seed_songs'
+
+USE_COMBINED_PATH = File.exist?(SEED_SONGS_COMBINED_PATH)
 
 SEED_PASSWORD = ENV['BASSCASE_SEED_PASSWORD']
 
@@ -116,6 +124,80 @@ def create_seed_users!()
     return created_users.map {|user| user.id }
 end
 
+def create_seed_songs_combined!(user_ids)
+    if !File.directory?(SEED_SONGS_AUDIO_FOLDER_PATH)
+        puts 'No seed music detected, skipping song uploads'
+        return []
+    end
+
+    created_songs = []
+
+    users = User.where("id IN (?)", user_ids).to_a
+
+    mp3_path_list = Dir.children(SEED_SONGS_COMBINED_PATH).map { |filename| "#{SEED_SONGS_COMBINED_PATH}/#{filename} }"
+
+    num_songs_per_user = (mp3_path_list.length.to_f / users.length).ceil
+
+    while !mp3_path_list.empty? do
+        user = users.shift
+
+        num_songs_per_user.times do
+            break if mp3_path_list.empty?
+
+            song = user.songs.new
+            song.plays = 0
+
+            mp3_path = mp3_path_list.shift
+
+            File.open(mp3_path) do |file|
+                song.audio = file
+            end
+
+            temp_image_filename = ""
+
+            TagLib::MPEG::File.open(mp3_path) do |file|
+                tag = file.id3v2_tag
+                cover_img = tag.frame_list('APIC').first
+                song.title = tag.title.empty? ? File.basename(Dir.children(audio_path)[0], ".*") : tag.title
+
+                if cover_img.nil?
+                    File.open('app/assets/images/track-artwork/default-track-image.png') do |file|
+                        song.image = file
+                    end
+                else
+                    image_data = cover_img.picture.force_encoding('UTF-8')
+                    mime_type = cover_img.mime_type === 'image/jpg' ? 'image/jpeg' : cover_img.mime_type
+
+                    temp_image_filename = "cover_art#{Rack::Mime::MIME_TYPES.invert[mime_type]}"
+                    File.open(temp_image_filename, "w+") do |file|
+                        file.write(image_data)
+                        song.image = file
+                    end
+                end
+            end
+
+            if song.save
+                created_songs.push(song.id)
+            else
+                File.open('app/assets/images/track-artwork/default-track-image.png') do |file|
+                    song.image = file
+                end
+                if song.save
+                    created_songs.push(song.id)
+                else
+                    puts "Error uploading song:"
+                    puts song.title
+                    puts song.errors.full_messages
+                end
+            end
+
+            File.delete(temp_image_filename) if File.exist?(temp_image_filename)
+        end
+    end
+
+    return created_songs
+end
+
 def create_seed_songs!(user_ids)
     if !File.directory?(SEED_SONGS_AUDIO_FOLDER_PATH)
         puts 'No seed music detected, skipping song uploads'
@@ -152,11 +234,8 @@ def create_seed_songs!(user_ids)
                 song.audio = file
             end
 
-            # temp_image_filename = ""
-
             TagLib::MPEG::File.open(audio_path) do |file|
                 tag = file.id3v2_tag
-                # cover_img = tag.frame_list('APIC').first
                 song.title = tag.title.empty? ? File.basename(Dir.children(audio_path)[0], ".*") : tag.title
 
                 if File.directory?(artwork_path)
@@ -168,21 +247,6 @@ def create_seed_songs!(user_ids)
                         song.image = file
                     end
                 end
-
-                # if cover_img.nil?
-                #     File.open('app/assets/images/track-artwork/default-track-image.png') do |file|
-                #         song.image = file
-                #     end
-                # else
-                #     image_data = cover_img.picture.force_encoding('UTF-8')
-                #     mime_type = cover_img.mime_type === 'image/jpg' ? 'image/jpeg' : cover_img.mime_type
-
-                #     temp_image_filename = "cover_art#{Rack::Mime::MIME_TYPES.invert[mime_type]}"
-                #     File.open(temp_image_filename, "w+") do |file|
-                #         file.write(image_data)
-                #         song.image = file
-                #     end
-                # end
             end
 
             if song.save
@@ -199,8 +263,6 @@ def create_seed_songs!(user_ids)
                     puts song.errors.full_messages
                 end
             end
-
-            # File.delete(temp_image_filename) if File.exist?(temp_image_filename)
         end
     end
 
@@ -249,7 +311,8 @@ if SEED_PASSWORD.nil?
     print "Error: required ENV variable BASSCASE_SEED_PASSWORD to seed db with users"
 else
     user_ids = create_seed_users!
-    song_ids = create_seed_songs!(user_ids)
+
+    song_ids = USE_COMBINED_PATH ? create_seed_songs_combined!(user_ids) : create_seed_songs!(user_ids)
     add_likes_and_reposts!(user_ids, song_ids)
 
     make_seed_user_deletion_script(user_ids, song_ids)
