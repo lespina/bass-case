@@ -252,9 +252,7 @@ class PlayBar extends React.Component {
 
   getVolumeSliderProgress() {
     const { volume } = this.props.playback;
-    const handleHeightOffset = 10;
-
-    let result = Math.round(100 * volume / MAX_VOL_SLIDER_HEIGHT) - handleHeightOffset;
+    let result = volume;
 
     if (result < 0) { result = 0; }
     if (result > MAX_VOL_SLIDER_HEIGHT) { result = MAX_VOL_SLIDER_HEIGHT; }
@@ -265,7 +263,7 @@ class PlayBar extends React.Component {
   getVolumeHandleTopPos() {
     const { volume } = this.props.playback;
 
-    let result = Math.round(100 * (100 - volume) / MAX_VOL_SLIDER_HEIGHT);
+    let result = 100 - volume;
 
     if (result < 10) { result = 10; }
     if (result > MAX_VOL_SLIDER_HEIGHT + 2) { result = MAX_VOL_SLIDER_HEIGHT + 2; }
